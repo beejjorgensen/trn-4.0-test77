@@ -23,3 +23,10 @@ norm.saver
 # Build products
 
 *.o
+all
+inews
+newsnews
+nntplist
+parsedate.c
+trn
+trn-artchk
