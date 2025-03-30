@@ -18,3 +18,9 @@ state of arrested decay.
 The only thing I'm really building for is (Arch) Linux, but I'd gladly
 take PRs that made it work on other platforms.
 
+## TODO
+
+* All function definitions need to be ANSI-fied.
+* Everything to do with signals is deprecated.
+* `term.h` should include `<term.h>` to get `tputs()`, but that breaks a
+  lot of things.
