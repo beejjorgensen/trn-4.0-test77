@@ -2,7 +2,6 @@
 */ 
 /* This software is copyrighted as detailed in the LICENSE file. */
 
-
 #ifdef SUPPORT_NNTP
 
 #define FB_BACKGROUND	0

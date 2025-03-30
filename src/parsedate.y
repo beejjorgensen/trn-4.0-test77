@@ -20,14 +20,16 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <ctype.h>
+#include <string.h>
 #include "config.h"
 /*#include "config2.h"*/
 #include <time.h>
 
+int date_lex(void);
+
 #define yyparse		date_parse
 #define yylex		date_lex
 #define yyerror		date_error
-
 
     /* See the LeapYears table in Convert. */
 #define EPOCH		1970
@@ -437,20 +439,13 @@ static TABLE	TimezoneTable[] = {
 
 
 /* ARGSUSED */
-static void
-date_error(s)
-    char	*s;
+static void date_error(char *s)
 {
     /* NOTREACHED */
 }
 
 
-static time_t
-ToSeconds(Hours, Minutes, Seconds, Meridian)
-    time_t	Hours;
-    time_t	Minutes;
-    time_t	Seconds;
-    MERIDIAN	Meridian;
+static time_t ToSeconds(time_t Hours, time_t Minutes, time_t Seconds, MERIDIAN Meridian)
 {
     if (Minutes < 0 || Minutes > 59 || Seconds < 0 || Seconds > 61)
 	return -1;
@@ -658,8 +653,7 @@ LookupWord(buff, length)
 }
 
 
-int
-date_lex()
+int date_lex(void)
 {
     register char	c;
     register char	*p;

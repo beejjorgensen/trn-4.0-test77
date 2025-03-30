@@ -46,10 +46,7 @@ struct utsname utsn;
 
 COMPEX cond_compex;
 
-void
-intrp_init(tcbuf, tcbuf_len)
-char* tcbuf;
-int tcbuf_len;
+void intrp_init(char* tcbuf, int tcbuf_len)
 {
 #if HOSTBITS != 0
     int i;
@@ -110,10 +107,7 @@ int tcbuf_len;
 
 /* skip interpolations */
 
-static char*
-skipinterp(pattern,stoppers)
-register char* pattern;
-char* stoppers;
+static char* skipinterp(register char* pattern, char* stoppers)
 {
 #ifdef DEBUG
     if (debug & DEB_INTRP)
@@ -195,13 +189,7 @@ getout:
 
 /* interpret interpolations */
 
-char*
-dointerp(dest,destsize,pattern,stoppers,cmd)
-register char* dest;
-register int destsize;
-register char* pattern;
-char* stoppers;
-char* cmd;
+char* dointerp(register char* dest, register int destsize, register char* pattern, char* stoppers, char* cmd)
 {
     char* subj_buf = NULL;
     char* ngs_buf = NULL;
@@ -1066,10 +1054,7 @@ getout:
     return pattern;			/* where we left off */
 }
 
-char*
-interp_backslash(dest,pattern)
-char* dest;
-register char* pattern;
+char* interp_backslash(char* dest, register char* pattern)
 {
     register int i = *pattern;
 
@@ -1110,30 +1095,19 @@ register char* pattern;
 
 /* helper functions */
 
-char*
-interp(dest,destsize,pattern)
-register char* dest;
-register int destsize;
-register char* pattern;
+char* interp(register char* dest, register int destsize, register char* pattern)
 {
     return dointerp(dest,destsize,pattern,(char*)NULL,(char*)NULL);
 }
 
-char*
-interpsearch(dest,destsize,pattern,cmd)
-register char* dest;
-register int destsize;
-register char* pattern;
-char* cmd;
+char* interpsearch(register char* dest, register int destsize, register char* pattern, char* cmd)
 {
     return dointerp(dest,destsize,pattern,(char*)NULL,cmd);
 }
 
 /* normalize a references line in place */
 
-void
-normalize_refs(refs)
-char* refs;
+void normalize_refs(char* refs)
 {
     register char* f;
     register char* t;
@@ -1153,8 +1127,7 @@ char* refs;
     *t = '\0';
 } 
 
-static void
-abort_interp()
+static void abort_interp(void)
 {
     fputs("\n% interp buffer overflow!\n",stdout) FLUSH;
     sig_catcher(0);

@@ -2,7 +2,11 @@
  */
 /* This software is copyrighted as detailed in the LICENSE file. */
 
-#include <curses.h>
+// beej this is hackish, can't we #include <term.h> to get these?
+int tputs(const char *str, int affcnt, int (*putc)(int));
+int tgetent(char *bp, const char *name);
+int tgetflag(const char *id);
+int tgetnum(const char *id);
 
 EXT char ERASECH;		/* rubout character */
 EXT char KILLCH;		/* line delete character */
@@ -46,8 +50,8 @@ EXT bool bizarre INIT(FALSE);		/* do we need to restore terminal? */
 #else /* !I_TERMIO */
 # ifdef I_TERMIOS
 
-//#define crmode() ((bizarre=1), _tty.c_lflag &= ~ICANON,_tty.c_cc[VMIN]=1,tcsetattr(_tty_ch, TCSAFLUSH, &_tty))
-//#define nocrmode() ((bizarre=1),_tty.c_lflag |= ICANON,_tty.c_cc[VEOF] = CEOF,tcsetattr(_tty_ch, TCSAFLUSH,&_tty))
+#define crmode() ((bizarre=1), _tty.c_lflag &= ~ICANON,_tty.c_cc[VMIN]=1,tcsetattr(_tty_ch, TCSAFLUSH, &_tty))
+#define nocrmode() ((bizarre=1),_tty.c_lflag |= ICANON,_tty.c_cc[VEOF] = CEOF,tcsetattr(_tty_ch, TCSAFLUSH,&_tty))
 #define echo()	 ((bizarre=1),_tty.c_lflag |= ECHO, tcsetattr(_tty_ch, TCSAFLUSH, &_tty))
 #define noecho() ((bizarre=1),_tty.c_lflag &=~ECHO, tcsetattr(_tty_ch, TCSAFLUSH, &_tty))
 #define nl()	 ((bizarre=1),_tty.c_iflag |= ICRNL,_tty.c_oflag |= ONLCR,tcsetattr(_tty_ch, TCSAFLUSH, &_tty))
@@ -162,7 +166,7 @@ EXT int just_a_sec INIT(960);		/* 1 sec at current baud rate */
 #define underline() tputs(tc_US,1,putchr) FLUSH
 #define un_underline() fire_is_out|=UNDERLINE, tputs(tc_UE,1,putchr) FLUSH
 #define underchar() tputs(tc_UC,0,putchr) FLUSH
-//#define standout() tputs(tc_SO,1,putchr) FLUSH
+#define standout() tputs(tc_SO,1,putchr) FLUSH
 #define un_standout() fire_is_out|=STANDOUT, tputs(tc_SE,1,putchr) FLUSH
 #define up_line() term_line--, tputs(tc_UP,1,putchr) FLUSH
 #define insert_line() tputs(tc_IL,1,putchr) FLUSH
@@ -234,7 +238,7 @@ void printcmd _((void));
 void rubout _((void));
 void reprint _((void));
 void erase_line _((bool_int));
-//void clear _((void));
+void clear _((void));
 void home_cursor _((void));
 void goto_xy _((int,int));
 #ifdef SIGWINCH
