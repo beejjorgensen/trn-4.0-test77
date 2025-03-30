@@ -1,0 +1,21 @@
+# Files created by ./Configure
+
+.config/
+HelpFiles/config/environment
+Makefile
+Pnews
+Pnews.header
+Policy.sh
+Rnmail
+Speller
+access.def
+config.h
+config.sh
+filexp
+makedepend
+makedir
+mbox.saver
+mkpro
+mktd
+myinstall
+norm.saver
