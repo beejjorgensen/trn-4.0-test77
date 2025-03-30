@@ -3047,7 +3047,8 @@ echo " "
 echo "Checking for GNU cc in disguise and/or its version number..." >&4
 $cat >gccvers.c <<EOM
 #include <stdio.h>
-int main() {
+#include <stdlib.h>
+int main(void) {
 #ifdef __GNUC__
 #ifdef __VERSION__
 	printf("%s\n", __VERSION__);
@@ -4096,7 +4097,8 @@ echo " "
 echo "Checking your choice of C compiler and flags for coherency..." >&4
 $cat > try.c <<'EOF'
 #include <stdio.h>
-main() { printf("Ok\n"); exit(0); }
+#include <stdlib.h>
+int main(void) { printf("Ok\n"); exit(0); }
 EOF
 set X $cc $optimize $ccflags -o try $ldflags try.c $libs
 shift
@@ -4303,8 +4305,9 @@ echo " "
 echo "Checking for GNU C Library..." >&4
 cat >gnulibc.c <<EOM
 #include <stdio.h>
+#include <stdlib.h>
 int
-main()
+main(void)
 {
 #ifdef __GLIBC__
     exit(0);
@@ -4717,7 +4720,7 @@ yes)
 		else tval=false;
 		fi;;
 	*)
-		echo "main() { extern short $1$tdc; printf(\"%hd\", $1$tc); }" > t.c;
+        printf "#include <stdio.h>\nint main(void) { extern short $1$tdc; printf(\"%hd\", $1$tc); }" > t.c;
 		if $cc $optimize $ccflags $ldflags -o t t.c $libs >/dev/null 2>&1;
 		then tval=true;
 		else tval=false;
@@ -5189,7 +5192,8 @@ case "$d_nolnbuf" in
 '')
 	$cat <<'EOT' >blurfl.c
 #include <stdio.h>
-main()
+#include <unistd.h>
+int main(void)
 {
 	int i;
 
@@ -5271,7 +5275,7 @@ eval $setvar
 echo " "
 $echo "Checking to see if your C compiler groks the void type..."
 $cat >void.c <<'EOCP'
-void main(){;}
+int main(void){;}
 EOCP
 if $cc -c void.c >/dev/null 2>&1 ; then
     d_novoid="$undef"
@@ -5490,8 +5494,9 @@ case "$d_wifstat" in
 	$cat >foo.c <<EOCP
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <stdlib.h>
 
-main()
+int main(void)
 {
 	$type status;
 	int e = 0;
@@ -6080,7 +6085,8 @@ $cat >try.c <<'EOCP'
 #ifdef I_SYSSELECT
 #include <sys/select.h>
 #endif
-main()
+#include <stdlib.h>
+int main(void)
 {
 	struct tm foo;
 #ifdef S_TIMEVAL
