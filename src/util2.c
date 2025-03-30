@@ -224,7 +224,7 @@ register char* s;
 /* return ptr to little string in big string, NULL if not found */
 
 char*
-instr(big, little, case_matters)
+findinstr(big, little, case_matters)
 char* big;
 char* little;
 bool_int case_matters;

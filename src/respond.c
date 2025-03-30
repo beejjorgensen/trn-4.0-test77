@@ -314,7 +314,7 @@ save_article()
 	    else if (norm_always)
 		mailbox = FALSE;
 	    else {
-		char* dflt = (instr(savename,"%a", TRUE) ? "nyq" : "ynq");
+		char* dflt = (findinstr(savename,"%a", TRUE) ? "nyq" : "ynq");
 		
 		sprintf(cmd_buf,
 		"\nFile %s doesn't exist--\n	use mailbox format?",s);
@@ -530,9 +530,9 @@ cancel_article()
     from_buf = fetchlines(art,FROM_LINE);
     ngs_buf = fetchlines(art,NGS_LINE);
     if (strcaseNE(getval("FROM",""),from_buf)
-     && (!instr(from_buf,hostname,FALSE)
-      || (!instr(from_buf,loginName,TRUE)
-       && !instr(reply_buf,loginName,TRUE)
+     && (!findinstr(from_buf,hostname,FALSE)
+      || (!findinstr(from_buf,loginName,TRUE)
+       && !findinstr(reply_buf,loginName,TRUE)
 #ifdef NEWS_ADMIN
        && myuid != newsuid
 #endif
@@ -604,9 +604,9 @@ supersede_article()		/* Supersedes: */
     from_buf = fetchlines(art,FROM_LINE);
     ngs_buf = fetchlines(art,NGS_LINE);
     if (strcaseNE(getval("FROM",""),from_buf)
-     && (!instr(from_buf,hostname,FALSE)
-      || (!instr(from_buf,loginName,TRUE)
-       && !instr(reply_buf,loginName,TRUE)
+     && (!findinstr(from_buf,hostname,FALSE)
+      || (!findinstr(from_buf,loginName,TRUE)
+       && !findinstr(reply_buf,loginName,TRUE)
 #ifdef NEWS_ADMIN
        && myuid != newsuid
 #endif
@@ -710,7 +710,7 @@ reply()
     }
     interp(hbuf, sizeof hbuf, getval("MAILHEADER",MAILHEADER));
     fputs(hbuf,tmpfp);
-    if (!instr(maildoer,"%h",TRUE)) {
+    if (!findinstr(maildoer,"%h",TRUE)) {
 #ifdef VERBOSE
 	IF(verbose)
 	    printf("\n%s\n(Above lines saved in file %s)\n",buf,headname)
@@ -814,7 +814,7 @@ forward()
 	}
     }
 #endif
-    if (!instr(maildoer,"%h",TRUE)) {
+    if (!findinstr(maildoer,"%h",TRUE)) {
 #ifdef VERBOSE
 	IF(verbose)
 	    printf("\n%s\n(Above lines saved in file %s)\n",hbuf,headname)

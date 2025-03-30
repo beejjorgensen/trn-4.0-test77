@@ -2,7 +2,6 @@
  */
 /* This software is copyrighted as detailed in the LICENSE file. */
 
-
 EXT bool reread INIT(FALSE);		/* consider current art temporarily */
 					/* unread? */
 

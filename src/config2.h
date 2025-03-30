@@ -2,6 +2,7 @@
  */
 /* This software is copyrighted as detailed in the LICENSE file. */
 
+#include <stdbool.h>
 
 #ifdef HAS_GETPWENT
 #   include <pwd.h>
@@ -67,7 +68,7 @@ char*	getenv();
 
 /* some handy defs */
 
-#define bool char
+//#define bool char
 #define bool_int int
 #define char_int int
 #ifndef TRUE

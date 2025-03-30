@@ -728,7 +728,7 @@ char* site;
 #else /* ANCIENT_NEWS */
     /* Grab the site from the Posting-Version line */
     sitebuf = fetchlines(artnum,RVER_LINE);
-    if ((s = instr(sitebuf,"; site ",TRUE)) != NULL) {
+    if ((s = findinstr(sitebuf,"; site ",TRUE)) != NULL) {
 	char* t = index(s+7, '.');
 	if (t)
 	    *t = '\0';

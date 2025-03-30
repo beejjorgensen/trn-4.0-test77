@@ -313,7 +313,7 @@ do_article()
 		}
 		else {
 		    int length = strlen(bufptr+1);
-		    notesfiles = instr(&bufptr[length-10]," - (nf", TRUE)!=NULL;
+		    notesfiles = findinstr(&bufptr[length-10]," - (nf", TRUE)!=NULL;
 		    artline++;
 		    if (!s)
 			bufptr += (continuation? 0 : 9);

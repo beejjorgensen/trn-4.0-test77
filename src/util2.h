@@ -9,7 +9,7 @@ char* savestr _((char*));
 char* safecpy _((char*,char*,int));
 char* cpytill _((char*,char*,int));
 char* filexp _((char*));
-char* instr _((char*,char*,bool_int));
+char* findinstr _((char*,char*,bool_int))
 #ifndef HAS_STRCASECMP
 int trn_casecmp _((char*,char*));
 int trn_ncasecmp _((char*,char*,int));

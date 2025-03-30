@@ -287,7 +287,7 @@ register ARTICLE* ap;
 	    } else
 		h = u = s;
 	    if (strEQ(u,loginName)) {
-		if (instr(h,hostname,FALSE)) {
+		if (findinstr(h,hostname,FALSE)) {
 		    switch (auto_select_postings) {
 		      case '.':
 			select_subthread(ap,AUTO_SEL_FOL);
@@ -305,7 +305,7 @@ register ARTICLE* ap;
 		} else {
 #ifdef REPLYTO_POSTER_CHECKING
 		    char* reply_buf = fetchlines(article_num(ap),REPLY_LINE);
-		    if (instr(reply_buf,loginName,TRUE))
+		    if (findinstr(reply_buf,loginName,TRUE))
 			select_subthread(ap,AUTO_SEL_FOL);
 		    free(reply_buf);
 #endif
