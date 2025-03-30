@@ -19,3 +19,7 @@ mkpro
 mktd
 myinstall
 norm.saver
+
+# Build products
+
+*.o
