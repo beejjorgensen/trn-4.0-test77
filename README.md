@@ -21,6 +21,7 @@ take PRs that made it work on other platforms.
 ## TODO
 
 * All function definitions need to be ANSI-fied.
-* Everything to do with signals is deprecated.
-* `term.h` should include `<term.h>` to get `tputs()`, but that breaks a
-  lot of things.
+* Everything to do with signals is deprecated (also search for `sighold`
+  and `sigrelse`).
+* `term.h` should include `<term.h>` to get `tputs()`, `tgetent()`,
+  `tgetflag()`, and `tgetnum()`, but that breaks a lot of things.
