@@ -13,8 +13,7 @@
 
 ART_LINE maxindx = -1;
 
-void
-backpage_init()
+void backpage_init(void)
 {
     char* varyname;
     
@@ -31,9 +30,7 @@ backpage_init()
 
 /* virtual array read */
 
-ART_POS
-vrdary(indx)
-ART_LINE indx;
+ART_POS vrdary(ART_LINE indx)
 {
     int subindx;
     long offset;
@@ -66,10 +63,7 @@ ART_LINE indx;
 
 /* write to virtual array */
 
-void
-vwtary(indx,newvalue)
-ART_LINE indx;
-ART_POS newvalue;
+void vwtary(ART_LINE indx, ART_POS newvalue)
 {
     int subindx;
     long offset;

@@ -31,8 +31,7 @@
 #include "INTERN.h"
 #include "artsrch.h"
 
-void
-artsrch_init()
+void artsrch_init(void)
 {
 #ifdef ARTSEARCH
     init_compex(&sub_compex);
@@ -43,11 +42,9 @@ artsrch_init()
 /* search for an article containing some pattern */
 
 #ifdef ARTSEARCH
-int
-art_search(patbuf,patbufsiz,get_cmd)
-char* patbuf;				/* if patbuf != buf, get_cmd must */
-int patbufsiz;
-int get_cmd;				/*   be set to FALSE!!! */
+/* if patbuf != buf, get_cmd must */
+/*   be set to FALSE!!! */
+int art_search(char* patbuf, int patbufsiz, int get_cmd)
 {
     char* pattern;			/* unparsed pattern */
     register char cmdchr = *patbuf;	/* what kind of search? */
@@ -371,11 +368,7 @@ exit:
 /* returns TRUE if it exists and fits pattern, FALSE otherwise */
 
 #ifdef ARTSEARCH
-bool
-wanted(compex, artnum, scope)
-COMPEX* compex;
-ART_NUM artnum;
-char_int scope;
+bool wanted(COMPEX* compex, ART_NUM artnum, char_int scope)
 {
     ARTICLE* ap = article_find(artnum);
 
