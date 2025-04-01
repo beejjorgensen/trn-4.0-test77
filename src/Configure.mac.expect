@@ -1,0 +1,79 @@
+#!/usr/bin/expect
+
+# Prereqs: ispell curses
+
+spawn ./Configure
+expect {
+	"Would you like to see the instructions?" { send n\r ; exp_continue; }
+	"Which of these apply, if any?" { send none\r ; exp_continue; } 
+	"Operating system name?" { send darwin\r ; exp_continue; } 
+	"Select the news spool support (\"local\", \"nntp\", or \"both\"):" { send both\r ; exp_continue; }
+	"Do you want to use generic user-authentication?" { send y\r ; exp_continue; } 
+	"Enter \"local\", a server name, or a file name (~name ok):" { send local\r ; exp_continue; }  
+	"Do you expect to run these scripts and binaries on multiple machines?" { send n\r ; exp_continue; } 
+	"Installation prefix to use? (~name ok)" { send ~/.local\r ; exp_continue; }  
+	"Where is the news library directory for local news? (~name ok)" { send \r ; exp_continue; }
+	"Where is the newsgroups file? (\"none\" ok) (~name ok)" { send \r ; exp_continue; }
+	"Where is the subscriptions file? (\"none\" ok) (~name ok)" { send \r ; exp_continue; }
+	"Pathname where trn's inews will reside? (\"none\" ok) (~name ok)" { send \r ; exp_continue; }  
+	"Which inews should be used for posting local articles? (~name ok)" { send inews\r ; exp_continue; }
+	"Where is news spooled? (~name ok)" { send \r ; exp_continue; }
+	"Enter a local directory for overview files or \"none\":  (~name ok)" { send \r ; exp_continue; }
+	"Where is the overview.fmt file for this database? (\"none\" ok) (~name ok)" { send \r ; exp_continue; }
+	"Enter a local directory for thread files or \"none\":  (~name ok)" { send \r ; exp_continue; }
+	"Where is the active file for local news? (~name ok)" { send \r ; exp_continue; }
+	"Where is active.times? (\"none\" ok) (~name ok)" { send \r ; exp_continue; }
+	"Do you want trn to default to -x, regardless of name?" { send n\r ; exp_continue; } 
+	"Should the -X option be on by default for trn (not rn)?" { send y\r ; exp_continue; }  
+	"Pathname where the public executables will reside? (~name ok)" { send \r ; exp_continue; } 
+	"What directory name should be used for the install? (~name ok)" { send \r ; exp_continue; }  
+	"What is the distribution code for your local organization?" { send \r ; exp_continue; }
+	"What is the distribution code for your organization?" { send \r ; exp_continue; }
+	"What is the distribution code for your city?" { send \r ; exp_continue; }
+	"What is the distribution code for your state/province?" { send \r ; exp_continue; }
+	"What is the distribution code for your multi-state region?" { send \r ; exp_continue; }
+	"What is the distribution code for your country?" { send \r ; exp_continue; }
+	"What is the distribution code for your continent?" { send \r ; exp_continue; }   
+	"Use which C compiler?" { send \r ; exp_continue; }  
+	"What hostname goes on the From line of this machine's postings?" { send hostname\r ; exp_continue; }
+	"Where do the manual pages (source) go? (~name ok)" { send ~/.local/man/man1\r ; exp_continue; }
+	"What directory name should be used for the install? (~name ok)" { send \r ; exp_continue; }  
+	"Pathname where the private library files will reside? (~name ok)" { send \r ; exp_continue; } 
+	"What directory name should be used for the install? (~name ok)" { send \r ; exp_continue; }
+	"Which interactive speller should we use? (\"none\" ok)" { send /usr/local/bin/ispell\r" ; exp_continue; }
+	"What options should be used? (\"none\" ok)" { send none\r ; exp_continue; } 
+	"What global mimecap file should trn use? (\"none\" ok) (~name ok)" { send \r ; exp_continue; }
+	"Organization:" { send Organization\r ; exp_continue; }
+	"Do you want to include strn's scan and score features?" { send \r ; exp_continue; }  
+	"Directories to use for library searches?" { send \r ; exp_continue; } 
+	"What is the file extension used for shared libraries?" { send \r ; exp_continue; }  
+	"Any additional libraries?" { send \r ; exp_continue; } 
+	"What optimizer/debugger flag should be used?" { send \r ; exp_continue; } 
+	"Any additional cc flags?" { send \r ; exp_continue; }  
+	"Any additional ld flags (NOT including libraries)?" { send  \r ; exp_continue; }  
+	"Berkeley/V7 format for full name in /etc/passwd?" { send y\r ; exp_continue; }  
+	"Shall I use /usr/bin/nm to extract C symbols from the libraries?" { send n\r ; exp_continue; }  
+    "Your system appears to NOT have termlib-style routines. Is this true?" { send n\r; exp_continue; }
+    "Specify termlib path:" { send -- -lncurses\r; exp_continue; }
+	"Should ORGANIZATION be ignored?" { send \r ; exp_continue; }  
+	"Does your mailer understand INTERNET addresses?" { send \r ; exp_continue; }  
+	"News admin login?" { send \r ; exp_continue; }  
+	"\\\[Type return to start printing the test characters\\\]" { send \r ; exp_continue; }
+	"Would you like to see that again?" { send \r ; exp_continue; }
+	"Do you have buffering (printed all at once)?" { send \r ; exp_continue; }  
+	"Do you have buffering on stdout to terminals?" { send y\r ; exp_continue; }
+	"Some systems have problems with vfork().  Do you want to use it?" { send \r ; exp_continue; }
+	"What is the default editor on your system?" { send /usr/local/bin/vim\r ; exp_continue; }  
+	"Mail transport agent to be used?" { send \r ; exp_continue; } 
+	"In which file is yet-to-be-read mail spooled? (~name ok)" { send \r ; exp_continue; }  
+	"What's the first character of a mailbox file?" { send \r ; exp_continue; }  
+	"What pager is used on your system?" { send \r; exp_continue; }
+	"Preferred shell to be used? (~name ok)" { send /bin/zsh\r ; exp_continue; }  
+	"Which compiler compiler (yacc or bison -y) shall I use?" { send \r; exp_continue; }
+	"\\\[Type carriage return to continue\\\]" { send \r ; exp_continue; }
+
+	"Press return or use a shell escape to edit config.sh:" { send \r ; exp_continue; }
+	"I see a config.sh file.  Shall I use it to set the defaults?" { send n\r ; exp_continue; }
+	"doesn't exist.  Use that name anyway?" { send y\r ; exp_continue; } 
+}
+
