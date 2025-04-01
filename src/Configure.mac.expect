@@ -1,6 +1,6 @@
 #!/usr/bin/expect
 
-# Prereqs: ispell curses
+# Prereqs: ispell ncurses
 
 spawn ./Configure
 expect {
