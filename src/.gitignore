@@ -11,6 +11,7 @@ Speller
 access.def
 config.h
 config.sh
+config.sh.old
 filexp
 makedepend
 makedir

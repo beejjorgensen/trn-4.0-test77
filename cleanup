@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Try to remove all the build products
+
+cd src
+
+rm -rf .config/
+rm -f HelpFiles/config/environment Makefile Pnews Pnews.header Policy.sh
+rm -f Rnmail Speller access.def config.h config.sh config.sh.old filexp
+rm -f makedepend makedir mbox.saver mkpro mktd myinstall norm.saver
+rm -f *.o all inews newsnews nntplist parsedate.c trn trn-artchk
