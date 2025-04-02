@@ -79,14 +79,16 @@ COMPEX gcompex;			/* in article search pattern */
 bool firstpage;			/* is this the 1st page of article? */
 bool continuation;		/* this line/header is being continued */
 
-void art_init(void)
+void
+art_init(void)
 {
 #ifdef INNERSEARCH
     init_compex(&gcompex);
 #endif
 }
 
-int do_article(void)
+int
+do_article(void)
 {
     register char* s;
     bool hide_this_line = FALSE;	/* hidden header line? */
@@ -280,7 +282,7 @@ int do_article(void)
 		    break;
 		 case FROM_LINE:
 		    if ((s = index(bufptr,'\n')) != NULL
-		     && s-bufptr < sizeof art_line)
+		     && (size_t)(s-bufptr) < sizeof art_line)
 			safecpy(art_line,bufptr,s-bufptr+1);
 		    else
 			safecpy(art_line,bufptr,sizeof art_line);
@@ -662,7 +664,8 @@ reask_pager:
     } /* end of page loop */
 }
 
-int maybe_set_color(char* cp, bool_int backsearch)
+int
+maybe_set_color(char* cp, bool_int backsearch)
 {
     register char ch = (cp == artbuf || cp == art_line? 0 : cp[-1]);
     if (ch == '\001')
@@ -688,7 +691,8 @@ int maybe_set_color(char* cp, bool_int backsearch)
 
 /* process pager commands */
 
-int page_switch(void)
+int
+page_switch(void)
 {
     register char* s;
 
@@ -1093,7 +1097,8 @@ leave_pager:
     return PS_ASK;
 }
 
-bool innermore(void)
+bool
+innermore(void)
 {
     if (artpos < innersearch) {		/* not even on page yet? */
 #ifdef DEBUG
@@ -1143,7 +1148,8 @@ bool innermore(void)
  *    btn = 3; x = released x; y = released y;
  *    btn_clk = click's 0, 1, or 2; x_clk = clicked x; y_clk = clicked y.
  */
-void pager_mouse(int btn, int x, int y, int btn_clk, int x_clk, int y_clk)
+void
+pager_mouse(int btn, int x, int y, int btn_clk, int x_clk, int y_clk)
 {
     ARTICLE* ap;
 

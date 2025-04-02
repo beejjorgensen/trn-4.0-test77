@@ -48,7 +48,8 @@
 HASHTABLE* subj_hash = 0;
 HASHTABLE* shortsubj_hash = 0;
 
-void cache_init(void)
+void
+cache_init(void)
 {
 #ifdef PENDING
 # ifdef ARTSEARCH
@@ -60,7 +61,8 @@ void cache_init(void)
 static NGDATA* cached_ng = NULL;
 static time_t cached_time = 0;
 
-void build_cache(void)
+void
+build_cache(void)
 {
     if (cached_ng == ngptr && time((time_t*)NULL) < cached_time + 6*60*60L) {
 	ART_NUM an;
@@ -98,7 +100,8 @@ void build_cache(void)
     thread_open();
 }
 
-void close_cache(void)
+void
+close_cache(void)
 {
     SUBJECT* sp;
     SUBJECT* next;
@@ -141,7 +144,8 @@ void close_cache(void)
 }
 
 /* Initialize the memory for an entire node's worth of article's */
-static void init_artnode(LIST* list, LISTNODE* node)
+static void
+init_artnode(LIST* list, LISTNODE* node)
 {
     register ART_NUM i;
     register ARTICLE* ap;
@@ -150,8 +154,11 @@ static void init_artnode(LIST* list, LISTNODE* node)
 	ap->num = i;
 }
 
-static bool clear_artitem(char* cp, int arg)
+static bool
+clear_artitem(char* cp, int arg)
 {
+    (void)arg;
+
     clear_article((ARTICLE*)cp);
     return 0;
 }
@@ -159,7 +166,8 @@ static bool clear_artitem(char* cp, int arg)
 /* The article has all it's data in place, so add it to the list of articles
 ** with the same subject.
 */
-void cache_article(register ARTICLE* ap)
+void
+cache_article(register ARTICLE* ap)
 {
     register ARTICLE* next;
     register ARTICLE* ap2;
@@ -194,7 +202,8 @@ void cache_article(register ARTICLE* ap)
 	check_for_near_subj(ap);
 }
 
-void check_for_near_subj(ARTICLE* ap)
+void
+check_for_near_subj(ARTICLE* ap)
 {
     register SUBJECT* sp;
     if (!shortsubj_hash) {
@@ -223,7 +232,8 @@ void check_for_near_subj(ARTICLE* ap)
     }
 }
 
-void change_join_subject_len(int len)
+void
+change_join_subject_len(int len)
 {
     if (join_subject_len != len) {
 	if (shortsubj_hash) {
@@ -236,7 +246,8 @@ void change_join_subject_len(int len)
     }
 }
 
-void check_poster(register ARTICLE* ap)
+void
+check_poster(register ARTICLE* ap)
 {
     if (auto_select_postings && (ap->flags & AF_EXISTS) && ap->from) {
 	if (ap->flags & AF_FROMTRUNCED) {
@@ -302,7 +313,8 @@ void check_poster(register ARTICLE* ap)
 ** list and possibly destroy the subject (should only happen if the data
 ** was corrupt and the duplicate id got a different subject).
 */
-void uncache_article(register ARTICLE* ap, bool_int remove_empties)
+void
+uncache_article(register ARTICLE* ap, bool_int remove_empties)
 {
     register ARTICLE* next;
 
@@ -343,7 +355,8 @@ void uncache_article(register ARTICLE* ap, bool_int remove_empties)
 
 /* get the header line from an article's cache or parse the article trying */
 
-char* fetchcache(ART_NUM artnum, int which_line, bool_int fill_cache)
+char*
+fetchcache(ART_NUM artnum, int which_line, bool_int fill_cache)
 {
     register char* s;
     register ARTICLE* ap;
@@ -366,7 +379,8 @@ char* fetchcache(ART_NUM artnum, int which_line, bool_int fill_cache)
 /* Return a pointer to a cached header line for the indicated article.
 ** Truncated headers (e.g. from a .thread file) are optionally ignored.
 */
-char* get_cached_line(register ARTICLE* ap, int which_line, bool_int no_truncs)
+char*
+get_cached_line(register ARTICLE* ap, int which_line, bool_int no_truncs)
 {
     register char* s;
 
@@ -418,7 +432,8 @@ char* get_cached_line(register ARTICLE* ap, int which_line, bool_int no_truncs)
 }
 
 /*char* subj; not yet allocated, so we can tweak it first */
-void set_subj_line(ARTICLE* ap, char* subj, int size)
+void
+set_subj_line(ARTICLE* ap, char* subj, int size)
 {
     HASHDATUM data;
     SUBJECT* sp;
@@ -479,7 +494,8 @@ void set_subj_line(ARTICLE* ap, char* subj, int size)
     }
 }
 
-int decode_header(char* t, char* f, int size)
+int
+decode_header(char* t, char* f, int size)
 {
     int i;
     for (i = size; i--; ) {
@@ -530,7 +546,8 @@ int decode_header(char* t, char* f, int size)
     return size;
 }
 
-void dectrl(char* str)
+void
+dectrl(char* str)
 {
     for ( ; *str; str++) {
 	if (AT_GREY_SPACE(str))
@@ -539,7 +556,8 @@ void dectrl(char* str)
 }
 
 /* register char* s; already allocated, ready to save */
-void set_cached_line(register ARTICLE* ap, register int which_line, register char* s)
+void
+set_cached_line(register ARTICLE* ap, register int which_line, register char* s)
 {
     char* cp;
     /* SUBJ_LINE is handled specially above */
@@ -595,7 +613,8 @@ void set_cached_line(register ARTICLE* ap, register int which_line, register cha
     }
 }
 
-int subject_cmp(char* key, int keylen, HASHDATUM data)
+int
+subject_cmp(char* key, int keylen, HASHDATUM data)
 {
     /* We already know that the lengths are equal, just compare the strings */
     return bcmp(key, ((SUBJECT*)data.dat_ptr)->str+4, keylen);
@@ -604,7 +623,8 @@ int subject_cmp(char* key, int keylen, HASHDATUM data)
 /* see what we can do while they are reading */
 
 #ifdef PENDING
-void look_ahead(void)
+void
+look_ahead(void)
 {
 #ifdef ARTSEARCH
     register char* h;
@@ -693,7 +713,8 @@ void look_ahead(void)
 
 /* see what else we can do while they are reading */
 
-void cache_until_key(void)
+void
+cache_until_key(void)
 {
     if (!in_ng)
 	return;
@@ -751,7 +772,8 @@ void cache_until_key(void)
 }
 
 #ifdef PENDING
-bool cache_subjects(void)
+bool
+cache_subjects(void)
 {
     register ART_NUM an;
 
@@ -769,7 +791,8 @@ bool cache_subjects(void)
     return subj_to_get > lastart;
 }
 
-bool cache_xrefs(void)
+bool
+cache_xrefs(void)
 {
     register ART_NUM an;
 
@@ -786,7 +809,8 @@ bool cache_xrefs(void)
     return xref_to_get > lastart;
 }
 
-bool cache_all_arts(void)
+bool
+cache_all_arts(void)
 {
     int old_last_cached = last_cached;
     if (!cached_all_in_range)
@@ -826,7 +850,8 @@ bool cache_all_arts(void)
     return TRUE;
 }
 
-bool cache_unread_arts(void)
+bool
+cache_unread_arts(void)
 {
     if (last_cached >= lastart)
 	return TRUE;
@@ -835,7 +860,8 @@ bool cache_unread_arts(void)
 }
 #endif
 
-bool art_data(ART_NUM first, ART_NUM last, bool_int cheating, bool_int all_articles)
+bool
+art_data(ART_NUM first, ART_NUM last, bool_int cheating, bool_int all_articles)
 {
     register ART_NUM i;
     ART_NUM expected_i = first;
@@ -892,7 +918,8 @@ bool art_data(ART_NUM first, ART_NUM last, bool_int cheating, bool_int all_artic
     return FALSE;
 }
 
-bool cache_range(ART_NUM first, ART_NUM last)
+bool
+cache_range(ART_NUM first, ART_NUM last)
 {
     bool success = TRUE;
     bool all_arts = (sel_rereading || thread_always);
@@ -944,7 +971,8 @@ bool cache_range(ART_NUM first, ART_NUM last)
     return success;
 }
 
-void clear_article(register ARTICLE* ap)
+void
+clear_article(register ARTICLE* ap)
 {
     if (ap->from)
 	free(ap->from);

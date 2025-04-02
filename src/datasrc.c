@@ -31,7 +31,7 @@
 #include "nntp.h"
 
 void
-datasrc_init()
+datasrc_init(void)
 {
     char** vals = prep_ini_words(datasrc_ini);
     char* machine = NULL;
@@ -103,8 +103,7 @@ datasrc_init()
 }
 
 char*
-read_datasrcs(filename)
-char* filename;
+read_datasrcs(char* filename)
 {
     int fd;
     char* s;
@@ -139,8 +138,7 @@ char* filename;
 }
 
 DATASRC*
-get_datasrc(name)
-char* name;
+get_datasrc(char* name)
 {
     DATASRC* dp;
     for (dp = datasrc_first(); dp && dp->name; dp = datasrc_next(dp))
@@ -150,9 +148,7 @@ char* name;
 }
 
 DATASRC*
-new_datasrc(name,vals)
-char* name;
-char** vals;
+new_datasrc(char* name, char** vals)
 {
     DATASRC* dp = datasrc_ptr(datasrc_cnt++);
     char* v;
@@ -249,10 +245,7 @@ char** vals;
 }
 
 static char*
-dir_or_none(dp,dir,flag)
-DATASRC* dp;
-char* dir;
-int flag;
+dir_or_none(DATASRC* dp, char* dir, int flag)
 {
     if (!dir || !*dir || strEQ(dir, "remote")) {
 	dp->flags |= flag;
@@ -290,8 +283,7 @@ int flag;
 }
 
 static char*
-file_or_none(fn)
-char* fn;
+file_or_none(char* fn)
 {
     if (!fn || !*fn || strEQ(fn, "none") || strEQ(fn, "remote"))
 	return NULL;
@@ -299,8 +291,7 @@ char* fn;
 }
 
 bool
-open_datasrc(dp)
-DATASRC* dp;
+open_datasrc(DATASRC* dp)
 {
     bool success;
 
@@ -378,8 +369,7 @@ DATASRC* dp;
 }
 
 void
-set_datasrc(dp)
-DATASRC* dp;
+set_datasrc(DATASRC* dp)
 {
 #ifdef SUPPORT_NNTP
     if (datasrc)
@@ -391,7 +381,7 @@ DATASRC* dp;
 }
 
 void
-check_datasrcs()
+check_datasrcs(void)
 {
 #ifdef SUPPORT_NNTP
     DATASRC* dp;
@@ -417,8 +407,7 @@ check_datasrcs()
 }
 
 void
-close_datasrc(dp)
-DATASRC* dp;
+close_datasrc(DATASRC* dp)
 {
 #ifdef SUPPORT_NNTP
     if (dp->flags & DF_REMOTE) {
@@ -455,8 +444,7 @@ DATASRC* dp;
 }
 
 bool
-actfile_hash(dp)
-DATASRC* dp;
+actfile_hash(DATASRC* dp)
 {
     int ret;
 #ifdef SUPPORT_NNTP
@@ -476,12 +464,8 @@ DATASRC* dp;
 }
 
 bool
-find_actgrp(dp, outbuf, nam, len, high)
-DATASRC* dp;
-register char* outbuf;
-register char* nam;
-register int len;
-ART_NUM high;
+find_actgrp(DATASRC* dp, register char* outbuf, register char* nam,
+            register int len, ART_NUM high)
 {
     HASHDATUM data;
     ACT_POS act_pos;
@@ -588,9 +572,7 @@ ART_NUM high;
 }
 
 char*
-find_grpdesc(dp, groupname)
-DATASRC* dp;
-char* groupname;
+find_grpdesc(DATASRC* dp, char* groupname)
 {
     HASHDATUM data;
     int grouplen;
@@ -678,11 +660,7 @@ char* groupname;
 }
 
 int
-srcfile_open(sfp, filename, fetchcmd, server)
-SRCFILE* sfp;
-char* filename;
-char* fetchcmd;
-char* server;
+srcfile_open(SRCFILE* sfp, char* filename, char* fetchcmd, char* server)
 {
     register unsigned offset;
     register char* s;
@@ -850,10 +828,7 @@ char* server;
 
 #ifdef SUPPORT_NNTP
 char*
-srcfile_append(sfp, bp, keylen)
-SRCFILE* sfp;
-char* bp;
-int keylen;
+srcfile_append(SRCFILE* sfp, char* bp, int keylen)
 {
     LISTNODE* node;
     long pos;
@@ -905,9 +880,7 @@ int keylen;
 
 #ifdef SUPPORT_NNTP
 void
-srcfile_end_append(sfp, filename)
-SRCFILE* sfp;
-char* filename;
+srcfile_end_append(SRCFILE* sfp, char* filename)
 {
     if (sfp->fp && sfp->refetch_secs) {
 	fflush(sfp->fp);
@@ -923,8 +896,7 @@ char* filename;
 #endif /* SUPPORT_NNTP */
 
 void
-srcfile_close(sfp)
-SRCFILE* sfp;
+srcfile_close(SRCFILE* sfp)
 {
     if (sfp->fp) {
 	fclose(sfp->fp);
@@ -941,10 +913,7 @@ SRCFILE* sfp;
 }
 
 static int
-srcfile_cmp(key, keylen, data)
-char* key;
-int keylen;
-HASHDATUM data;
+srcfile_cmp(char* key, int keylen, HASHDATUM data)
 {
     /* We already know that the lengths are equal, just compare the strings */
     return bcmp(key, ((LISTNODE*)data.dat_ptr)->data + data.dat_len, keylen);
@@ -986,7 +955,7 @@ static int ngn;			/* Length of list in ngptrs[] */
 static int best_match;		/* Value of best match */
 
 int
-find_close_match()
+find_close_match(void)
 {
     DATASRC* dp;
     int ret = 0;
@@ -1042,10 +1011,7 @@ find_close_match()
 }
 
 static int
-check_distance(len, data, newsrc_ptr)
-int len;
-HASHDATUM* data;
-int newsrc_ptr;
+check_distance(int len, HASHDATUM* data, int newsrc_ptr)
 {
     int value;
     char* name;
@@ -1088,7 +1054,7 @@ int newsrc_ptr;
 ** somehow.  Again, results will be returned in global ngname.
 */
 static int
-get_near_miss()
+get_near_miss(void)
 {
     char promptbuf[256];
     char options[MAX_NG+10];

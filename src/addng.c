@@ -26,13 +26,18 @@
 #include "addng.h"
 #include "addng.ih"
 
-static int addng_cmp(char* key, int keylen, HASHDATUM data)
+static int
+addng_cmp(char* key, int keylen, HASHDATUM data)
 {
 	return bcmp(key, ((ADDGROUP*)data.dat_ptr)->name, keylen);
 }
 
-static int build_addgroup_list(int keylen, HASHDATUM* data, int extra)
+static int
+build_addgroup_list(int keylen, HASHDATUM* data, int extra)
 {
+    (void)keylen;
+    (void)extra;
+
     ADDGROUP* node = (ADDGROUP*)data->dat_ptr;
 
     node->num = addgroup_cnt++;
@@ -46,12 +51,14 @@ static int build_addgroup_list(int keylen, HASHDATUM* data, int extra)
     return 0;
 }
 
-void addng_init(void)
+void
+addng_init(void)
 {
     ;
 }
 
-bool find_new_groups(void)
+bool
+find_new_groups(void)
 {
     NEWSRC* rp;
     NG_NUM oldcnt = newsgroup_cnt;	/* remember # newsgroups */
@@ -77,7 +84,8 @@ bool find_new_groups(void)
     return oldcnt != newsgroup_cnt;
 }
 
-static void process_list(int flag)
+static void
+process_list(int flag)
 {
     ADDGROUP* node;
     ADDGROUP* prevnode;
@@ -107,7 +115,8 @@ static void process_list(int flag)
 
 #ifdef SUPPORT_NNTP
 
-static void new_nntp_groups(DATASRC* dp)
+static void
+new_nntp_groups(DATASRC* dp)
 {
     register char* s;
     int len;
@@ -177,7 +186,8 @@ static void new_nntp_groups(DATASRC* dp)
 }
 #endif
 
-static void new_local_groups(DATASRC* dp)
+static void
+new_local_groups(DATASRC* dp)
 {
     register char* s;
     time_t lastone;
@@ -226,7 +236,8 @@ static void new_local_groups(DATASRC* dp)
     dp->act_sf.recent_cnt = filestat.st_size;
 }
 
-static void add_to_hash(HASHTABLE* ng, char* name, int toread, char_int ch)
+static void
+add_to_hash(HASHTABLE* ng, char* name, int toread, char_int ch)
 {
     HASHDATUM data;
     ADDGROUP* node;
@@ -253,7 +264,8 @@ static void add_to_hash(HASHTABLE* ng, char* name, int toread, char_int ch)
     hashstore(ng, name, namelen, data);
 }
 
-static void add_to_list(char* name, int toread, char_int ch)
+static void
+add_to_list(char* name, int toread, char_int ch)
 {
     ADDGROUP* node = first_addgroup;
 
@@ -288,7 +300,8 @@ static void add_to_list(char* name, int toread, char_int ch)
     last_addgroup = node;
 }
 
-bool scanactive(bool_int add_matching)
+bool
+scanactive(bool_int add_matching)
 {
     DATASRC* dp;
     NG_NUM oldcnt = newsgroup_cnt;	/* remember # of newsgroups */
@@ -333,8 +346,11 @@ bool scanactive(bool_int add_matching)
     return oldcnt != newsgroup_cnt;
 }
 
-static int list_groups(int keylen, HASHDATUM* data, int add_matching)
+static int
+list_groups(int keylen, HASHDATUM* data, int add_matching)
 {
+    (void)keylen;
+
     char* bp = ((LISTNODE*)data->dat_ptr)->data + data->dat_len;
     int linelen = index(bp, '\n') - bp + 1;
     (void) bcopy(bp, buf, linelen);
@@ -343,7 +359,8 @@ static int list_groups(int keylen, HASHDATUM* data, int add_matching)
     return 0;
 }
 
-static void scanline(char* actline, bool_int add_matching)
+static void
+scanline(char* actline, bool_int add_matching)
 {
     register char* s;
     NGDATA* np;
@@ -371,18 +388,21 @@ static void scanline(char* actline, bool_int add_matching)
     }
 }
 
-static int agorder_number(register ADDGROUP** app1, register ADDGROUP** app2)
+static int
+agorder_number(register ADDGROUP** app1, register ADDGROUP** app2)
 {
     ART_NUM eq = (*app1)->num - (*app2)->num;
     return eq > 0? sel_direction : -sel_direction;
 }
 
-static int agorder_groupname(register ADDGROUP** app1, register ADDGROUP** app2)
+static int
+agorder_groupname(register ADDGROUP** app1, register ADDGROUP** app2)
 {
     return strcaseCMP((*app1)->name, (*app2)->name) * sel_direction;
 }
 
-static int agorder_count(register ADDGROUP** app1, register ADDGROUP** app2)
+static int
+agorder_count(register ADDGROUP** app1, register ADDGROUP** app2)
 {
     long eq = (*app1)->toread - (*app2)->toread;
     if (eq)
@@ -392,7 +412,8 @@ static int agorder_count(register ADDGROUP** app1, register ADDGROUP** app2)
 
 /* Sort the newsgroups into the chosen order.
 */
-void sort_addgroups(void)
+void
+sort_addgroups(void)
 {
     register ADDGROUP* ap;
     register int i;

@@ -60,11 +60,7 @@ static int _mx, _my, _mz;		/* min2, min3 temp variables */
    failure */
 
 int
-edit_distn(from, from_len, to, to_len)
-char* from;
-register int from_len;
-char* to;
-register int to_len;
+edit_distn(char* from, register int from_len, char* to, register int to_len)
 {
 #ifndef TRN_SPEEDUP
     register int ins, del, ch;	  	/* local copies of edit costs */

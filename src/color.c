@@ -73,7 +73,7 @@ static int stack_pointer = 0;
 
 /* Initialize color support after trnrc is read. */
 void
-color_init()
+color_init(void)
 {
     if (use_colors) {
 	char* fg;
@@ -108,9 +108,7 @@ color_init()
 
 /* Parse a line from the [attribute] section of trnrc. */
 void
-color_rc_attribute(object, value)
-char* object;
-char* value;
+color_rc_attribute(char* object, char* value)
 {
     char* s;
     char* t;
@@ -207,9 +205,7 @@ char* value;
 
 /* Turn on color attribute for an object. */
 void
-color_object(object, push)
-int object;
-bool_int push;
+color_object(int object, bool_int push)
 {
     COLOR_OBJ merged;
 
@@ -240,7 +236,7 @@ bool_int push;
 
 /* Pop the color/attribute stack. */
 void
-color_pop()
+color_pop(void)
 {
     /* Trying to pop an empty stack? */
     if (--stack_pointer < 0)
@@ -251,9 +247,7 @@ color_pop()
 
 /* Color a string with the given object's color/attribute. */
 void
-color_string(object, str)
-int object;
-char* str;
+color_string(int object, char* str)
 {
     int len = strlen(str);
     if (str[len-1] == '\n') {
@@ -275,7 +269,7 @@ char* str;
 
 /* Turn off color attribute. */
 void
-color_default()
+color_default(void)
 {
     color_stack[stack_pointer].object = objects[COLOR_DEFAULT];
     output_color();
@@ -283,7 +277,7 @@ color_default()
 
 /* Set colors/attribute for an object. */
 static void
-output_color()
+output_color(void)
 {
     static COLOR_OBJ prior = { nullstr, NULL, NULL, NOMARKING };
     COLOR_OBJ* op = &color_stack[stack_pointer].object;

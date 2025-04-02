@@ -20,7 +20,8 @@
 /* : if we should autosubscribe to it			*/
 /* ! if we should autounsubscribe to it			*/
 /* \0 if we should ask the user.			*/
-int auto_subscribe(char* name)
+int
+auto_subscribe(char* name)
 {
     char* s;
 
@@ -31,7 +32,8 @@ int auto_subscribe(char* name)
     return 0;
 }
 
-bool matchlist(char* patlist, char* s)
+bool
+matchlist(char* patlist, char* s)
 {
     COMPEX ilcompex;
     char* p;

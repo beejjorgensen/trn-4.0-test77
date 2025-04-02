@@ -25,13 +25,12 @@
 #include "decode.ih"
 
 void
-decode_init()
+decode_init(void)
 {
 }
 
 char*
-decode_fix_fname(s)
-char* s;
+decode_fix_fname(char* s)
 {
     char* t;
 #ifdef MSDOS
@@ -71,8 +70,7 @@ char* s;
 
 /* Returns nonzero if "filename" is a bad choice */
 static bool
-bad_filename(filename)
-char* filename;
+bad_filename(char* filename)
 {
     int len = strlen(filename);
 #ifdef MSDOS
@@ -100,10 +98,7 @@ char* filename;
 /* Parse the subject looking for filename and part number information. */
 
 char*
-decode_subject(artnum, partp, totalp)
-ART_NUM artnum;
-int* partp;
-int* totalp;
+decode_subject(ART_NUM artnum, int* partp, int* totalp)
 {
     static char* subject = NULL;
     char* filename;
@@ -231,9 +226,7 @@ int* totalp;
  * Handle a piece of a split file.
  */
 int
-decode_piece(mcp, first_line)
-MIMECAP_ENTRY* mcp;
-char* first_line;
+decode_piece(MIMECAP_ENTRY* mcp, char* first_line)
 {
     char* dir;
     char* filename;
@@ -403,8 +396,7 @@ char* first_line;
 }
 
 DECODE_FUNC
-decode_function(encoding)
-int encoding;
+decode_function(int encoding)
 {
     switch (encoding) {
       case MENCODE_QPRINT:
@@ -422,8 +414,7 @@ int encoding;
 
 /* return a directory to use for unpacking the pieces of a given filename */
 char*
-decode_mkdir(filename)
-char* filename;
+decode_mkdir(char* filename)
 {
     static char dir[LBUFLEN];
     char* s;
@@ -445,8 +436,7 @@ char* filename;
 }
 
 void
-decode_rmdir(dir)
-char* dir;
+decode_rmdir(char* dir)
 {
     char* s;
 

@@ -37,10 +37,7 @@ static Uchar textbl[96] = {
 static char texchar = '\0';
 
 int
-putsubstchar(c, limit, outputok)
-int c;
-int limit;
-bool_int outputok;
+putsubstchar(int c, int limit, bool_int outputok)
 {
     Uchar d, oc[2], nc[5];
     int t, i = 0;
@@ -111,7 +108,7 @@ bool_int outputok;
 }
 
 char*
-current_charsubst()
+current_charsubst(void)
 {
     static char* show;
 
@@ -154,11 +151,7 @@ current_charsubst()
 }
 
 int
-strcharsubst(outb, inb, limit, subst)
-char* outb;
-char* inb;
-int limit;
-char_int subst;
+strcharsubst(char* outb, char* inb, int limit, char_int subst)
 {
     char* s;
     int len;
@@ -229,11 +222,7 @@ static char* iso2asc[ISO_TABLES][96] = {
  *  worst case: strlen(iso) == 4*strlen(asc)
  */
 static int
-Latin1toASCII(asc, iso, limit, t)
-Uchar* asc;
-Uchar* iso;
-int limit;
-int t;
+Latin1toASCII(Uchar* asc, Uchar* iso, int limit, int t)
 {
     Uchar* s = asc;
     char* p;
