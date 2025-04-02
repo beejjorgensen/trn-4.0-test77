@@ -33,10 +33,9 @@
 static HASHENT* hereuse = NULL;
 static int reusables = 0;
 
+/* size is a crude guide to size */
 HASHTABLE*
-hashcreate(size, cmpfunc)
-unsigned size;			/* a crude guide to size */
-int (*cmpfunc) _((char*,int,HASHDATUM));
+hashcreate(unsigned size, int (*cmpfunc) _((char*,int,HASHDATUM)))
 {
     register HASHTABLE* tbl;
     /* allocate HASHTABLE and (HASHENT*) array together to reduce the
@@ -63,10 +62,9 @@ int (*cmpfunc) _((char*,int,HASHDATUM));
 ** invalidate tbl to prevent further use via other pointers to it.
 */
 void
-hashdestroy(tbl)
-register HASHTABLE* tbl;
+hashdestroy(register HASHTABLE* tbl)
 {
-    register unsigned idx;
+    register int idx;
     register HASHENT* hp;
     register HASHENT* next;
     register HASHENT** hepp;
@@ -90,11 +88,7 @@ register HASHTABLE* tbl;
 }
 
 void
-hashstore(tbl, key, keylen, data)
-register HASHTABLE* tbl;
-char* key;
-int keylen;
-HASHDATUM data;
+hashstore(register HASHTABLE* tbl, char* key, int keylen, HASHDATUM data)
 {
     register HASHENT* hp;
     register HASHENT** nextp;
@@ -111,10 +105,7 @@ HASHDATUM data;
 }
 
 void
-hashdelete(tbl, key, keylen)
-register HASHTABLE* tbl;
-char* key;
-int keylen;
+hashdelete(register HASHTABLE* tbl, char* key, int keylen)
 {
     register HASHENT* hp;
     register HASHENT** nextp;
@@ -133,10 +124,7 @@ HASHENT** slast_nextp;
 int slast_keylen;
 
 HASHDATUM				/* data corresponding to key */
-hashfetch(tbl, key, keylen)
-register HASHTABLE* tbl;
-char* key;
-int keylen;
+hashfetch(register HASHTABLE* tbl, char* key, int keylen)
 {
     register HASHENT* hp;
     register HASHENT** nextp;
@@ -152,8 +140,7 @@ int keylen;
 }
 
 void
-hashstorelast(data)
-HASHDATUM data;
+hashstorelast(HASHDATUM data)
 {
     register HASHENT* hp;
 
@@ -171,12 +158,10 @@ HASHDATUM data;
 ** and extra as arguments.
 */
 void
-hashwalk(tbl, nodefunc, extra)
-HASHTABLE* tbl;
-register int (*nodefunc) _((int,HASHDATUM*,int));
-register int extra;
+hashwalk(HASHTABLE* tbl, register int (*nodefunc) _((int,HASHDATUM*,int)),
+         register int extra)
 {
-    register unsigned idx;
+    register int idx;
     register HASHENT* hp;
     register HASHENT* next;
     register HASHENT** hepp;
@@ -207,10 +192,7 @@ register int extra;
 ** to be inserted, if insertion is desired.
 */
 static HASHENT**
-hashfind(tbl, key, keylen)
-register HASHTABLE* tbl;
-char* key;
-register int keylen;
+hashfind(register HASHTABLE* tbl, char* key, register int keylen)
 {
     register HASHENT* hp;
     register HASHENT* prevhp = NULL;
@@ -232,9 +214,7 @@ register int keylen;
 }
 
 static unsigned				/* not yet taken modulus table size */
-hash(key, keylen)
-register char* key;
-register int keylen;
+hash(register char* key, register int keylen)
 {
     register unsigned hash = 0;
 
@@ -244,17 +224,14 @@ register int keylen;
 }
 
 static int
-default_cmp(key, keylen, data)
-char* key;
-int keylen;
-HASHDATUM data;
+default_cmp(char* key, int keylen, HASHDATUM data)
 {
     /* We already know that the lengths are equal, just compare the strings */
     return bcmp(key, data.dat_ptr, keylen);
 }
 
 static HASHENT*
-healloc()				/* allocate a hash entry */
+healloc(void)				/* allocate a hash entry */
 {
     register HASHENT* hp;
 
@@ -281,8 +258,7 @@ healloc()				/* allocate a hash entry */
 }
 
 static void
-hefree(hp)				/* free a hash entry */
-register HASHENT* hp;
+hefree(register HASHENT* hp) /* free a hash entry */
 {
 #ifdef HASH_FREE_ENTRIES
     if (reusables >= RETAIN)		/* compost heap is full? */

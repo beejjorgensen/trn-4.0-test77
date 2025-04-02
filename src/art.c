@@ -95,7 +95,7 @@ do_article(void)
     bool restart_color;
     ART_LINE linenum;			/* line # on page, 1 origin */
 #ifdef ULSMARTS
-    bool under_lining = FALSE;		/* are we underlining a word? */
+    int under_lining = 0;		/* are we underlining a word? */
 #endif
     register char* bufptr = art_line;	/* pointer to input buffer */
     register int outpos;		/* column position of output */

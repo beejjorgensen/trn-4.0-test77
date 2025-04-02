@@ -181,7 +181,7 @@ readartbuf(bool_int view_inline)
 {
     char* bp;
     char* s;
-    int read_offset, line_offset, filter_offset, extra_offset, len, o;
+    int read_offset, line_offset, filter_offset, extra_offset, len = 0, o;
     int word_wrap, extra_chars = 0;
     int read_something = 0;
 
@@ -331,8 +331,8 @@ readartbuf(bool_int view_inline)
 	    if (mime_state != SKIP_MIME)
 		goto mime_switch;
 	}
-	/* FALL THROUGH */
       }
+	/* fall through */
       case SKIP_MIME: {
 	MIME_SECT* mp = mime_section;
 	while ((mp = mp->prev) != NULL && !mp->boundary_len) ;

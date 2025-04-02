@@ -43,7 +43,7 @@
 #endif
 
 void
-final_init()
+final_init(void)
 {
 #ifdef SIGTSTP
     sigset(SIGTSTP, stop_catcher);	/* job control signals */
@@ -95,8 +95,7 @@ final_init()
 }
 
 void					/* very much void */
-finalize(status)
-int status;
+finalize(int status)
 {
 #ifdef SUPPORT_NNTP
     int i;
@@ -143,8 +142,17 @@ int status;
     if (status < 0) {
 	sigset(SIGILL,SIG_DFL);
 #ifdef HAS_SIGBLOCK
-	sigsetmask(sigblock(0) & ~(sigmask(SIGILL) | sigmask(SIGIOT)));
+	//sigsetmask(sigblock(0) & ~(sigmask(SIGILL) | sigmask(SIGIOT)));
 #endif
+        // This is replacement code for the above line
+        {
+	    sigset_t mask;
+	    sigprocmask(SIG_SETMASK, NULL, &mask);
+	    sigdelset(&mask, SIGILL);
+	    sigdelset(&mask, SIGIOT);
+	    sigprocmask(SIG_SETMASK, &mask, NULL);
+        }
+
 	abort();
     }
 #ifdef RESTORE_ORIGDIR
@@ -157,9 +165,10 @@ int status;
 /* come here on interrupt */
 
 Signal_t
-int_catcher(dummy)
-int dummy;
+int_catcher(int dummy)
 {
+    (void)dummy;
+
     sigset(SIGINT,int_catcher);
 #ifdef DEBUG
     if (debug)
@@ -179,8 +188,7 @@ int dummy;
 /* come here on signal other than interrupt, stop, or cont */
 
 Signal_t
-sig_catcher(signo)
-int signo;
+sig_catcher(int signo)
 {
 #ifdef VERBOSE
     static char* signame[] = {
@@ -227,8 +235,16 @@ int signo;
 #endif
     if (panic) {
 #ifdef HAS_SIGBLOCK
-	sigsetmask(sigblock(0) & ~(sigmask(SIGILL) | sigmask(SIGIOT)));
+	//sigsetmask(sigblock(0) & ~(sigmask(SIGILL) | sigmask(SIGIOT)));
 #endif
+        // This is replacement code for the above line
+        {
+	    sigset_t mask;
+	    sigprocmask(SIG_SETMASK, NULL, &mask);
+	    sigdelset(&mask, SIGILL);
+	    sigdelset(&mask, SIGIOT);
+	    sigprocmask(SIG_SETMASK, &mask, NULL);
+        }
 	abort();
     }
     (void) sigset(SIGILL,SIG_DFL);
@@ -273,10 +289,10 @@ int signo;
 
 #ifdef SUPPORT_NNTP
 Signal_t
-pipe_catcher(signo)
-int signo;
+pipe_catcher(int signo)
 {
     ;/*$$ we lost the current nntp connection */
+    (void)signo;
     sigset(SIGPIPE,pipe_catcher);
 }
 #endif
@@ -285,8 +301,7 @@ int signo;
 
 #ifdef SIGTSTP
 Signal_t
-stop_catcher(signo)
-int signo;
+stop_catcher(int signo)
 {
     if (!waiting) {
 	xmouse_off();
@@ -304,8 +319,15 @@ int signo;
 	fflush(stdout);
 	sigset(signo,SIG_DFL);	/* enable stop */
 #ifdef HAS_SIGBLOCK
-	sigsetmask(sigblock(0) & ~(1 << (signo-1)));
+	//sigsetmask(sigblock(0) & ~(1 << (signo-1)));
 #endif
+        // This is replacement code for the above line
+        {
+	    sigset_t mask;
+	    sigprocmask(SIG_SETMASK, NULL, &mask);
+	    sigdelset(&mask, signo);
+	    sigprocmask(SIG_SETMASK, &mask, NULL);
+        }
 	kill(0,signo);		/* and do the stop */
     	savetty();
 #ifdef MAILCALL
