@@ -282,7 +282,7 @@ do_article(void)
 		    break;
 		 case FROM_LINE:
 		    if ((s = index(bufptr,'\n')) != NULL
-		     && (size_t)(s-bufptr) < sizeof art_line)
+		     && (size_t)(s-bufptr) < (size_t)sizeof art_line)  /* clang 15.0.0 needs the sizeof cast to not warn! */
 			safecpy(art_line,bufptr,s-bufptr+1);
 		    else
 			safecpy(art_line,bufptr,sizeof art_line);
