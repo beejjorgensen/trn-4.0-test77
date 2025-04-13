@@ -61,9 +61,7 @@
 #endif
 
 bool
-initialize(argc,argv)
-int argc;
-char* argv[];
+initialize(int argc, char* argv[])
 {
     char* tcbuf;
     bool foundany = FALSE;
@@ -194,7 +192,7 @@ char* argv[];
 }
 
 void
-newsnews_check()
+newsnews_check(void)
 {
     char* newsnewsname = filexp(NEWSNEWSNAME);
 
