@@ -392,7 +392,6 @@ char* dointerp(register char* dest, register int destsize, register char* patter
 		}
 #ifdef BACKTICK
 		case '`': {
-		    FILE* popen();
 		    FILE* pipefp;
 
 		    pattern = dointerp(scrbuf,(sizeof scrbuf),pattern+1,"`",cmd);
@@ -966,7 +965,7 @@ char* dointerp(register char* dest, register int destsize, register char* patter
 		    /* copy out so we can copy in. */
 		    safecpy(scrbuf, s, sizeof scrbuf);
 		    s = scrbuf;
-		    if (i > sizeof scrbuf)	/* we truncated, ack! */
+		    if ((size_t)i > (size_t)sizeof scrbuf)	/* we truncated, ack! */  // Second size_t for clang 15.0.0
 			abort_interp();
 		}
 		while (*s) {
