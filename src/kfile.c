@@ -48,7 +48,7 @@ static char killlocal[] = KILLLOCAL;
 static char killthreads[] = KILLTHREADS;
 
 void
-kfile_init()
+kfile_init(void)
 {
     char* cp = getenv("KILLTHREADS");
     if (!cp)
@@ -101,8 +101,7 @@ kfile_init()
 }
 
 static void
-mention(str)
-char* str;
+mention(char* str)
 {
 #ifdef VERBOSE
     IF(verbose) {
@@ -120,9 +119,7 @@ char* str;
 static bool kill_mentioned;
 
 int
-do_kfile(kfp,entering)
-FILE* kfp;
-int entering;
+do_kfile(FILE* kfp, int entering)
 {
     bool first_time = (entering && !killfirst);
     char last_kill_type = '\0';
@@ -315,9 +312,7 @@ int entering;
 }
 
 static bool
-kfile_junk(ptr, killmask)
-char* ptr;
-int killmask;
+kfile_junk(char* ptr, int killmask)
 {
     register ARTICLE* ap = (ARTICLE*)ptr;
     if ((ap->flags & killmask) == AF_UNREAD)
@@ -331,10 +326,7 @@ int killmask;
 }
 
 void
-kill_unwanted(starting,message,entering)
-ART_NUM starting;
-char* message;
-int entering;
+kill_unwanted(ART_NUM starting, char* message, int entering)
 {
     bool intr = FALSE;			/* did we get an interrupt? */
     ART_NUM oldfirst;
@@ -390,14 +382,14 @@ int entering;
 static FILE* newkfp;
 
 static int
-write_local_thread_commands(keylen, data, extra)
-int keylen;
-HASHDATUM* data;
-int extra;
+write_local_thread_commands(int keylen, HASHDATUM* data, int extra)
 {
+    (void)keylen;
+    (void)extra;
+
     ARTICLE* ap = (ARTICLE*)data->dat_ptr;
     int autofl = ap->autofl;
-    char ch;
+    char ch = '\0';  // Was used uninitialized -Beej
 
     if (autofl && ((ap->flags & AF_EXISTS) || ap->child1)) {
 	int i;
@@ -414,8 +406,7 @@ int extra;
 }
 
 void
-rewrite_kfile(thru)
-ART_NUM thru;
+rewrite_kfile(ART_NUM thru)
 {
     bool has_content = (kf_state & (KFS_THREAD_LINES|KFS_GLOBAL_THREADFILE))
 				 == KFS_THREAD_LINES;
@@ -487,15 +478,14 @@ ART_NUM thru;
 }
 
 static int
-write_global_thread_commands(keylen, data, appending)
-int keylen;
-HASHDATUM* data;
-int appending;
+write_global_thread_commands(int keylen, HASHDATUM* data, int appending)
 {
+    (void)keylen;
+
     int autofl;
     int i, age;
     char* msgid;
-    char ch;
+    char ch = '\0';  // Was used uninitialized -Beej
 
     if (data->dat_len) {
 	if (appending)
@@ -528,11 +518,10 @@ int appending;
 }
 
 static int
-age_thread_commands(keylen, data, elapsed_days)
-int keylen;
-HASHDATUM* data;
-int elapsed_days;
+age_thread_commands(int keylen, HASHDATUM* data, int elapsed_days)
 {
+    (void)keylen;
+
     if (data->dat_len) {
 	int age = (data->dat_len & KF_AGE_MASK) + elapsed_days;
 	if (age > KF_MAXDAYS) {
@@ -554,7 +543,7 @@ int elapsed_days;
 }
 
 void
-update_thread_kfile()
+update_thread_kfile(void)
 {
     char* cp;
     int elapsed_days;
@@ -591,9 +580,7 @@ update_thread_kfile()
 }
 
 void
-change_auto_flags(ap, auto_flag)
-ARTICLE* ap;
-int auto_flag;
+change_auto_flags(ARTICLE* ap, int auto_flag)
 {
     if (auto_flag > (ap->autofl & (AUTO_KILLS|AUTO_SELS))) {
 	if (ap->autofl & AUTO_OLD)
@@ -604,8 +591,7 @@ int auto_flag;
 }
 
 void
-clear_auto_flags(ap)
-ARTICLE* ap;
+clear_auto_flags(ARTICLE* ap)
 {
     if (ap->autofl) {
 	if (ap->autofl & AUTO_OLD)
@@ -616,11 +602,7 @@ ARTICLE* ap;
 }
 
 void
-perform_auto_flags(ap, thread_autofl, subj_autofl, chain_autofl)
-ARTICLE* ap;
-int thread_autofl;
-int subj_autofl;
-int chain_autofl;
+perform_auto_flags(ARTICLE* ap, int thread_autofl, int subj_autofl, int chain_autofl)
 {
     if (thread_autofl & AUTO_SEL_THD) {
 	if (sel_mode == SM_THREAD)
@@ -652,7 +634,7 @@ int chain_autofl;
 #else /* !KILLFILES */
 
 void
-kfile_init()
+kfile_init(void)
 {
     ;
 }
@@ -662,7 +644,7 @@ kfile_init()
 /* edit KILL file for newsgroup */
 
 int
-edit_kfile()
+edit_kfile(void)
 {
 #ifdef KILLFILES
     int r = -1;
@@ -727,8 +709,7 @@ edit_kfile()
 
 #ifdef KILLFILES
 void
-open_kfile(local)
-int local;
+open_kfile(int local)
 {
     char* kname = filexp(local ?
 	getval("KILLLOCAL",killlocal) :
@@ -751,9 +732,7 @@ int local;
 }
 
 void
-kf_append(cmd, local)
-char* cmd;
-bool_int local;
+kf_append(char* cmd, bool_int local)
 {
     strcpy(cmd_buf, filexp(local? getval("KILLLOCAL",killlocal)
 				: getval("KILLGLOBAL",killglobal)));

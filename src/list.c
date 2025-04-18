@@ -19,13 +19,7 @@ list_init()
 /* Create the header for a dynamic list of items.
 */
 LIST*
-new_list(low, high, item_size, items_per_node, flags, init_node)
-long low;
-long high;
-int item_size;
-int items_per_node;
-int flags;
-void (*init_node) _((LIST*,LISTNODE*));
+new_list(long low, long high, int item_size, int items_per_node, int flags, void (*init_node) _((LIST*,LISTNODE*)))
 {
     LIST* list = (LIST*)safemalloc(sizeof (LIST));
     list->first = list->recent = NULL;
@@ -41,9 +35,7 @@ void (*init_node) _((LIST*,LISTNODE*));
 
 /* The default way to initialize a node */
 static void
-def_init_node(list, node)
-LIST* list;
-LISTNODE* node;
+def_init_node(LIST* list, LISTNODE* node)
 {
     if (list->flags & LF_ZERO_MEM)
 	bzero(node->data, list->items_per_node * list->item_size);
@@ -54,9 +46,7 @@ LISTNODE* node;
 ** value up to date.
 */
 char*
-listnum2listitem(list, num)
-LIST* list;
-long num;
+listnum2listitem(LIST* list, long num)
 {
     LISTNODE* node = list->recent;
     LISTNODE* prevnode = NULL;
@@ -102,9 +92,7 @@ long num;
 ** must already exist or this will infinite loop.
 */
 long
-listitem2listnum(list, ptr)
-LIST* list;
-char* ptr;
+listitem2listnum(LIST* list, char* ptr)
 {
     LISTNODE* node;
     char* cp;
@@ -128,10 +116,7 @@ char* ptr;
 /* Execute the indicated callback function on every item in the list.
 */
 bool
-walk_list(list, callback, arg)
-LIST* list;
-bool (*callback) _((char*,int));
-int arg;
+walk_list(LIST* list, bool (*callback) _((char*,int)), int arg)
 {
     LISTNODE* node;
     char* cp;
@@ -152,10 +137,7 @@ int arg;
 ** the initial list number.
 */
 long
-existing_listnum(list, num, direction)
-LIST* list;
-long num;
-int direction;
+existing_listnum(LIST* list, long num, int direction)
 {
     register LISTNODE* node = list->recent;
     LISTNODE* prevnode = NULL;
@@ -195,9 +177,7 @@ int direction;
 ** Returns NULL if ptr is the last one.
 */
 char*
-next_listitem(list, ptr)
-LIST* list;
-char* ptr;
+next_listitem(LIST* list, char* ptr)
 {
     register LISTNODE* node = list->recent;
 
@@ -221,9 +201,7 @@ char* ptr;
 ** Returns NULL if ptr is the first one.
 */
 char*
-prev_listitem(list, ptr)
-LIST* list;
-char* ptr;
+prev_listitem(LIST* list, char* ptr)
 {
     register LISTNODE* node = list->recent;
 
@@ -244,8 +222,7 @@ char* ptr;
 ** calling this.
 */
 void
-delete_list(list)
-LIST* list;
+delete_list(LIST* list)
 {
     LISTNODE* node = list->first;
     LISTNODE* prevnode = NULL;
