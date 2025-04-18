@@ -455,7 +455,7 @@ prefetchlines(ART_NUM artnum, int which_line, bool_int copy)
 {
     char* s;
     char* t;
-    register ART_POS firstpos;
+    register ART_POS firstpos = 0; // Was used uninitialized -Beej
     register ART_POS lastpos;
     int size;
 
