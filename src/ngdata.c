@@ -40,7 +40,7 @@
 #include "rcln.h"
 
 void
-ngdata_init()
+ngdata_init(void)
 {
     ;
 }
@@ -48,8 +48,7 @@ ngdata_init()
 /* set current newsgroup */
 
 void
-set_ng(np)
-NGDATA* np;
+set_ng(NGDATA* np)
 {
     ngptr = np;
     if (ngptr)
@@ -57,7 +56,7 @@ NGDATA* np;
 }
 
 int
-access_ng()
+access_ng(void)
 {
 #ifdef SUPPORT_NNTP
     ART_NUM old_first = ngptr->abs1st;
@@ -128,7 +127,7 @@ access_ng()
 }
 
 void
-chdir_newsdir()
+chdir_newsdir(void)
 {
     if (chdir(datasrc->spool_dir) || (
 #ifdef SUPPORT_NNTP
@@ -141,8 +140,7 @@ chdir_newsdir()
 }
 
 void
-grow_ng(newlast)
-ART_NUM newlast;
+grow_ng(ART_NUM newlast)
 {
     ART_NUM tmpfirst;
 
@@ -191,25 +189,19 @@ ART_NUM newlast;
 }
 
 static int
-ngorder_number(npp1, npp2)
-register NGDATA** npp1;
-register NGDATA** npp2;
+ngorder_number(register NGDATA** npp1, register NGDATA** npp2)
 {
     return (int)((*npp1)->num - (*npp2)->num) * sel_direction;
 }
 
 static int
-ngorder_groupname(npp1, npp2)
-register NGDATA** npp1;
-register NGDATA** npp2;
+ngorder_groupname(register NGDATA** npp1, register NGDATA** npp2)
 {
     return strcaseCMP((*npp1)->rcline, (*npp2)->rcline) * sel_direction;
 }
 
 static int
-ngorder_count(npp1, npp2)
-register NGDATA** npp1;
-register NGDATA** npp2;
+ngorder_count(register NGDATA** npp1, register NGDATA** npp2)
 {
     int eq;
     if ((eq = (int)((*npp1)->toread - (*npp2)->toread)) != 0)
@@ -220,7 +212,7 @@ register NGDATA** npp2;
 /* Sort the newsgroups into the chosen order.
 */
 void
-sort_newsgroups()
+sort_newsgroups(void)
 {
     register NGDATA* np;
     register int i;
@@ -264,7 +256,7 @@ sort_newsgroups()
 }
 
 void
-ng_skip()
+ng_skip(void)
 {
 #ifdef SUPPORT_NNTP
     if (datasrc->flags & DF_REMOTE) {
@@ -327,8 +319,7 @@ ng_skip()
 /* find the maximum article number of a newsgroup */
 
 ART_NUM
-getngsize(gp)
-register NGDATA* gp;
+getngsize(register NGDATA* gp)
 {
     register int len;
     register char* nam;

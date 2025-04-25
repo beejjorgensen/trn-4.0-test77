@@ -76,7 +76,7 @@
 int exit_code = NG_NORM;
 
 void
-ng_init()
+ng_init(void)
 {
     setdfltcmd();
 
@@ -115,9 +115,9 @@ ng_init()
  * arises from trying to be both space and time efficient.  Have fun.
  */
 
+/* command to fake up first */
 int
-do_newsgroup(start_command)
-char* start_command;			/* command to fake up first */
+do_newsgroup(char* start_command)
 {
     char mode_save = mode;
     char gmode_save = gmode;
@@ -588,7 +588,7 @@ cleanup2:
 /* decide what to do at the end of an article */
 
 int
-art_switch()
+art_switch(void)
 {
     setdef(buf,dfltcmd);
 #ifdef VERIFY
@@ -1594,8 +1594,7 @@ run_the_selector:
 
 #ifdef MAILCALL
 void
-setmail(force)
-bool_int force;
+setmail(bool_int force)
 {
     if (force)
 	mailcount = 0;
@@ -1613,7 +1612,7 @@ bool_int force;
 #endif
 
 void
-setdfltcmd()
+setdfltcmd(void)
 {
     if (!ngptr || !ngptr->toread)
 	dfltcmd = "npq";
@@ -1639,7 +1638,7 @@ setdfltcmd()
 ** unsubscription as needed.
 */
 char
-ask_catchup()
+ask_catchup(void)
 {
     char ch;
     bool use_one_line = (gmode == 's');
@@ -1745,10 +1744,9 @@ u to mark all and unsubscribe.\n\n\
 }
 
 static bool
-count_unCACHED_article(ptr, arg)
-char* ptr;
-int arg;
+count_unCACHED_article(char* ptr, int arg)
 {
+    (void)arg;
     register ARTICLE* ap = (ARTICLE*)ptr;
     if ((ap->flags & (AF_UNREAD|AF_CACHED)) == AF_UNREAD)
 	obj_count++;
@@ -1756,9 +1754,7 @@ int arg;
 }
 
 static bool
-mark_all_READ(ptr, leave_unread)
-char* ptr;
-int leave_unread;
+mark_all_READ(char* ptr, int leave_unread)
 {
     register ARTICLE* ap = (ARTICLE*)ptr;
     if (article_num(ap) > lastart - leave_unread)
@@ -1768,10 +1764,9 @@ int leave_unread;
 }
 
 static bool
-mark_all_unREAD(ptr, arg)
-char* ptr;
-int arg;
+mark_all_unREAD(char* ptr, int arg)
 {
+    (void)arg;
     register ARTICLE* ap = (ARTICLE*)ptr;
     if ((ap->flags & (AF_UNREAD|AF_EXISTS)) == AF_EXISTS) {
 	ap->flags |= AF_UNREAD;		/* mark as unread */
@@ -1781,9 +1776,7 @@ int arg;
 }
 
 bool
-output_subject(ptr, flag)
-char* ptr;
-int flag;
+output_subject(char* ptr, int flag)
 {
     register ARTICLE* ap;
     register ART_NUM i;
@@ -1823,9 +1816,7 @@ int flag;
 
 #ifdef DEBUG
 static bool
-debug_article_output(ptr, arg)
-char* ptr;
-int arg;
+debug_article_output(char* ptr, int arg)
 {
     register ARTICLE* ap = (ARTICLE*)ptr;
     if (int_count)
@@ -1840,8 +1831,7 @@ int arg;
 #endif
 
 char
-ask_memorize(ch)
-char_int ch;
+ask_memorize(char_int ch)
 {
     bool thread_cmd = (ch == 'T');
     bool use_one_line = (gmode == 's');

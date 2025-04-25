@@ -38,7 +38,7 @@
 #include "ngstuff.h"
 
 void
-ngstuff_init()
+ngstuff_init(void)
 {
     ;
 }
@@ -46,7 +46,7 @@ ngstuff_init()
 /* do a shell escape */
 
 int
-escapade()
+escapade(void)
 {
     register char* s;
     bool interactive = (buf[1] == FINISHCMD);
@@ -89,7 +89,7 @@ escapade()
 /* process & command */
 
 int
-switcheroo()
+switcheroo(void)
 {
     if (!finish_command(TRUE)) /* get rest of command */
 	return -1;	/* if rubbed out, try something else */
@@ -151,7 +151,7 @@ switcheroo()
 /* process range commands */
 
 int
-numnum()
+numnum(void)
 {
     ART_NUM min, max;
     char* cmdlst = NULL;
@@ -257,7 +257,7 @@ numnum()
 }
 
 int
-thread_perform()
+thread_perform(void)
 {
     register SUBJECT* sp;
     register ARTICLE* ap;
@@ -384,9 +384,7 @@ thread_perform()
 }
 
 int
-perform(cmdlst,output_level)
-register char* cmdlst;
-int output_level;
+perform(register char* cmdlst, int output_level)
 {
     register int ch;
     int savemode = 0;
@@ -577,7 +575,7 @@ int output_level;
 }
 
 int
-ngsel_perform()
+ngsel_perform(void)
 {
     char* cmdstr;
     int len;
@@ -630,9 +628,7 @@ ngsel_perform()
 }
 
 int
-ng_perform(cmdlst, output_level)
-register char* cmdlst;
-int output_level;
+ng_perform(register char* cmdlst, int output_level)
 {
     register int ch;
     
@@ -701,7 +697,7 @@ int output_level;
 }
 
 int
-addgrp_sel_perform()
+addgrp_sel_perform(void)
 {
     register ADDGROUP* gp;
     char* cmdstr;
@@ -750,10 +746,7 @@ addgrp_sel_perform()
 }
 
 int
-addgrp_perform(gp, cmdlst, output_level)
-register ADDGROUP* gp;
-register char* cmdlst;
-int output_level;
+addgrp_perform(register ADDGROUP* gp, register char* cmdlst, int output_level)
 {
     register int ch;
     
