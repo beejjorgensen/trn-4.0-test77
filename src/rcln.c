@@ -21,17 +21,14 @@
 #define MAX_DIGITS 7
 
 void
-rcln_init()
+rcln_init(void)
 {
     ;
 }
 
 #ifdef CATCHUP
 void
-catch_up(np, leave_count, output_level)
-NGDATA* np;
-int leave_count;
-int output_level;
+catch_up(NGDATA* np, int leave_count, int output_level)
 {
     char tmpbuf[128];
     
@@ -78,10 +75,7 @@ int output_level;
 /* add an article number to a newsgroup, if it isn't already read */
 
 int
-addartnum(dp,artnum,ngnam)
-DATASRC* dp;
-ART_NUM artnum;
-char* ngnam;
+addartnum(DATASRC* dp, ART_NUM artnum, char* ngnam)
 {
     register NGDATA* np;
     register char* s;
@@ -220,10 +214,7 @@ char* ngnam;
 
 #ifdef MCHASE
 void
-subartnum(dp,artnum,ngnam)
-DATASRC* dp;
-register ART_NUM artnum;
-char* ngnam;
+subartnum(DATASRC* dp, register ART_NUM artnum, char* ngnam)
 {
     register NGDATA* np;
     register char* s;
@@ -340,9 +331,7 @@ char* ngnam;
 }
 
 void
-prange(where,min,max)
-char* where;
-ART_NUM min,max;
+prange(char* where, ART_NUM min, ART_NUM max)
 {
     if (min == max)
 	sprintf(where,"%ld",(long)min);
@@ -354,9 +343,7 @@ ART_NUM min,max;
 /* calculate the number of unread articles for a newsgroup */
 
 void
-set_toread(np, lax_high_check)
-register NGDATA* np;
-bool_int lax_high_check;
+set_toread(register NGDATA* np, bool_int lax_high_check)
 {
     register char* s;
     register char* c;
@@ -390,7 +377,7 @@ bool_int lax_high_check;
     }
     nums = np->rcline + np->numoffset;
     length = strlen(nums);
-    if (length+MAX_DIGITS+1 > sizeof tmpbuf)
+    if ((size_t)(length+MAX_DIGITS+1) > (size_t)sizeof tmpbuf)  // Second cast for clang 15.0.0
 	mybuf = safemalloc((MEM_SIZE)(length+MAX_DIGITS+1));
     strcpy(mybuf,nums);
     mybuf[length++] = ',';
@@ -446,9 +433,7 @@ bool_int lax_high_check;
 /* make sure expired articles are marked as read */
 
 void
-checkexpired(np,a1st)
-register NGDATA* np;
-register ART_NUM a1st;
+checkexpired(register NGDATA* np, register ART_NUM a1st)
 {
     register char* s;
     register ART_NUM num, lastnum = 0;
@@ -535,16 +520,15 @@ register ART_NUM a1st;
 /* Returns TRUE if article is marked as read or does not exist */
 /* could use a better name */
 bool
-was_read_group(dp,artnum,ngnam)
-DATASRC* dp;
-ART_NUM artnum;
-char* ngnam;
+was_read_group(DATASRC* dp, ART_NUM artnum, char* ngnam)
 {
+    (void)dp;
+
     register NGDATA* np;
     register char* s;
     register char* t;
-    register char* maxt = NULL;
-    ART_NUM min = 0, max = -1, lastnum = 0;
+    //register char* maxt = NULL;
+    ART_NUM min = 0, max = -1; // lastnum = 0;
 
     if (!artnum)
 	return TRUE;
@@ -576,16 +560,16 @@ char* ngnam;
 	    t++;			/* skip to next number */
 	    if (artnum <= (max = atol(t)))
 		return TRUE;		/* it is in range => already read */
-	    lastnum = max;		/* remember it */
-	    maxt = t;			/* remember position in case we */
+	    //lastnum = max;		/* remember it */
+	    //maxt = t;			/* remember position in case we */
 					/* want to overwrite the max */
 	    while (isdigit(*t)) t++;	/* skip second number */
 	}
 	else {
 	    if (artnum == min)		/* explicitly a read article? */
 		return TRUE;
-	    lastnum = min;		/* remember what the number was */
-	    maxt = NULL;		/* last one was not a range */
+	    //lastnum = min;		/* remember what the number was */
+	    //maxt = NULL;		/* last one was not a range */
 	}
 	while (*t && !isdigit(*t)) t++;	/* skip comma and any spaces */
 	s = t;
