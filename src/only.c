@@ -19,14 +19,13 @@
 static int save_maxngtodo = 0;
 
 void
-only_init()
+only_init(void)
 {
     ;
 }
 
 void
-setngtodo(pat)
-char* pat;
+setngtodo(char* pat)
 {
     char* s;
     register int i = maxngtodo + save_maxngtodo;
@@ -51,8 +50,7 @@ char* pat;
 /* if command line list is non-null, is this newsgroup wanted? */
 
 bool
-inlist(ngnam)
-char* ngnam;
+inlist(char* ngnam)
 {
     register int i;
 
@@ -66,7 +64,7 @@ char* ngnam;
 }
 
 void
-end_only()
+end_only(void)
 {
     if (maxngtodo) {			/* did they specify newsgroup(s) */
 	int i;
@@ -93,14 +91,14 @@ end_only()
 }
 
 void
-push_only()
+push_only(void)
 {
     save_maxngtodo = maxngtodo;
     maxngtodo = 0;
 }
 
 void
-pop_only()
+pop_only(void)
 {
     ART_UNREAD save_ng_min_toread = ng_min_toread;
 

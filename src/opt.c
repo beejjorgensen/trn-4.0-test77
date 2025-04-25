@@ -45,10 +45,7 @@
 COMPEX optcompex;
 
 void
-opt_init(argc,argv,tcbufptr)
-int argc;
-char* argv[];
-char** tcbufptr;
+opt_init(int argc, char* argv[], char** tcbufptr)
 {
     register int i;
     char* s;
@@ -119,10 +116,7 @@ char** tcbufptr;
 }
 
 void
-opt_file(filename,tcbufptr,bleat)
-char* filename;
-char** tcbufptr;
-bool_int bleat;
+opt_file(char* filename, char** tcbufptr, bool_int bleat)
 {
     char* filebuf = *tcbufptr;
     char* s;
@@ -190,8 +184,7 @@ bool_int bleat;
 #define NO(s)  (*(s) == 'n' || *(s) == 'N')
 
 void
-set_options(vals)
-char** vals;
+set_options(char** vals)
 {
     int limit = INI_LEN(options_ini);
     int i;
@@ -202,9 +195,7 @@ char** vals;
 }
 
 void
-set_option(num, s)
-int num;
-char* s;
+set_option(int num, char* s)
 {
     if (option_saved_vals) {
 	if (!option_saved_vals[num]) {
@@ -610,8 +601,7 @@ char* s;
 }
 
 void
-save_options(filename)
-char* filename;
+save_options(char* filename)
 {
     int i;
     int fd_in;
@@ -722,8 +712,7 @@ line that sets %sRNINIT.\n", ini_file, t, t);
 }
 
 char*
-option_value(num)
-int num;
+option_value(int num)
 {
     switch (num) {
       case OI_USE_THREADS:
@@ -990,7 +979,7 @@ int num;
 }
 
 static char*
-hidden_list()
+hidden_list(void)
 {
     int i;
     buf[0] = '\0';
@@ -1003,7 +992,7 @@ hidden_list()
 }
 
 static char*
-magic_list()
+magic_list(void)
 {
     int i;
     buf[0] = '\0';
@@ -1019,10 +1008,7 @@ magic_list()
 }
 
 static void
-set_header_list(flag,defflag,str)
-int flag;
-int defflag;
-char* str;
+set_header_list(int flag, int defflag, char* str)
 {
     int i;
     bool setit;
@@ -1059,10 +1045,7 @@ char* str;
 }
 
 void
-set_header(s, flag, setit)
-char* s;
-int flag;
-bool_int setit;
+set_header(char* s, int flag, bool_int setit)
 {
     int i;
     int len = strlen(s);
@@ -1136,9 +1119,7 @@ bool_int setit;
 }
 
 static int
-parse_mouse_buttons(cpp, btns)
-char** cpp;
-char* btns;
+parse_mouse_buttons(char** cpp, char* btns)
 {
     char* t = *cpp;
     int cnt = 0;
@@ -1172,9 +1153,7 @@ char* btns;
 }
 
 static char*
-expand_mouse_buttons(cp, cnt)
-char* cp;
-int cnt;
+expand_mouse_buttons(char* cp, int cnt)
 {
     *buf = '\0';
     while (cnt--) {
@@ -1193,8 +1172,7 @@ int cnt;
 }
 
 char*
-quote_string(val)
-char* val;
+quote_string(char* val)
 {
     static char* bufptr = NULL;
     char* cp;
@@ -1250,7 +1228,7 @@ char* val;
 }
 
 void
-cwd_check()
+cwd_check(void)
 {
     char tmpbuf[LBUFLEN];
 
