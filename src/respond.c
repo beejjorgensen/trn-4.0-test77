@@ -765,7 +765,7 @@ forward()
     char* s;
     char* eol;
 #endif
-    char* mime_boundary;
+    char* mime_boundary = NULL;
 
 #ifdef REGEX_WORKS_RIGHT
     init_compex(&mime_compex);
@@ -929,9 +929,7 @@ trim the quoted article down as much as possible.)\n\
 }
 
 int
-invoke(cmd,dir)
-char* cmd;
-char* dir;
+invoke(char* cmd, char* dir)
 {
     char oldmode = mode;
     int ret = -1;
