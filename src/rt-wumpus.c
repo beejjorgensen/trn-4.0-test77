@@ -64,7 +64,7 @@ static char* str;
 /* Prepare tree display for inclusion in the article header.
 */
 void
-init_tree()
+init_tree(void)
 {
     ARTICLE* thread;
     SUBJECT* sp;
@@ -124,9 +124,7 @@ init_tree()
 /* A recursive routine to find the maximum tree extents and where we are.
 */
 static void
-find_depth(article, depth)
-ARTICLE* article;
-int depth;
+find_depth(ARTICLE* article, int depth)
 {
     if (depth > max_depth)
 	max_depth = depth;
@@ -147,10 +145,7 @@ int depth;
 /* Place the tree display in a maximum of 11 lines x 6 nodes.
 */
 static void
-cache_tree(ap, depth, cp)
-ARTICLE* ap;
-int depth;
-char* cp;
+cache_tree(ARTICLE* ap, int depth, char* cp)
 {
     int depth_mode;
 
@@ -236,9 +231,7 @@ char* cp;
 static int find_artp_y;
 
 ARTICLE*
-get_tree_artp(x,y)
-int x;
-int y;
+get_tree_artp(int x, int y)
 {
     ARTICLE* ap;
     if (!tree_article || !tree_article->subj)
@@ -256,9 +249,7 @@ int y;
 /* A recursive routine to find the maximum tree extents and where we are.
 */
 static ARTICLE*
-find_artp(article, x)
-ARTICLE* article;
-int x;
+find_artp(ARTICLE* article, int x)
 {
     for (;;) {
 	if (!x && !find_artp_y)
@@ -280,10 +271,7 @@ int x;
 ** Does automatic wrapping of lines that are too long.
 */
 int
-tree_puts(orig_line, header_line, is_subject)
-char* orig_line;
-ART_LINE header_line;
-int is_subject;
+tree_puts(char* orig_line, ART_LINE header_line, int is_subject)
 {
     char* tmpbuf;
     register char* line;
@@ -477,8 +465,7 @@ int is_subject;
 ** end of each header.
 */
 int
-finish_tree(last_line)
-ART_LINE last_line;
+finish_tree(ART_LINE last_line)
 {
     ART_LINE start_line = last_line;
 
@@ -493,8 +480,7 @@ ART_LINE last_line;
 /* Output the entire article tree for the user.
 */
 void
-entire_tree(ap)
-ARTICLE* ap;
+entire_tree(ARTICLE* ap)
 {
     ARTICLE* thread;
     SUBJECT* sp;
@@ -559,9 +545,7 @@ ARTICLE* ap;
 /* A recursive routine to output the entire article tree.
 */
 static void
-display_tree(article, cp)
-ARTICLE* article;
-char* cp;
+display_tree(ARTICLE* article, char* cp)
 {
     if (cp - tree_indent > tc_COLS || page_line < 0)
 	return;
@@ -623,8 +607,7 @@ char* cp;
 **	' ', '1'-'9', 'A'-'Z', 'a'-'z', '+'
 */
 char
-thread_letter(ap)
-register ARTICLE* ap;
+thread_letter(register ARTICLE* ap)
 {
     int subj = ap->subj->misc;
 

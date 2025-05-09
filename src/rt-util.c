@@ -36,8 +36,7 @@
 ** found.
 */
 char*
-extract_name(name)
-char* name;
+extract_name(char* name)
 {
     char* s;
     char* lparen;
@@ -82,9 +81,7 @@ char* name;
 ** first step of the compaction, if needed.
 */
 char*
-compress_name(name, max)
-char* name;
-int max;
+compress_name(char* name, int max)
 {
     register char* s;
     register char* last;
@@ -251,9 +248,7 @@ try_again:
 ** @ % ! may be better...
 */
 char*
-compress_address(name, max)
-char* name;
-int max;
+compress_address(char* name, int max)
 {
     char* s;
     char* at;
@@ -332,9 +327,7 @@ int max;
 ** and pads with spaces.
 */
 char*
-compress_from(from, size)
-char* from;
-int size;
+compress_from(char* from, int size)
 {
     static char lbuf[LBUFLEN];
     char* s = from? from : nullstr;
@@ -361,9 +354,7 @@ int size;
 
 /* Fit the date in <max> chars. */
 char*
-compress_date(ap, size)
-ARTICLE* ap;
-int size;
+compress_date(ARTICLE* ap, int size)
 {
     char* s;
     char* t;
@@ -382,9 +373,7 @@ int size;
 ** will be set to the start of the interesting characters.
 */
 bool
-subject_has_Re(str, strp)
-register char* str;
-char** strp;
+subject_has_Re(register char* str, char** strp)
 {
     bool has_Re = 0;
 
@@ -410,9 +399,7 @@ char** strp;
 ** save the last two words on the line, excluding "(was: blah)" if needed.
 */
 char*
-compress_subj(ap, max)
-ARTICLE* ap;
-int max;
+compress_subj(ARTICLE* ap, int max)
 {
     register char* cp;
     register int len;
@@ -488,8 +475,7 @@ static ART_NUM spin_art;
 static ART_POS spin_tell;
 
 void
-setspin(mode)
-int mode;
+setspin(int mode)
 {
     switch (mode) {
       case SPIN_FOREGROUND:
@@ -550,8 +536,7 @@ int mode;
 }
 
 void
-spin(count)
-int count;		/* modulus for the spin... */
+spin(int count)  /* modulus for the spin... */
 {
     if (!spin_level)
 	return;
@@ -611,7 +596,7 @@ int count;		/* modulus for the spin... */
 }
 
 bool
-inbackground()
+inbackground(void)
 {
     return spin_mode == SPIN_BACKGROUND;
 }
@@ -623,8 +608,7 @@ static long	ps_cnt;
 static long	ps_missing;
 
 void
-perform_status_init(cnt)
-long cnt;
+perform_status_init(long cnt)
 {
     perform_cnt = 0;
     error_occurred = FALSE;
@@ -644,9 +628,7 @@ long cnt;
 }
 
 void
-perform_status(cnt, spin)
-long cnt;
-int spin;
+perform_status(long cnt, int spin)
 {
     long kills, sels, missing;
     time_t now;
@@ -691,12 +673,7 @@ int spin;
 }
 
 static char*
-output_change(cp, num, obj_type, modifier, action)
-char* cp;
-long num;
-char* obj_type;
-char* modifier;
-char* action;
+output_change(char* cp, long num, char* obj_type, char* modifier, char* action)
 {
     bool neg;
     char* s;
@@ -737,9 +714,7 @@ char* action;
 }
 
 int
-perform_status_end(cnt, obj_type)
-long cnt;
-char* obj_type;
+perform_status_end(long cnt, char* obj_type)
 {
     long kills, sels, missing;
     char* cp = msg;

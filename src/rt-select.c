@@ -114,8 +114,7 @@ static int (*extra_commands) _((char_int));
 ** the list consists of previously-read items for the user to mark as unread.
 */
 char
-article_selector(cmd)
-char_int cmd;
+article_selector(char_int cmd)
 {
     bool save_selected_only;
     START_SELECTOR('t');
@@ -232,7 +231,7 @@ sel_exit:
 }
 
 static void
-sel_dogroups()
+sel_dogroups(void)
 {
     NGDATA* np;
     int ret;
@@ -302,7 +301,7 @@ sel_dogroups()
 }
 
 char
-multirc_selector()
+multirc_selector(void)
 {
     START_SELECTOR('c');
 
@@ -356,7 +355,7 @@ multirc_selector()
 }
 
 char
-newsgroup_selector()
+newsgroup_selector(void)
 {
     START_SELECTOR('w');
 
@@ -430,8 +429,7 @@ newsgroup_selector()
 }
 
 char
-addgroup_selector(flags)
-int flags;
+addgroup_selector(int flags)
 {
     START_SELECTOR('j');
 
@@ -495,7 +493,7 @@ int flags;
 }
 
 char
-option_selector()
+option_selector(void)
 {
     int i;
     char** vals = INI_VALUES(options_ini);
@@ -552,8 +550,7 @@ option_selector()
 
 /* returns a command to do */
 static int
-univ_read(ui)
-UNIV_ITEM* ui;
+univ_read(UNIV_ITEM* ui)
 {
     int exit_code = UR_NORM;
     char ch;
@@ -729,7 +726,7 @@ UNIV_ITEM* ui;
 }
 
 char
-universal_selector()
+universal_selector(void)
 {
     START_SELECTOR('v');		/* kind of like 'v'irtual... */
 
@@ -804,7 +801,7 @@ sel_restart:
 }
 
 static void
-sel_display()
+sel_display(void)
 {
     /* Present a page of items to the user */
     display_page();
@@ -823,8 +820,7 @@ sel_display()
 }
 
 static void
-sel_status_msg(cp)
-char* cp;
+sel_status_msg(char* cp)
 {
     if (can_home)
 	goto_xy(0,sel_last_line+1);
@@ -838,7 +834,7 @@ char* cp;
 }
 
 static char
-sel_input()
+sel_input(void)
 {
     register int j;
     int ch, action;
@@ -1235,7 +1231,7 @@ reinp_selector:
 }
 
 static void
-sel_prompt()
+sel_prompt(void)
 {
     draw_mousebar(tc_COLS,0);
     if (can_home)
@@ -1261,8 +1257,7 @@ sel_prompt()
 }
 
 static bool
-select_item(u)
-SEL_UNION u;
+select_item(SEL_UNION u)
 {
     switch (sel_mode) {
       case SM_MULTIRC:
@@ -1303,8 +1298,7 @@ SEL_UNION u;
 }
 
 static bool
-delay_return_item(u)
-SEL_UNION u;
+delay_return_item(SEL_UNION u)
 {
     switch (sel_mode) {
       case SM_MULTIRC:
@@ -1334,8 +1328,7 @@ SEL_UNION u;
 }
 
 static bool
-deselect_item(u)
-SEL_UNION u;
+deselect_item(SEL_UNION u)
 {
     switch (sel_mode) {
       case SM_MULTIRC:
@@ -1390,8 +1383,7 @@ SEL_UNION u;
 }
 
 static bool
-select_option(i)
-int i;
+select_option(int i)
 {
     bool changed = FALSE;
     char** vals = INI_VALUES(options_ini);
@@ -1449,7 +1441,7 @@ int i;
 }
 
 static void
-sel_cleanup()
+sel_cleanup(void)
 {
     switch (sel_mode) {
       case SM_MULTIRC:
@@ -1533,10 +1525,9 @@ sel_cleanup()
 }
 
 static bool
-mark_DEL_as_READ(ptr, arg)
-char* ptr;
-int arg;
+mark_DEL_as_READ(char* ptr, int arg)
 {
+    (void)arg;
     register ARTICLE* ap = (ARTICLE*)ptr;
     if (ap->flags & AF_DEL) {
 	ap->flags &= ~AF_DEL;
@@ -1546,8 +1537,7 @@ int arg;
 }
 
 static int
-sel_command(ch)
-char_int ch;
+sel_command(char_int ch)
 {
     int ret;
     if (can_home)
@@ -1691,9 +1681,7 @@ char_int ch;
 }
 
 static bool
-sel_perform_change(cnt, obj_type)
-long cnt;
-char* obj_type;
+sel_perform_change(long cnt, char* obj_type)
 {
     int ret;
 
@@ -1737,8 +1725,7 @@ char* obj_type;
 #endif
 
 static char
-another_command(ch)
-char_int ch;
+another_command(char_int ch)
 {
     bool skip_q = !ch;
     if (ch < 0)
@@ -1764,8 +1751,7 @@ char_int ch;
 }
 
 static int
-article_commands(ch)
-char_int ch;
+article_commands(char_int ch)
 {
     switch (ch) {
       case 'U':
@@ -2176,8 +2162,7 @@ q does nothing.\n\n\
 }
 
 static int
-newsgroup_commands(ch)
-char_int ch;
+newsgroup_commands(char_int ch)
 {
     switch (ch) {
       case Ctl('n'):
@@ -2480,8 +2465,7 @@ q does nothing.\n\n\
 }
 
 static int
-addgroup_commands(ch)
-char_int ch;
+addgroup_commands(char_int ch)
 {
     switch (ch) {
       case 'O':
@@ -2655,8 +2639,7 @@ q does nothing.\n\n\
 }
 
 static int
-multirc_commands(ch)
-char_int ch;
+multirc_commands(char_int ch)
 {
     switch (ch) {
       case 'R':
@@ -2690,8 +2673,7 @@ char_int ch;
 }
 
 static int
-option_commands(ch)
-char_int ch;
+option_commands(char_int ch)
 {
     switch (ch) {
       case 'R':
@@ -2761,8 +2743,7 @@ char_int ch;
 }
 
 static int
-universal_commands(ch)
-char_int ch;
+universal_commands(char_int ch)
 {
     switch (ch) {
       case 'R':
@@ -2864,8 +2845,7 @@ q does nothing.\n\n\
 }
 
 static void
-switch_dmode(dmode_cpp)
-char** dmode_cpp;
+switch_dmode(char** dmode_cpp)
 {
     char* s;
 
@@ -2893,8 +2873,7 @@ char** dmode_cpp;
 }
 
 static int
-find_line(y)
-int y;
+find_line(int y)
 {
     int i;
     for (i = 0; i < sel_page_item_cnt; i++) {
@@ -2915,11 +2894,7 @@ int y;
  *    btn_clk = click's 0, 1, or 2; x_clk = click's x; y_clk = click's y.
  */
 void
-selector_mouse(btn, x,y, btn_clk, x_clk,y_clk)
-int btn;
-int x, y;
-int btn_clk;
-int x_clk, y_clk;
+selector_mouse(int btn, int x, int y, int btn_clk, int x_clk, int y_clk)
 {
     if (check_mousebar(btn, x,y, btn_clk, x_clk,y_clk))
 	return;
@@ -2995,8 +2970,7 @@ int x_clk, y_clk;
 
 /* Icky placement, but the PUSH/POP stuff is local to this file */
 int
-univ_visit_group(gname)
-char* gname;
+univ_visit_group(char* gname)
 {
     PUSH_SELECTOR();
 
@@ -3008,8 +2982,7 @@ char* gname;
 
 /* later consider returning universal_selector() value */
 void
-univ_visit_help(where)
-int where;
+univ_visit_help(int where)
 {
     PUSH_SELECTOR();
     PUSH_UNIV_SELECTOR();
