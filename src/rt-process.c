@@ -30,8 +30,7 @@
 /* This depends on art being set to the current article number.
 */
 ARTICLE*
-allocate_article(artnum)
-ART_NUM artnum;
+allocate_article(ART_NUM artnum)
 {
     register ARTICLE* article;
 
@@ -47,8 +46,7 @@ ART_NUM artnum;
 }
 
 static void
-fix_msgid(msgid)
-char* msgid;
+fix_msgid(char* msgid)
 {
     register char* cp;
 
@@ -62,10 +60,7 @@ char* msgid;
 }
 
 int
-msgid_cmp(key, keylen, data)
-char* key;
-int keylen;
-HASHDATUM data;
+msgid_cmp(char* key, int keylen, HASHDATUM data)
 {
     /* We already know that the lengths are equal, just compare the strings */
     if (data.dat_len)
@@ -76,8 +71,7 @@ HASHDATUM data;
 SUBJECT* fake_had_subj; /* the fake-turned-real article had this subject */
 
 bool
-valid_article(article)
-ARTICLE* article;
+valid_article(ARTICLE* article)
 {
     ARTICLE* ap;
     ARTICLE* fake_ap;
@@ -178,8 +172,7 @@ ARTICLE* article;
 ** the article, otherwise create a fake one.
 */
 ARTICLE*
-get_article(msgid)
-char* msgid;
+get_article(char* msgid)
 {
     register ARTICLE* article;
     HASHDATUM data;
@@ -212,9 +205,7 @@ char* msgid;
 ** the article tree at the best place we can deduce.
 */
 void
-thread_article(article,references)
-ARTICLE* article;
-char* references;
+thread_article(ARTICLE* article, char* references)
 {
     register ARTICLE* ap;
     register ARTICLE* prev;
@@ -382,9 +373,7 @@ char* references;
 }
 
 void
-rover_thread(article, s)
-ARTICLE* article;
-char* s;
+rover_thread(ARTICLE* article, char* s)
 {
     ARTICLE* prev = article;
     char* end;
@@ -416,9 +405,7 @@ char* s;
 /* Check if the string we've found looks like a valid message-id reference.
 */
 static char*
-valid_message_id(start, end)
-register char* start;
-register char* end;
+valid_message_id(register char* start, register char* end)
 {
     char* mid;
 
@@ -449,8 +436,7 @@ register char* end;
 /* Remove an article from its parent/siblings.  Leave parent pointer intact.
 */
 static void
-unlink_child(child)
-register ARTICLE* child;
+unlink_child(register ARTICLE* child)
 {
     register ARTICLE* last;
 
@@ -481,8 +467,7 @@ register ARTICLE* child;
 ** link it to its thread.  Sorts siblings by date.
 */
 void
-link_child(child)
-register ARTICLE* child;
+link_child(register ARTICLE* child)
 {
     register ARTICLE* ap;
 
@@ -515,9 +500,7 @@ register ARTICLE* child;
 /* Merge all of s2's thread into s1's thread.
 */
 void
-merge_threads(s1, s2)
-SUBJECT* s1;
-SUBJECT* s2;
+merge_threads(SUBJECT* s1, SUBJECT* s2)
 {
     register SUBJECT* sp;
     register ARTICLE* t1;
