@@ -60,13 +60,13 @@ static bool got_a_char = FALSE;	/* TRUE if we got a char since eating */
 /* guarantee capability pointer != NULL */
 /* (I believe terminfo will ignore the &tmpaddr argument.) */
 
-char* tgetstr();
+char* tgetstr(char *key, char **buf);
 #define Tgetstr(key) ((tmpstr = tgetstr(key,&tmpaddr)) ? tmpstr : nullstr)
 
 /* terminal initialization */
 
 void
-term_init()
+term_init(void)
 {
     savetty();				/* remember current tty state */
 
@@ -147,10 +147,9 @@ int devtty;
 /* set terminal characteristics */
 
 void
-term_set(tcbuf)
-char* tcbuf;		/* temp area for "uncompiled" termcap entry */
-{
-    char* tmpaddr;			/* must not be register */
+term_set(char* tcbuf)	/* temp area for "uncompiled" termcap entry */
+{			/* must not be register */
+    char* tmpaddr;
     register char* tmpstr;
     char* s;
     int status;
@@ -310,7 +309,7 @@ char* tcbuf;		/* temp area for "uncompiled" termcap entry */
 
 #ifdef MSDOS
 static void
-set_lines_and_cols()
+set_lines_and_cols(void)
 {
     gotoxy(132,1);
     if (wherex() == 132)
@@ -330,10 +329,10 @@ set_lines_and_cols()
 }
 #endif
 
+/* input sequence of keys */
+/* definition */
 void
-set_macro(seq,def)
-char* seq;	/* input sequence of keys */
-char* def;	/* definition */
+set_macro(char* seq, char* def)
 {
     mac_line(def,seq,0);
     /* check for common (?) brain damage: ku/kd/etc sequence may be the
@@ -388,8 +387,7 @@ char* right[] = {
 ** Code provided by Clifford Adams.
 */
 void
-arrow_macros(tmpbuf)
-char* tmpbuf;
+arrow_macros(char* tmpbuf)
 {
 #ifdef HAS_TERMLIB
     char lbuf[256];			/* should be long enough */
@@ -439,8 +437,7 @@ char* tmpbuf;
 }
 
 static void
-mac_init(tcbuf)
-char* tcbuf;
+mac_init(char* tcbuf)
 {
     char tmpbuf[1024];
 
@@ -457,10 +454,7 @@ char* tcbuf;
 }
 
 void
-mac_line(line,tmpbuf,tbsize)
-char* line;
-char* tmpbuf;
-int tbsize;
+mac_line(char* line, char* tmpbuf, int tbsize)
 {
     register char* s;
     register char* m;
@@ -520,7 +514,7 @@ int tbsize;
 }
 
 static KEYMAP*
-newkeymap()
+newkeymap(void)
 {
     register int i;
     register KEYMAP* map;
@@ -538,7 +532,7 @@ newkeymap()
 }
 
 void
-show_macros()
+show_macros(void)
 {
     char prebuf[64];
 
@@ -553,9 +547,7 @@ show_macros()
 }
 
 static void
-show_keymap(curmap,prefix)
-register KEYMAP* curmap;
-char* prefix;
+show_keymap(register KEYMAP* curmap, char* prefix)
 {
     register int i;
     register char* next = prefix + strlen(prefix);
@@ -597,9 +589,7 @@ char* prefix;
 }
 
 void
-set_mode(new_gmode, new_mode)
-char_int new_gmode;
-char_int new_mode;
+set_mode(char_int new_gmode, char_int new_mode)
 {
     if (gmode != new_gmode || mode != new_mode) {
 	gmode = new_gmode;
@@ -611,8 +601,7 @@ char_int new_mode;
 /* routine to pass to tputs */
 
 int
-putchr(ch)
-register char_int ch;
+putchr(register char_int ch)
 {
     putchar(ch);
 #ifdef lint
@@ -625,15 +614,14 @@ register char_int ch;
 int not_echoing = 0;
 
 void
-hide_pending()
+hide_pending(void)
 {
     not_echoing = 1;
     pushchar(0200);
 }
 
 bool
-finput_pending(check_term)
-bool_int check_term;
+finput_pending(bool_int check_term)
 {
     while (nextout != nextin) {
 	if (circlebuf[nextout] != '\200')
@@ -687,8 +675,7 @@ bool_int check_term;
 int buflimit = LBUFLEN;
 
 bool
-finish_command(donewline)
-int donewline;
+finish_command(int donewline)
 {
     register char* s;
     char gmode_save = gmode;
@@ -727,8 +714,7 @@ int donewline;
 }
 
 static int
-echo_char(ch)
-char_int ch;
+echo_char(char_int ch)
 {
     if (((Uchar)ch & 0x7F) < ' ') {
 	putchar('^');
@@ -749,9 +735,7 @@ static bool screen_is_dirty; /*$$ remove this? */
 /* Process the character *s in the buffer buf returning the new 's' */
 
 char*
-edit_buf(s, cmd)
-register char* s;
-char* cmd;
+edit_buf(register char* s, char* cmd)
 {
     static bool quoteone = FALSE;
     if (quoteone) {
@@ -849,7 +833,7 @@ echo_it:
 }
 
 bool
-finish_dblchar()
+finish_dblchar(void)
 {
     bool ret;
     int buflimit_save = buflimit;
@@ -864,7 +848,7 @@ finish_dblchar()
 /* discard any characters typed ahead */
 
 void
-eat_typeahead()
+eat_typeahead(void)
 {
     static double last_time = 0.;
     double this_time = current_time();
@@ -943,9 +927,7 @@ eat_typeahead()
 }
 
 void
-save_typeahead(buf, len)
-char* buf;
-int len;
+save_typeahead(char* buf, int len)
 {
     int cnt;
 
@@ -958,7 +940,7 @@ int len;
 }
 
 void
-settle_down()
+settle_down(void)
 {
     dingaling();
     fflush(stdout);
@@ -972,9 +954,9 @@ settle_down()
 bool ignore_EINTR = FALSE;
 
 Signal_t
-alarm_catcher(signo)
-int signo;
+alarm_catcher(int signo)
 {
+    (void)signo;
     /*printf("\n*** In alarm catcher **\n"); $$*/
     ignore_EINTR = TRUE;
     check_datasrcs();
@@ -986,9 +968,7 @@ int signo;
 /* read a character from the terminal, with multi-character pushback */
 
 int
-read_tty(addr,size)
-char* addr;
-int size;
+read_tty(char* addr, int size)
 {
     if (macro_pending()) {
 	*addr = circlebuf[nextout++];
@@ -1030,7 +1010,7 @@ int size;
 #ifdef PENDING
 # if !defined(FIONREAD) && !defined(HAS_RDCHK) && !defined(MSDOS)
 int
-circfill()
+circfill(void)
 {
     register int Howmany;
 
@@ -1049,8 +1029,7 @@ circfill()
 #endif /* PENDING */
 
 void
-pushchar(c)
-char_int c;
+pushchar(char_int c)
 {
     nextout--;
     if (nextout < 0)
@@ -1065,8 +1044,7 @@ char_int c;
 /* print an underlined string, one way or another */
 
 void
-underprint(s)
-register char* s;
+underprint(register char* s)
 {
     assert(tc_UC);
     if (*tc_UC) {	/* char by char underline? */
@@ -1099,7 +1077,7 @@ register char* s;
 
 #ifdef NOFIREWORKS
 void
-no_sofire()
+no_sofire(void)
 {
     /* should we disable fireworks? */
     if (!(fire_is_out & STANDOUT) && (term_line|term_col)==0 && *tc_UP && *tc_SE) {
@@ -1113,7 +1091,7 @@ no_sofire()
 
 #ifdef NOFIREWORKS
 void
-no_ulfire()
+no_ulfire(void)
 {
     /* should we disable fireworks? */
     if (!(fire_is_out & UNDERLINE) && (term_line|term_col)==0 && *tc_UP && *tc_US) {
@@ -1128,8 +1106,7 @@ no_ulfire()
 /* get a character into a buffer */
 
 void
-getcmd(whatbuf)
-register char* whatbuf;
+getcmd(register char* whatbuf)
 {
     register KEYMAP* curmap;
     register int i;
@@ -1221,9 +1198,7 @@ got_canonical:
 }
 
 void
-pushstring(str,bits)
-char* str;
-char_int bits;
+pushstring(char* str, char_int bits)
 {
     register int i;
     char tmpbuf[PUSHSIZE];
@@ -1236,7 +1211,7 @@ char_int bits;
 }
 
 int
-get_anything()
+get_anything(void)
 {
     char tmpbuf[64];
     char mode_save = mode;
@@ -1296,7 +1271,7 @@ reask_anything:
 }
 
 int
-pause_getcmd()
+pause_getcmd(void)
 {
     char mode_save = mode;
 
@@ -1329,10 +1304,7 @@ pause_getcmd()
 }
 
 void
-in_char(prompt, newmode, dflt)
-char* prompt;
-char_int newmode;
-char* dflt;
+in_char(char* prompt, char_int newmode, char* dflt)
 {
     char mode_save = mode;
     char gmode_save = gmode;
@@ -1361,9 +1333,7 @@ reask_in_char:
 }
 
 void
-in_answer(prompt, newmode)
-char* prompt;
-char_int newmode;
+in_answer(char* prompt, char_int newmode)
 {
     char mode_save = mode;
     char gmode_save = gmode;
@@ -1395,11 +1365,7 @@ reinp_in_answer:
 /* If this takes more than one line, return FALSE */
 
 bool
-in_choice(prompt, value, choices, newmode)
-char* prompt;
-char* value;
-char* choices;
-char_int newmode;
+in_choice(char* prompt, char* value, char* choices, char_int newmode)
 {
     char mode_save = mode;
     char gmode_save = gmode;
@@ -1575,9 +1541,7 @@ reinp_in_choice:
 }
 
 int
-print_lines(what_to_print,hilite)
-char* what_to_print;
-int hilite;
+print_lines(char* what_to_print, int hilite)
 {
     register char* s;
     register int i;
@@ -1634,7 +1598,7 @@ int hilite;
 }
 
 int
-check_page_line()
+check_page_line(void)
 {
     if (page_line < 0)
 	return -1;
@@ -1652,7 +1616,7 @@ check_page_line()
 }
 
 void
-page_start()
+page_start(void)
 {
     page_line = 1;
     if (erase_screen)
@@ -1662,8 +1626,7 @@ page_start()
 }
 
 void
-errormsg(str)
-char* str;
+errormsg(char* str)
 {
     if (gmode == 's') {
 	if (str != msg)
@@ -1677,8 +1640,7 @@ char* str;
 }
 
 void
-warnmsg(str)
-char* str;
+warnmsg(char* str)
 {
     if (gmode != 's') {
 	printf("\n%s\n", str) FLUSH;
@@ -1688,8 +1650,7 @@ char* str;
 }
 
 void
-pad(num)
-int num;
+pad(int num)
 {
     register int i;
 
@@ -1702,7 +1663,7 @@ int num;
 
 #ifdef VERIFY
 void
-printcmd()
+printcmd(void)
 {
     if (verify && buf[1] == FINISHCMD) {
 	if (!AT_NORM_CHAR(buf)) {
@@ -1721,7 +1682,7 @@ printcmd()
 #endif
 
 void
-rubout()
+rubout(void)
 {
     backspace();			/* do the old backspace, */
     putchar(' ');			/*   space, */
@@ -1729,7 +1690,7 @@ rubout()
 }
 
 void
-reprint()
+reprint(void)
 {
     register char* s;
 
@@ -1741,8 +1702,7 @@ reprint()
 }
 
 void
-erase_line(to_eos)
-bool_int to_eos;
+erase_line(bool_int to_eos)
 {
     carriage_return();
     if (to_eos)
@@ -1754,7 +1714,7 @@ bool_int to_eos;
 }
 
 void
-clear()
+clear(void)
 {
     term_line = term_col = fire_is_out = 0;
     if (tc_CL)
@@ -1773,9 +1733,9 @@ clear()
 }
 
 void
-home_cursor()
+home_cursor(void)
 {
-    char* tgoto();
+    //char* tgoto();
 
     if (!*tc_HO) {		/* no home sequence? */
 	if (!*tc_CM) {		/* no cursor motion either? */
@@ -1793,9 +1753,7 @@ home_cursor()
 }
 
 void
-goto_xy(to_col,to_line)
-int to_col;
-int to_line;
+goto_xy(int to_col, int to_line)
 {
     char* tgoto();
     char* str;
@@ -1849,7 +1807,7 @@ int to_line;
 }
 
 static void
-line_col_calcs()
+line_col_calcs(void)
 {
     if (tc_LINES > 0) {		/* is this a crt? */
 	if (!initlines || !option_def_vals[OI_INITIAL_ARTICLE_LINES]) {
@@ -1880,8 +1838,7 @@ line_col_calcs()
 
 #ifdef SIGWINCH
 Signal_t
-winch_catcher(dummy)
-int dummy;
+winch_catcher(int dummy)
 {
     /* Reset signal in case of System V dain bramage */
     sigset(SIGWINCH, winch_catcher);
@@ -1913,7 +1870,7 @@ int dummy;
 #endif
 
 void
-termlib_init()
+termlib_init(void)
 {
 #ifdef USETITE
     if (tc_TI && *tc_TI) {
@@ -1933,7 +1890,7 @@ termlib_init()
 }
 
 void
-termlib_reset()
+termlib_reset(void)
 {
 #ifdef USETITE
     if (tc_TE && *tc_TE) {
@@ -1980,8 +1937,7 @@ termlib_reset()
 
 #ifdef NBG_SIGIO /* SIGIO style */
 Signal_t
-waitkey_sig_handler(dummy)
-int dummy;
+waitkey_sig_handler(int dummy)
 {
 #ifdef DEBUG_NICEBG
     /* CAA: I doubt that printf is safe in a signal handler... */
@@ -2004,9 +1960,9 @@ static int wait_tbl_size;
 #endif
 
 /* returns TRUE if input received */
+/* tenths of seconds to wait */
 bool
-wait_key_pause(ticks)
-int ticks;		/* tenths of seconds to wait */
+wait_key_pause(int ticks)
 {
 #ifdef DEBUG_NICEBG
     ticks = 50;		/* debugging: wait 5 seconds */
@@ -2154,8 +2110,7 @@ int ticks;		/* tenths of seconds to wait */
 #endif /* PENDING */
 
 void
-xmouse_init(progname)
-char* progname;
+xmouse_init(char* progname)
 {
     char* s;
     if (!can_home || !use_threads)
@@ -2172,7 +2127,7 @@ char* progname;
 }
 
 void
-xmouse_check()
+xmouse_check(void)
 {
     mousebar_cnt = 0;
     if (UseMouse) {
@@ -2249,7 +2204,7 @@ xmouse_check()
 }
 
 void
-xmouse_on()
+xmouse_on(void)
 {
     if (!xmouse_is_on) {
 	/* save old highlight mouse tracking and enable mouse tracking */
@@ -2260,7 +2215,7 @@ xmouse_on()
 }
 
 void
-xmouse_off()
+xmouse_off(void)
 {
     if (xmouse_is_on) {
 	/* disable mouse tracking and restore old highlight mouse tracking */
@@ -2271,9 +2226,7 @@ xmouse_off()
 }
 
 void
-draw_mousebar(limit,restore_cursor)
-int limit;
-bool_int restore_cursor;
+draw_mousebar(int limit, bool_int restore_cursor)
 {
     int i;
     char* s;
@@ -2337,8 +2290,7 @@ bool_int restore_cursor;
 }
 
 static void
-mouse_input(cp)
-char* cp;
+mouse_input(char* cp)
 {
     static int last_btn;
     static int last_x, last_y;
@@ -2380,11 +2332,7 @@ char* cp;
 }
 
 bool
-check_mousebar(btn, x,y, btn_clk, x_clk,y_clk)
-int btn;
-int x, y;
-int btn_clk;
-int x_clk, y_clk;
+check_mousebar(int btn, int x, int y, int btn_clk, int x_clk, int y_clk)
 {
     char* s = mousebar_btns;
     char* t;
@@ -2457,9 +2405,7 @@ static struct {
 
 /* Parse a line from the [termcap] section of trnrc. */
 void
-add_tc_string(capability, string)
-char* capability;
-char* string;
+add_tc_string(char* capability, char* string)
 {
     int i;
 
@@ -2484,8 +2430,7 @@ char* string;
 
 /* Return the named termcap color capability's string. */
 char*
-tc_color_capability(capability)
-char* capability;
+tc_color_capability(char* capability)
 {
     int c;
 
@@ -2498,10 +2443,7 @@ char* capability;
 
 #ifdef MSDOS
 int
-tputs(str,num,func)
-char* str;
-int num;
-int (*func) _((char_int));
+tputs(char* str, int num, int (*func) _((char_int)))
 {
     printf(str,num);
     return 0;
@@ -2510,10 +2452,7 @@ int (*func) _((char_int));
 
 #ifdef MSDOS
 char*
-tgoto(str,x,y)
-char* str;
-int x;
-int y;
+tgoto(char* str, int x, int y)
 {
     static char gbuf[32];
     sprintf(gbuf,str,y+1,x+1);

@@ -25,8 +25,7 @@
 #include "sw.h"
 
 void
-sw_file(tcbufptr)
-char** tcbufptr;
+sw_file(char** tcbufptr)
 {
     int initfd = open(*tcbufptr,0);
 
@@ -48,8 +47,7 @@ char** tcbufptr;
 /* decode a list of space separated switches */
 
 void
-sw_list(swlist)
-char* swlist;
+sw_list(char* swlist)
 {
     register char* s;
     register char* p;
@@ -100,8 +98,7 @@ char* swlist;
 /* decode a single switch */
 
 void
-decode_switch(s)
-register char* s;
+decode_switch(register char* s)
 {
     while (isspace(*s)) s++;		/* ignore leading spaces */
 #ifdef DEBUG
@@ -398,8 +395,7 @@ register char* s;
 }
 
 void
-save_init_environment(str)
-char* str;
+save_init_environment(char* str)
 {
     if (init_environment_cnt >= init_environment_max) {
 	init_environment_max += 32;
@@ -411,8 +407,7 @@ char* str;
 }
 
 void
-write_init_environment(fp)
-FILE* fp;
+write_init_environment(FILE* fp)
 {
     int i;
     char* s;

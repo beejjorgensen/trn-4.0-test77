@@ -71,7 +71,7 @@ static int err;
 static char* FirstCharacter;
 
 void
-search_init()
+search_init(void)
 {
     register int    i;
     
@@ -80,8 +80,7 @@ search_init()
 }
 
 void
-init_compex(compex)
-register COMPEX* compex;
+init_compex(register COMPEX* compex)
 {
     /* the following must start off zeroed */
 
@@ -90,8 +89,7 @@ register COMPEX* compex;
 }
 
 void
-free_compex(compex)
-register COMPEX* compex;
+free_compex(register COMPEX* compex)
 {
     if (compex->eblen) {
 	free(compex->expbuf);
@@ -107,9 +105,7 @@ static char* gbr_str = NULL;
 static int gbr_siz = 0;
 
 char*
-getbracket(compex,n)
-register COMPEX* compex;
-int n;
+getbracket(register COMPEX* compex, int n)
 {
     int length = compex->braelist[n] - compex->braslist[n];
 
@@ -123,8 +119,7 @@ int n;
 }
 
 void
-case_fold(which)
-int which;
+case_fold(int which)
 {
     register int i;
 
@@ -144,11 +139,7 @@ int which;
 /* Compile the given regular expression into a [secret] internal format */
 
 char*
-compile(compex, strp, RE, fold)
-register COMPEX* compex;
-register char* strp;
-int RE;
-int fold;
+compile(register COMPEX* compex, register char* strp, int RE, int fold)
 {
     register int c;
     register char* ep;
@@ -339,10 +330,7 @@ cerror:
 }
 
 char*
-grow_eb(compex, epp, alt)
-register COMPEX* compex;
-char* epp;
-char** alt;
+grow_eb(register COMPEX* compex, char* epp, char** alt)
 {
     register char* oldbuf = compex->expbuf;
     register char** altlist = compex->alternatives;
@@ -358,9 +346,7 @@ char** alt;
 }
 
 char*
-execute(compex, addr)
-register COMPEX* compex;
-char* addr;
+execute(register COMPEX* compex, char* addr)
 {
     register char* p1 = addr;
     register Uchar* trt = trans;
@@ -406,10 +392,7 @@ char* addr;
 /* advance the match of the regular expression starting at ep along the
    string lp, simulates an NDFSA */
 bool
-advance(compex, lp, ep)
-register COMPEX* compex;
-register char* ep;
-register char* lp;
+advance(register COMPEX* compex, register char* lp, register char* ep)
 {
     register char* curlp;
     register Uchar* trt = trans;
@@ -570,10 +553,7 @@ register char* lp;
 }
  
 bool
-backref(compex, i, lp)
-register COMPEX* compex;
-register int i;
-register char* lp;
+backref(register COMPEX* compex, register int i, register char* lp)
 {
     register char* bp;
  
@@ -588,10 +568,7 @@ register char* lp;
 }
 
 bool
-cclass(set, c, af)
-register char* set;
-register int c;
-int af;
+cclass(register char* set, register int c, int af)
 {
     c &= 0177;
 #if BITSPERBYTE == 8
