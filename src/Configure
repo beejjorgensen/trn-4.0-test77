@@ -5427,6 +5427,11 @@ if $contains 'union.*wait.*{' wait.out >/dev/null 2>&1 ; then
 		echo "But wait() seems to expect an 'int' pointer (POSIX way)." >&4
 		val="$undef"
 		also=''
+	elif $contains 'pid_t.*wait[ 	]*([ 	]*int' wait.out >/dev/null 2>&1
+	then
+		echo "But wait() seems to expect an 'int' pointer (POSIX way)." >&4
+		val="$undef"
+		also=''
 	elif $contains 'extern.*wait[ 	]*([ 	]*union' wait.out >/dev/null 2>&1
 	then
 		echo "And indeed wait() expects an 'union wait' pointer (BSD way)." >&4
