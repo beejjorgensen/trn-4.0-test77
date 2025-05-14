@@ -1735,7 +1735,7 @@ clear(void)
 void
 home_cursor(void)
 {
-    //char* tgoto();
+    char* tgoto(char* str, int x, int y);
 
     if (!*tc_HO) {		/* no home sequence? */
 	if (!*tc_CM) {		/* no cursor motion either? */
@@ -1755,7 +1755,7 @@ home_cursor(void)
 void
 goto_xy(int to_col, int to_line)
 {
-    char* tgoto();
+    char* tgoto(char* str, int x, int y);
     char* str;
     int cmcost, xcost, ycost;
 
@@ -1840,6 +1840,8 @@ line_col_calcs(void)
 Signal_t
 winch_catcher(int dummy)
 {
+    (void)dummy;
+
     /* Reset signal in case of System V dain bramage */
     sigset(SIGWINCH, winch_catcher);
 
@@ -2338,6 +2340,8 @@ check_mousebar(int btn, int x, int y, int btn_clk, int x_clk, int y_clk)
     char* t;
     int i, j;
     int col = tc_COLS - mousebar_width;
+
+    (void)y;
 
     if (mousebar_width != 0 && btn_clk == 0 && y_clk == tc_LINES-1
      && (x_clk -= col-1) > 0) {
