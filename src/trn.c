@@ -79,7 +79,7 @@
 #include "univ.h"
 
 void
-trn_init()
+trn_init(void)
 {
     ;
 }
@@ -88,9 +88,7 @@ static bool restore_old_newsrc = FALSE;
 static bool go_forward = TRUE;
 
 int
-main(argc,argv)
-int argc;
-char* argv[];
+main(int argc, char* argv[])
 {
     bool foundany;
     char* s;
@@ -157,7 +155,7 @@ newsgroup use the g<newsgroup> command.\n\
 }
 
 void
-do_multirc()
+do_multirc(void)
 {
     bool special = FALSE;	/* allow newsgroup with no unread news? */
     char mode_save = mode;
@@ -379,7 +377,7 @@ bug_out:
 }
 
 int
-input_newsgroup()
+input_newsgroup(void)
 {
     register char* s;
 
@@ -812,8 +810,7 @@ reask_abandon:
 
 #ifdef SUPPORT_NNTP
 void
-check_active_refetch(force)
-bool_int force;
+check_active_refetch(bool_int force)
 {
     DATASRC* dp;
     time_t now = time((time_t*)NULL);
@@ -829,7 +826,7 @@ bool_int force;
 #endif
 
 void
-trn_version()
+trn_version(void)
 {
     page_start();
     sprintf(msg,"Trn version:%s.\nConfigured for ",patchlevel);
@@ -923,8 +920,7 @@ Send bug reports, suggestions, etc. to:  trn-workers@lists.sourceforge.net\n",
 }
 
 void
-set_ngname(what)
-char* what;
+set_ngname(char* what)
 {
     if (ngname != what) {
 	ngname_len = strlen(what);
@@ -939,8 +935,7 @@ static char* myngdir;
 static int ngdirlen = 0;
 
 char*
-getngdir(ngnam)
-char* ngnam;
+getngdir(char* ngnam)
 {
     register char* s;
 
