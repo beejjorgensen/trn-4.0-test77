@@ -25,8 +25,7 @@ static char* tildedir = NULL;
 /* copy a string to a safe spot */
 
 char*
-savestr(str)
-char* str;
+savestr(char* str)
 {
     register char* newaddr = safemalloc((MEM_SIZE)(strlen(str)+1));
 
@@ -37,10 +36,7 @@ char* str;
 /* safe version of string copy */
 
 char*
-safecpy(to,from,len)
-char* to;
-register char* from;
-register int len;
+safecpy(char* to, register char* from, register int len)
 {
     register char* dest = to;
 
@@ -56,10 +52,7 @@ register int len;
 /* copy a string up to some (non-backslashed) delimiter, if any */
 
 char*
-cpytill(to,from,delim)
-register char* to;
-register char* from;
-register int delim;
+cpytill(register char* to, register char* from, register int delim)
 {
     while (*from) {
 	if (*from == '\\' && from[1] == delim)
@@ -77,8 +70,7 @@ register int delim;
 /* Note that there is a 1-deep cache of ~name interpretation */
 
 char*
-filexp(s)
-register char* s;
+filexp(register char* s)
 {
     static char filename[CBUFLEN];
     char scrbuf[CBUFLEN];
@@ -224,10 +216,7 @@ register char* s;
 /* return ptr to little string in big string, NULL if not found */
 
 char*
-findinstr(big, little, case_matters)
-char* big;
-char* little;
-bool_int case_matters;
+findinstr(char* big, char* little, bool_int case_matters)
 {
     register char* t;
     register char* s;
@@ -299,9 +288,7 @@ static Uchar casemap[256] = {
 
 #ifndef HAS_STRCASECMP
 int
-trn_casecmp(s1, s2)
-register char* s1;
-register char* s2;
+trn_casecmp(register char* s1, register char* s2)
 {
     do {
 	if (casemap[(Uchar)*s1++] != casemap[(Uchar)*s2])
@@ -313,10 +300,7 @@ register char* s2;
 
 #ifndef HAS_STRCASECMP
 int
-trn_ncasecmp(s1, s2, len)
-register char* s1;
-register char* s2;
-register int len;
+trn_ncasecmp(register char* s1, register char* s2, register int len)
 {
     while (len--) {
 	if (casemap[(Uchar)*s1++] != casemap[(Uchar)*s2])
@@ -330,9 +314,7 @@ register int len;
 
 #ifdef SUPPORT_NNTP
 char*
-read_auth_file(file, pass_ptr)
-char* file;
-char** pass_ptr;
+read_auth_file(char* file, char** pass_ptr)
 {
     FILE* fp;
     char* strptr[2];
@@ -357,8 +339,7 @@ char** pass_ptr;
 
 #ifdef MSDOS
 int
-ChDir(path)
-char* path;
+ChDir(char* path)
 {
     if (isalpha(*path) && path[1] == ':') {
 	setdisk(path[0]&0x1f);
@@ -371,7 +352,7 @@ char* path;
 
 #ifdef MSDOS
 int
-getuid()
+getuid(void)
 {
     return 2;
 }
