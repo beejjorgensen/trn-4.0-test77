@@ -24,10 +24,9 @@
 #include "sdisp.h"
 
 void
-s_goxy(x,y)
-int x,y;
+s_goxy(int x, int y)
 {
-    char* tgoto();
+    char *tgoto(const char *cap, int col, int row);
     tputs(tgoto(tc_CM, x, y), 1, putchr);
 }
 
@@ -36,7 +35,7 @@ int x,y;
  * Good for most bottom status bars.
  */
 void
-s_mail_and_place()
+s_mail_and_place(void)
 {
     bool previous,next;
 
@@ -58,7 +57,7 @@ s_mail_and_place()
 }
 
 void
-s_refresh_top()
+s_refresh_top(void)
 {
     home_cursor();
     switch (s_cur_type) {
@@ -72,7 +71,7 @@ s_refresh_top()
 }
 
 void
-s_refresh_bot()
+s_refresh_bot(void)
 {
     /* if bottom bar exists, then it is at least one character high... */
     s_goxy(0,tc_LINES-s_bot_lines);
@@ -88,7 +87,7 @@ s_refresh_bot()
 
 /* refresh both status and description */
 void
-s_refresh_entzone()
+s_refresh_entzone(void)
 {
     int i;
     int start;		/* starting page_arts index to refresh... */
@@ -113,7 +112,7 @@ s_refresh_entzone()
 }
 
 void
-s_place_ptr()
+s_place_ptr(void)
 {
     s_goxy(s_status_cols,
 	    s_top_lines+page_ents[s_ptr_page_line].start_line);
@@ -124,8 +123,7 @@ s_place_ptr()
 /* refresh the status line for an article on screen page */
 /* note: descriptions will not (for now) be individually refreshable */
 void
-s_refresh_status(line)
-int line;
+s_refresh_status(int line)
 {
     int i,j;
     long ent;
@@ -140,8 +138,7 @@ int line;
 }
 
 void
-s_refresh_description(line)
-int line;
+s_refresh_description(int line)
 {
     int i,j,startline;
     long ent;
@@ -169,10 +166,9 @@ int line;
     fflush(stdout);
 }
 
+/* jump: true means that the cursor should be positioned */
 void
-s_ref_entry(line,jump)
-int line;
-int jump;	/* true means that the cursor should be positioned */
+s_ref_entry(int line, int jump)
 {
     int i,j;
     long ent;
@@ -201,13 +197,13 @@ int jump;	/* true means that the cursor should be positioned */
 }
 
 void
-s_rub_ptr()
+s_rub_ptr(void)
 {
     rubout();
 }
 
 void
-s_refresh()
+s_refresh(void)
 {
     int i;
 
@@ -236,7 +232,7 @@ s_refresh()
 }
 
 int
-s_initscreen()
+s_initscreen(void)
 {
     /* check to see if term is too dumb: if so, return non-zero */
 
@@ -252,8 +248,7 @@ s_initscreen()
 
 /* screen-refresh the status if on-page */
 void
-s_ref_status_onpage(ent)
-long ent;
+s_ref_status_onpage(long ent)
 {
     int i;
     for (i = 0; i <= s_bot_ent; i++)
@@ -263,7 +258,7 @@ long ent;
 
 
 void
-s_resize_win()
+s_resize_win(void)
 {
 #if 0
     int i;

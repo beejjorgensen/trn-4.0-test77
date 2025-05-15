@@ -55,9 +55,7 @@
 **  Match text and p, return TRUE, FALSE, or ABORT.
 */
 static int
-DoMatch(text, p)
-register char* text;
-register char* p;
+DoMatch(register char* text, register char* p)
 {
     register int	last;
     register int	matched;
@@ -116,9 +114,7 @@ register char* p;
 **  User-level routine.  Returns TRUE or FALSE.
 */
 int
-wildmat(text, p)
-char* text;
-char* p;
+wildmat(char* text, char* p)
 {
 #ifdef	OPTIMIZE_JUST_STAR
     if (p[0] == '*' && p[1] == '\0')
@@ -135,7 +131,7 @@ char* p;
 
 #ifdef	TEST
 int
-main()
+main(void)
 {
     /* Yes, we use gets not fgets.  Sue me. */
     extern char* gets();

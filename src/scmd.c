@@ -37,7 +37,7 @@
 void s_search();
 
 void
-s_go_bot()
+s_go_bot(void)
 {
     s_ref_bot = TRUE;			/* help uses whole screen */
     s_goxy(0,tc_LINES-s_bot_lines);	/* go to bottom bar */
@@ -48,8 +48,7 @@ s_go_bot()
 /* finishes a command on the bottom line... */
 /* returns TRUE if command entered, FALSE if wiped out... */
 int
-s_finish_cmd(string)
-char* string;
+s_finish_cmd(char* string)
 {
     s_go_bot();
     if (string && *string) {
@@ -62,7 +61,7 @@ char* string;
 
 /* returns an entry # selected, S_QUIT, or S_ERR */
 int
-s_cmdloop()
+s_cmdloop(void)
 {
     int i;
 
@@ -114,7 +113,7 @@ s_cmdloop()
 }
 
 void
-s_lookahead()
+s_lookahead(void)
 {
     switch (s_cur_type) {
 #ifdef SCAN_ART
@@ -133,7 +132,7 @@ s_lookahead()
  * if necessary.
  */
 int
-s_docmd()
+s_docmd(void)
 {
     long a;		/* entry pointed to */
     bool flag;		/* misc */
@@ -306,8 +305,7 @@ static char search_text[LBUFLEN];
 static char search_init INIT(FALSE);
 
 bool
-s_match_description(ent)
-long ent;
+s_match_description(long ent)
 {
     int i, lines;
     static char lbuf[LBUFLEN];
@@ -326,8 +324,7 @@ long ent;
 }
 
 long
-s_forward_search(ent)
-long ent;
+s_forward_search(long ent)
 {
     if (ent)
 	ent = s_next_elig(ent);
@@ -340,8 +337,7 @@ long ent;
 }
 
 long
-s_backward_search(ent)
-long ent;
+s_backward_search(long ent)
 {
     if (ent)
 	ent = s_prev_elig(ent);
@@ -355,7 +351,7 @@ long ent;
 
 /* perhaps later have a wraparound search? */
 void
-s_search()
+s_search(void)
 {
     int i;
     int fill_type;    /* 0: forward, 1: backward */
@@ -448,8 +444,7 @@ s_search()
 }
 
 void
-s_jumpnum(firstchar)
-char_int firstchar;
+s_jumpnum(char_int firstchar)
 {
     int value;
     bool jump_verbose;

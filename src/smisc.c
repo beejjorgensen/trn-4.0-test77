@@ -25,8 +25,7 @@
 #include "smisc.h"
 
 bool
-s_eligible(ent)
-long ent;
+s_eligible(long ent)
 {
     switch (s_cur_type) {
 #ifdef SCAN_ART
@@ -40,16 +39,14 @@ long ent;
 }
 
 void
-s_beep()
+s_beep(void)
 {
     putchar(7);
     fflush(stdout);
 }
 
 char*
-s_get_statchars(ent,line)
-long ent;
-int line;
+s_get_statchars(long ent, int line)
 {
     if (s_status_cols == 0)
 	return nullstr;
@@ -64,10 +61,7 @@ int line;
 }
 
 char*
-s_get_desc(ent,line,trunc)
-long ent;
-int line;
-bool_int trunc;
+s_get_desc(long ent, int line, bool_int trunc)
 {
     switch (s_cur_type) {
 #ifdef SCAN_ART
@@ -80,8 +74,7 @@ bool_int trunc;
 }
 
 int
-s_ent_lines(ent)
-long ent;
+s_ent_lines(long ent)
 {
     switch (s_cur_type) {
 #ifdef SCAN_ART

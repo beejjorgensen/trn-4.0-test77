@@ -223,7 +223,7 @@ nntp_body(ART_NUM artnum)
 	char b[NNTP_STRLEN];
 	ART_POS prev_pos = body_end = 0;
 	while (nntp_copybody(b, sizeof b, body_end+1) > 0) {
-	    if (*b == '\n' && body_end - prev_pos < sizeof b)
+	    if (*b == '\n' && (size_t)(body_end - prev_pos) < (size_t)sizeof b)  // Extra (size_t) for Clang 15.0.0
 		break;
 	    prev_pos = body_end;
 	}
