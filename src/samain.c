@@ -34,7 +34,7 @@
 
 
 void
-sa_init()
+sa_init(void)
 {
     sa_init_context();
     if (lastart == 0 || absfirst > lastart)
@@ -61,22 +61,22 @@ sa_init()
 }
 
 void
-sa_init_ents()
+sa_init_ents(void)
 {
     sa_num_ents = sa_ents_alloc = 0;
     sa_ents = (SA_ENTRYDATA*)NULL;
 }
 
 void
-sa_clean_ents()
+sa_clean_ents(void)
 {
     free(sa_ents);
 }
 
 /* returns entry number that was added */
+/* artnum: article number to be added */
 long
-sa_add_ent(artnum)
-ART_NUM artnum;		/* article number to be added */
+sa_add_ent(ART_NUM artnum)
 {
     long cur;
 
@@ -102,7 +102,7 @@ ART_NUM artnum;		/* article number to be added */
 }
 
 void
-sa_cleanmain()
+sa_cleanmain(void)
 {
     sa_clean_ents();
 
@@ -117,8 +117,7 @@ sa_cleanmain()
 }
 
 void
-sa_growarts(oldlast,last)
-long oldlast,last;
+sa_growarts(long oldlast, long last)
 {
     int i;
 
@@ -128,7 +127,7 @@ long oldlast,last;
 
 /* Initialize the scan-context to enter article scan mode. */
 void
-sa_init_context()
+sa_init_context(void)
 {
     if (sa_context_init)
 	return;		/* already initialized */
@@ -138,7 +137,7 @@ sa_init_context()
 }
 
 bool
-sa_initarts()
+sa_initarts(void)
 {
     int a;
 
@@ -154,7 +153,7 @@ sa_initarts()
 
 /* note: initscreen must be called before (for scr_width) */
 void
-sa_initmode()
+sa_initmode(void)
 {
     /* set up screen sizes */
     sa_set_screen();
@@ -163,7 +162,7 @@ sa_initmode()
 }
 
 int
-sa_mainloop()
+sa_mainloop(void)
 {
     int i;
 
@@ -206,7 +205,7 @@ sa_mainloop()
 
 /* do something useful until a key is pressed. */
 void
-sa_lookahead()
+sa_lookahead(void)
 {
 #ifdef PENDING
 #ifdef SCORE
@@ -222,7 +221,7 @@ sa_lookahead()
 
 /* Returns first marked entry number, or 0 if no articles are marked. */
 long
-sa_readmarked_elig()
+sa_readmarked_elig(void)
 {
     long e;
 

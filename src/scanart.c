@@ -28,7 +28,7 @@
 #include "samisc.h"
 
 int
-sa_main()
+sa_main(void)
 {
     char sa_oldmode;	/* keep mode of caller */
     int i;
@@ -94,8 +94,7 @@ sa_main()
 
 /* called when more articles arrive */
 void
-sa_grow(oldlast,last)
-ART_NUM oldlast,last;
+sa_grow(ART_NUM oldlast, ART_NUM last)
 {
     if (!sa_initialized)
 	return;
@@ -103,7 +102,7 @@ ART_NUM oldlast,last;
 }
 
 void
-sa_cleanup()
+sa_cleanup(void)
 {
     /* we might be called by other routines which aren't sure
      * about the scan status

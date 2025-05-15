@@ -18,11 +18,10 @@
 #include "sorder.h"
 
 #ifdef UNDEF
+/* a,b: pointers to the two entries to be compared */
 int
-s_compare(a,b)
-long* a;
-long* b;		/* pointers to the two entries to be compared */
- {
+s_compare(long* a, long* b)
+{
     switch(s_cur_type) {
 #ifdef SCAN_ART
       case S_ART:
@@ -34,10 +33,9 @@ long* b;		/* pointers to the two entries to be compared */
 }
 #endif
 
+/* a,b: the two entry numbers to be compared */
 int
-s_compare(a,b)
-long a;
-long b;		/* the two entry numbers to be compared */
+s_compare(long a, long b)
 {
     switch(s_cur_type) {
 #ifdef SCAN_ART
@@ -56,7 +54,7 @@ long b;		/* the two entry numbers to be compared */
 
 /* Uses a heapsort algorithm with the heap readjustment inlined. */
 void
-s_sort_basic()
+s_sort_basic(void)
 {
     int i,n;
     int t1;
@@ -109,7 +107,7 @@ s_sort_basic()
 }
 
 void
-s_sort()
+s_sort(void)
 {
     long i;
 
@@ -125,7 +123,7 @@ s_sort()
 }
 
 void
-s_order_clean()
+s_order_clean(void)
 {
     if (s_ent_sort)
 	free(s_ent_sort);
@@ -145,8 +143,7 @@ s_order_clean()
 
 /* adds the entry number to the current context */
 void
-s_order_add(ent)
-long ent;
+s_order_add(long ent)
 {
     long size;
 
@@ -183,8 +180,7 @@ long ent;
 }
 
 long
-s_prev(ent)
-long ent;
+s_prev(long ent)
 {
     long tmp;
 
@@ -199,8 +195,7 @@ long ent;
 }
 
 long
-s_next(ent)
-long ent;
+s_next(long ent)
 {
     long tmp;
 
@@ -217,8 +212,7 @@ long ent;
 /* given an entry, returns previous eligible entry */
 /* returns 0 if no previous eligible entry */
 long
-s_prev_elig(a)
-long a;
+s_prev_elig(long a)
 {
     while ((a = s_prev(a)) != 0)
 	if (s_eligible(a))
@@ -229,8 +223,7 @@ long a;
 /* given an entry, returns next eligible entry */
 /* returns 0 if no next eligible entry */
 long
-s_next_elig(a)
-long a;
+s_next_elig(long a)
 {
     while ((a = s_next(a)) != 0)
 	if (s_eligible(a))
@@ -239,7 +232,7 @@ long a;
 }
 
 long
-s_first()
+s_first(void)
 {
     if (s_order_changed)
 	s_sort();
@@ -249,7 +242,7 @@ s_first()
 }
 
 long
-s_last()
+s_last(void)
 {
     if (s_order_changed)
 	s_sort();

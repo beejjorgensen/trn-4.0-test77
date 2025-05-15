@@ -34,8 +34,7 @@
 
 #ifdef UNDEF	/* use function for breakpoint debugging */
 int
-check_article(a)
-long a;
+check_article(long a)
 {
     if (a < absfirst || a > lastart) {
 	printf("\nArticle %d out of range\n",a) FLUSH;
@@ -50,8 +49,7 @@ long a;
 
 /* ignoring "Fold" (or later recursive) mode(s), is this article eligible? */
 bool
-sa_basic_elig(a)
-long a;
+sa_basic_elig(long a)
 {
     ART_NUM artnum;
 
@@ -79,8 +77,7 @@ long a;
 }
 
 bool
-sa_eligible(a)
-long a;
+sa_eligible(long a)
 {
 
     assert(check_article(sa_ents[a].artnum));
@@ -98,8 +95,7 @@ long a;
 /* given an article number, return the entry number for that article */
 /* (There is no easy mapping between entry numbers and article numbers.) */
 long
-sa_artnum_to_ent(artnum)
-ART_NUM artnum;
+sa_artnum_to_ent(ART_NUM artnum)
 {
     long i;
     for (i = 1; i < sa_num_ents; i++)
@@ -111,7 +107,7 @@ ART_NUM artnum;
 
 /* select1 the articles picked in the TRN thread selector */
 void
-sa_selthreads()
+sa_selthreads(void)
 {
     register SUBJECT *sp;
     register ARTICLE *ap;
@@ -154,7 +150,7 @@ sa_selthreads()
 }
 
 int
-sa_number_arts()
+sa_number_arts(void)
 {
     int total;
     long i;
@@ -180,8 +176,7 @@ sa_number_arts()
  * scope of an article.
  */
 void
-sa_go_art(a)
-long a;
+sa_go_art(long a)
 {
     art = a;
     (void)article_find(art);
@@ -189,9 +184,9 @@ long a;
         artopen(art,(ART_POS)0);
 }
 
+/* a,b: the entry numbers to compare */
 int
-sa_compare(a,b)
-long a,b;		/* the entry numbers to compare */
+sa_compare(long a, long b)
 {
     long i,j;
     
