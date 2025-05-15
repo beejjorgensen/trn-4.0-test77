@@ -45,13 +45,13 @@ int socket _((int, struct sockproto *, struct sockaddr_in *, int));
 #ifndef WINSOCK
 unsigned long inet_addr _((char*));
 #ifndef NONETDB
-struct servent* getservbyname();
-struct hostent* gethostbyname();
+struct servent* getservbyname(const char *name, const char *proto);
+struct hostent* gethostbyname(const char *name);
 #endif
 #endif
 
 int
-init_nntp()
+init_nntp(void)
 {
 #ifdef WINSOCK
     if (WSAStartup(0x0101,&wsaData) == 0) {
@@ -67,8 +67,7 @@ init_nntp()
 }
 
 int
-server_init(machine)
-char* machine;
+server_init(char* machine)
 {
     int sockt_rd, sockt_wr;
 #ifdef DECNET
@@ -123,7 +122,7 @@ char* machine;
 }
 
 void
-cleanup_nntp()
+cleanup_nntp(void)
 {
 #ifdef WINSOCK
     WSACleanup();
@@ -131,10 +130,7 @@ cleanup_nntp()
 }
 
 int
-get_tcp_socket(machine, port, service)
-char* machine;
-int port;
-char* service;
+get_tcp_socket(char* machine, int port, char* service)
 {
     int s;
 #if INET6
@@ -336,8 +332,7 @@ char* service;
 
 #ifdef DECNET
 static int
-get_dnet_socket(machine)
-char* machine;
+get_dnet_socket(char* machine)
 {
     int s, area, node;
     struct sockaddr_dn sdn;
@@ -391,8 +386,7 @@ char* machine;
  */
 #ifdef NONETDB
 unsigned long
-inet_addr(cp)
-register char* cp;
+inet_addr(register char* cp)
 {
     unsigned long val, base, n;
     register char c;
