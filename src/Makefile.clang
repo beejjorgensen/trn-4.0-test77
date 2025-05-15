@@ -7,7 +7,8 @@
 #    -DNO_LISTGROUP               avoids attempting to use LISTGROUP
 #    -DREPLYTO_POSTER_CHECKING    makes -p also check Reply-To (slow)
 
-srcdir = /home/beej/src/trn-4.0-test77/src
+srcdir = $(HOME)/src/trn-4.0-test77/src
+
 VPATH = 
 extra_cleanup = 
 
