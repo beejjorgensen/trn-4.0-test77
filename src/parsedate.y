@@ -94,9 +94,9 @@ static time_t	yyRelMonth;
 static time_t	yyRelSeconds;
 
 
-extern struct tm	*localtime();
+extern struct tm	*localtime(const time_t *);
 
-static void		date_error();
+static void		date_error(char *);
 %}
 
 %union {
@@ -442,6 +442,7 @@ static TABLE	TimezoneTable[] = {
 static void date_error(char *s)
 {
     /* NOTREACHED */
+    (void)s;
 }
 
 
@@ -466,15 +467,7 @@ static time_t ToSeconds(time_t Hours, time_t Minutes, time_t Seconds, MERIDIAN M
 
 
 static time_t
-Convert(Month, Day, Year, Hours, Minutes, Seconds, Meridian, dst)
-    time_t	Month;
-    time_t	Day;
-    time_t	Year;
-    time_t	Hours;
-    time_t	Minutes;
-    time_t	Seconds;
-    MERIDIAN	Meridian;
-    DSTMODE	dst;
+Convert(time_t Month, time_t Day, time_t Year, time_t Hours, time_t Minutes, time_t Seconds, MERIDIAN Meridian, DSTMODE dst)
 {
     static int	DaysNormal[13] = {
 	0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
@@ -528,9 +521,7 @@ Convert(Month, Day, Year, Hours, Minutes, Seconds, Meridian, dst)
 
 
 static time_t
-DSTcorrect(Start, Future)
-    time_t	Start;
-    time_t	Future;
+DSTcorrect(time_t Start, time_t Future)
 {
     time_t	StartDay;
     time_t	FutureDay;
@@ -542,9 +533,7 @@ DSTcorrect(Start, Future)
 
 
 static time_t
-RelativeMonth(Start, RelMonth)
-    time_t	Start;
-    time_t	RelMonth;
+RelativeMonth(time_t Start, time_t RelMonth)
 {
     struct tm	*tm;
     time_t	Month;
@@ -562,9 +551,7 @@ RelativeMonth(Start, RelMonth)
 
 
 static int
-LookupWord(buff, length)
-    char		*buff;
-    register int	length;
+LookupWord(char *buff, register int length)
 {
     register char	*p;
     register char	*q;
@@ -716,8 +703,7 @@ int date_lex(void)
 
 
 time_t
-parsedate(p)
-    char		*p;
+parsedate(char *p)
 {
     extern int		date_parse();
     time_t		Start;
