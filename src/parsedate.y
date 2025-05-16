@@ -104,12 +104,14 @@ static void		date_error(char *);
     enum _MERIDIAN	Meridian;
 }
 
-%token	tDAY tDAYZONE tMERIDIAN tMONTH tMONTH_UNIT tSEC_UNIT tSNUMBER
-%token	tUNUMBER tZONE
+%token	tDAY
 
-%type	<Number>	tDAYZONE tMONTH tMONTH_UNIT tSEC_UNIT
-%type	<Number>	tSNUMBER tUNUMBER tZONE numzone zone
-%type	<Meridian>	tMERIDIAN o_merid
+%token	<Number>	tDAYZONE tMONTH tMONTH_UNIT tSEC_UNIT
+%token	<Number>	tSNUMBER tUNUMBER tZONE
+%token	<Meridian>	tMERIDIAN
+
+%type	<Number>	numzone zone
+%type	<Meridian>	o_merid
 
 %%
 
