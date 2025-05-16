@@ -23,16 +23,14 @@ char* nntp_password;
 #endif
 
 int
-doshell(sh,cmd)
-char* sh;
-char* cmd;
+doshell(char* sh, char* cmd)
 {
+    (void)sh;
     return system(cmd);
 }
 
 void
-finalize(num)
-int num;
+finalize(int num)
 {
 #ifdef SUPPORT_NNTP
     nntp_close(TRUE);
@@ -46,8 +44,7 @@ static char nomem[] = "trn: out of memory!\n";
 
 #ifndef USE_DEBUGGING_MALLOC
 char*
-safemalloc(size)
-MEM_SIZE size;
+safemalloc(MEM_SIZE size)
 {
     char* ptr;
 
@@ -64,9 +61,7 @@ MEM_SIZE size;
 
 #ifndef USE_DEBUGGING_MALLOC
 char*
-saferealloc(where,size)
-char* where;
-MEM_SIZE size;
+saferealloc(char* where, MEM_SIZE size)
 {
     char* ptr;
 
@@ -80,13 +75,9 @@ MEM_SIZE size;
 #endif
 
 char*
-dointerp(dest, destsize, pattern, stoppers, cmd)
-char* dest;
-int destsize;
-char* pattern;
-char* stoppers;
-char* cmd;
+dointerp(char* dest, int destsize, char* pattern, char* stoppers, char* cmd)
 {
+    (void)cmd;
     extern char* dotdir;
     if (*pattern == '%' && pattern[1] == '.') {
 	int len = strlen(dotdir);
@@ -101,7 +92,7 @@ char* cmd;
 
 #ifdef SUPPORT_NNTP
 int
-nntp_handle_nested_lists()
+nntp_handle_nested_lists(void)
 {
     fputs("Programming error! Nested NNTP calls detected.\n",stderr);
     return -1;
@@ -110,7 +101,7 @@ nntp_handle_nested_lists()
 
 #ifdef SUPPORT_NNTP
 char*
-get_auth_user()
+get_auth_user(void)
 {
     extern char* nntp_auth_file;
     return read_auth_file(nntp_auth_file, &nntp_password);
@@ -119,7 +110,7 @@ get_auth_user()
 
 #ifdef SUPPORT_NNTP
 char*
-get_auth_pass()
+get_auth_pass(void)
 {
     return nntp_password;
 }
@@ -127,7 +118,7 @@ get_auth_pass()
 
 #if defined(USE_GENAUTH) && defined(SUPPORT_NNTP)
 char*
-get_auth_command()
+get_auth_command(void)
 {
     return NULL;
 }

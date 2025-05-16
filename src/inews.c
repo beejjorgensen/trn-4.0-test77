@@ -26,9 +26,7 @@ int valid_header _((char*));
 void append_signature _((void));
 
 int
-main(argc, argv)
-int argc;
-char* argv[];
+main(int argc, char* argv[])
 {
     bool has_fromline, in_header, has_pathline;
     bool found_nl, had_nl;
@@ -251,8 +249,7 @@ char* argv[];
 
 /* valid_header -- determine if a line is a valid header line */
 int
-valid_header(h)
-register char* h;
+valid_header(register char* h)
 {
     char* colon;
     char* space;
@@ -279,7 +276,7 @@ register char* h;
  * The rn-style DOTDIR environmental variable is used if present.
  */
 void
-append_signature()
+append_signature(void)
 {
     char* cp;
     FILE* fp;
@@ -316,7 +313,7 @@ append_signature()
 
 #ifdef SUPPORT_NNTP
 int
-nntp_handle_timeout()
+nntp_handle_timeout(void)
 {
     if (!new_connection) {
 	static bool handling_timeout = FALSE;

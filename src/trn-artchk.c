@@ -37,9 +37,7 @@ char nullstr[1] = "";
 char ess[2] = "s";
 
 int
-main(argc, argv)
-int argc;
-char* argv[];
+main(int argc, char* argv[])
 {
     FILE* fp;
     FILE* fp_active = NULL;
@@ -318,7 +316,7 @@ Warning: posting exceeds %d columns.  Line %d is the first long one:\n%s\n",
 
 #ifdef SUPPORT_NNTP
 int
-server_connection()
+server_connection(void)
 {
     static int server_stat = 0;
     if (!server_stat) {
@@ -333,7 +331,7 @@ server_connection()
 
 #ifdef SUPPORT_NNTP
 int
-nntp_handle_timeout()
+nntp_handle_timeout(void)
 {
     fputs("\n503 Server timed out.\n",stderr);
     return -2;

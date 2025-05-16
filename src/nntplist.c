@@ -29,9 +29,7 @@ char* loginName;
 #endif
 
 int
-main(argc, argv)
-int argc;
-char* argv[];
+main(int argc, char* argv[])
 {
     char command[32];
     char* action = NULL;
@@ -185,7 +183,7 @@ char* argv[];
 }
 
 void
-Usage()
+Usage(void)
 {
     fprintf(stderr, "Usage: nntplist [-x WildSpec] [-o OutputFile] [type]\n\
 \nWhere type is any of the LIST command arguments your server accepts.\n");
@@ -194,7 +192,7 @@ Usage()
 
 #ifdef SUPPORT_NNTP
 int
-nntp_handle_timeout()
+nntp_handle_timeout(void)
 {
     fputs("\n503 Server timed out.\n",stderr);
     return -2;
