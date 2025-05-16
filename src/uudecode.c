@@ -174,7 +174,7 @@ int
 uudecode(FILE* ifp, int state)
 {
     static FILE* ofp = NULL;
-    static int line_length;
+    static unsigned int line_length;
     char lastline[UULENGTH+1];
     char* filename;
     char* p;
@@ -237,7 +237,7 @@ uudecode(FILE* ifp, int state)
 		uudecodeline(buf, ofp);
 		break;
 	    }
-	    if ((int)strlen(buf) > line_length) {
+	    if (strlen(buf) > line_length) {
 		state = DECODE_INACTIVE;
 		break;
 	    }

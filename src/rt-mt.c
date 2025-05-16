@@ -125,7 +125,7 @@ mt_data(void)
 	IF(verbose)
 	    printf("\nGetting thread file."), fflush(stdout);
 #endif
-	if (nntp_read((char*)&total, sizeof (TOTAL)) < (size_t)sizeof (TOTAL))  // size_t cast for Clang 15.0.0
+	if ((size_t)nntp_read((char*)&total, sizeof (TOTAL)) < (size_t)sizeof (TOTAL))  // size_t cast for Clang 15.0.0
 	    goto exit;
     }
     else
