@@ -26,7 +26,7 @@ static long sa_num_threads = 0;
 static HASHTABLE* sa_thread_hash = 0;
 
 void
-sa_init_threads()
+sa_init_threads(void)
 {
     mp_free(MP_SATHREAD);
     sa_num_threads = 0;
@@ -41,9 +41,9 @@ sa_init_threads()
  * the default comparison function, so it can be used for a number.
  * later: write a custom comparison function.
  */
+/* e: entry number */
 long
-sa_get_subj_thread(e)
-long e;			/* entry number */
+sa_get_subj_thread(long e)
 {
     HASHDATUM data;
     char* s;
@@ -78,8 +78,7 @@ long e;			/* entry number */
 }
 
 int
-sa_subj_thread_count(a)
-long a;
+sa_subj_thread_count(long a)
 {
     int count;
     long b;
@@ -95,8 +94,7 @@ long a;
 
 /* returns basic_elig previous subject thread */
 long
-sa_subj_thread_prev(a)
-long a;
+sa_subj_thread_prev(long a)
 {
     int i,j;
 
@@ -113,8 +111,7 @@ long a;
 }
 
 long
-sa_subj_thread_next(a)
-long a;
+sa_subj_thread_next(long a)
 {
     int i,j;
 

@@ -35,7 +35,7 @@ static int mp_first_free_frag;
 static MP_HEAD mpheads[MAX_MEM_POOLS];
 
 void
-mp_init()
+mp_init(void)
 {
     int i;
 
@@ -54,7 +54,7 @@ mp_init()
 
 /* returns the fragment number */
 static int
-mp_alloc_frag()
+mp_alloc_frag(void)
 {
     int f;
 
@@ -75,8 +75,7 @@ mp_alloc_frag()
 
 /* frees a fragment number */
 static void
-mp_free_frag(f)
-int f;
+mp_free_frag(int f)
 {
 #if 0
     /* old code to actually free the blocks */
@@ -94,9 +93,7 @@ int f;
 }
 
 char*
-mp_savestr(str,pool)
-char* str;
-int pool;
+mp_savestr(char* str, int pool)
 {
     int f, oldf;
     int len;
@@ -133,9 +130,7 @@ int pool;
 
 /* returns a pool-allocated string */
 char*
-mp_malloc(len,pool)
-int len;
-int pool;
+mp_malloc(int len, int pool)
 {
     int f,oldf;
     char* s;
@@ -162,8 +157,7 @@ int pool;
 
 /* free a whole memory pool */
 void
-mp_free(pool)
-int pool;
+mp_free(int pool)
 {
     int oldnext;
     int f;

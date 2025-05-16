@@ -45,11 +45,7 @@ static char url_path[1024];
 
 /* returns TRUE if successful */
 bool
-fetch_http(host,port,path,outname)
-char* host;
-int port;
-char* path;
-char* outname;
+fetch_http(char* host, int port, char* path, char* outname)
 {
     int sock;
     FILE* fp_out;
@@ -92,10 +88,7 @@ char* outname;
 
 /* add port support later? */
 bool
-fetch_ftp(host,origpath,outname)
-char* host;
-char* origpath;
-char* outname;
+fetch_ftp(char* host, char* origpath, char* outname)
 {
 #ifdef USEFTP
     static char cmdline[1024];
@@ -164,8 +157,7 @@ char* outname;
 /* use relative URLs later? */
 /* later: pay more attention to long URLs */
 bool
-parse_url(url)
-char* url;
+parse_url(char* url)
 {
     char* s;
     char* p;
@@ -231,9 +223,7 @@ char* url;
 }
 
 bool
-url_get(url,outfile)
-char* url;
-char* outfile;
+url_get(char* url, char* outfile)
 {
     bool flag;
     
