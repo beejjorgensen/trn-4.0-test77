@@ -20,7 +20,7 @@ static char sc_e_newline[LBUFLEN];
 
 /* returns new string or NULL to abort. */
 char*
-sc_easy_append()
+sc_easy_append(void)
 {
     char* s;
     bool q_done;	/* if TRUE, we are finished with current question */
@@ -172,12 +172,13 @@ sc_easy_append()
 
 /* returns new string or NULL to abort. */
 char*
-sc_easy_command()
+sc_easy_command(void)
 {
     char* s;
     bool q_done;	/* if TRUE, we are finished with current question */
     char ch;
 
+    (void)s;
     s = sc_e_newline;
     printf("\nScoring easy command mode.\n") FLUSH;
     q_done = FALSE;

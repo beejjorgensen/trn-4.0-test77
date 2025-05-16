@@ -30,7 +30,7 @@ static char* ttk_idle_pending_buf;
 /* This needs to be made *fast* when nothing is waiting... */
 #ifdef USE_TK
 static void
-ttk_waitidle_pending()
+ttk_waitidle_pending(void)
 {
     if (ttk_idle_flag) {
 	(void)Tcl_Eval(ttcl_interp,ttk_idle_pending_buf);
@@ -40,7 +40,7 @@ ttk_waitidle_pending()
 
 #ifdef USE_TK
 void
-ttk_do_waiting_events()
+ttk_do_waiting_events(void)
 {
     if (ttk_running) {
 	ttk_waitidle_pending();
@@ -61,7 +61,7 @@ ttk_do_waiting_events()
  */
 #ifdef USE_TK
 void
-ttk_wait_for_input()
+ttk_wait_for_input(void)
 {
     if (ttk_running) {
 	while (!finput_pending(1)) {
@@ -73,7 +73,7 @@ ttk_wait_for_input()
 #endif /* USE_TK */
 
 void
-ttcl_init()
+ttcl_init(void)
 {
     char* name;
     char* class;
@@ -208,8 +208,7 @@ ttcl_init()
 
 /* might use status later */
 void
-ttcl_finalize(status)
-int status;
+ttcl_finalize(int status)
 {
 #ifdef USE_TK
     if (ttk_running)
@@ -220,9 +219,7 @@ int status;
 }
 
 void
-ttcl_set_int(varname,val)
-char* varname;
-int val;
+ttcl_set_int(char* varname, int val)
 {
     static char buf[20];
 
@@ -232,16 +229,13 @@ int val;
 }
 
 void
-ttcl_set_str(varname,val)
-char* varname;
-char* val;
+ttcl_set_str(char* varname, char* val)
 {
     (void)Tcl_SetVar(ttcl_interp,varname,val,0);
 }
 
 int
-ttcl_get_int(varname)
-char* varname;
+ttcl_get_int(char* varname)
 {
     char* s;
     int result = 0;
@@ -254,15 +248,13 @@ char* varname;
 }
 
 char*
-ttcl_get_str(varname)
-char* varname;
+ttcl_get_str(char* varname)
 {
     return Tcl_GetVar(ttcl_interp,varname,0);
 }
 
 void
-ttcl_eval(str)
-char* str;
+ttcl_eval(char* str)
 {
     static char buf[1024];
     char* p;

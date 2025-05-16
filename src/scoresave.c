@@ -42,8 +42,7 @@ static int saved;
 static ART_NUM last;
 
 void
-sc_sv_add(str)
-char* str;
+sc_sv_add(char* str)
 {
     if (num_lines == lines_alloc) {
 	lines_alloc += 100;
@@ -54,8 +53,7 @@ char* str;
 }
 
 void
-sc_sv_delgroup(gname)
-char* gname;
+sc_sv_delgroup(char* gname)
 {
     char* s;
     int i;
@@ -88,7 +86,7 @@ char* gname;
 
 /* get the file containing scores into memory */
 void
-sc_sv_getfile()
+sc_sv_getfile(void)
 {
     char* s;
     FILE* fp;
@@ -113,7 +111,7 @@ sc_sv_getfile()
 
 /* save the memory into the score file */
 void
-sc_sv_savefile()
+sc_sv_savefile(void)
 {
     char* s;
     FILE* tmpfp;
@@ -157,10 +155,9 @@ sc_sv_savefile()
 }
 
 /* returns the next article number (after the last one used) */
+/* a: art number to start with */
 ART_NUM
-sc_sv_use_line(line,a)
-char* line;
-ART_NUM a;	/* art number to start with */
+sc_sv_use_line(char* line, ART_NUM a)
 {
     char* s;
     char* p;
@@ -259,8 +256,7 @@ ART_NUM a;	/* art number to start with */
 }
 
 ART_NUM
-sc_sv_make_line(a)
-ART_NUM a;
+sc_sv_make_line(ART_NUM a)
 {
     char* s;
     bool lastscore_valid = FALSE;
@@ -331,7 +327,7 @@ ART_NUM a;
 }
 
 void
-sc_load_scores()
+sc_load_scores(void)
 {
 /* lots of cleanup needed here */
     ART_NUM a = 0;
@@ -425,7 +421,7 @@ sc_load_scores()
 }
 
 void
-sc_save_scores()
+sc_save_scores(void)
 {
     ART_NUM a;
     char* gname;

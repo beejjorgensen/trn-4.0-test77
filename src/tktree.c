@@ -44,8 +44,7 @@ typedef struct {
 } TTK_ART;
 
 static void
-ttk_article_delete(cd)
-ClientData cd;
+ttk_article_delete(ClientData cd)
 {
     safefree(cd);
 }
@@ -56,8 +55,7 @@ static TTK_ART* ttk_fastart;
 static char ttk_letters[] = "123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+";
 
 static void
-ttk_treeprep_helper(ap)
-ARTICLE* ap;
+ttk_treeprep_helper(ARTICLE* ap)
 {
     for (;;) {
 	ap->flags2 &= ~(AF2_WASUNREAD|AF2_CHANGED|AF2_NODEDRAWN);
@@ -71,8 +69,7 @@ ARTICLE* ap;
 }
 
 static void
-ttk_treechange_helper(ap)
-ARTICLE* ap;
+ttk_treechange_helper(ARTICLE* ap)
 {
     int changed;			/* later indicate num of changes? */
 
@@ -105,11 +102,7 @@ ARTICLE* ap;
 }
 
 static int
-ttk_article_objectcmd(cd, interp, argc, argv)
-ClientData cd;
-Tcl_Interp* interp;
-int argc;
-char* argv[];
+ttk_article_objectcmd(ClientData cd, Tcl_Interp* interp, int argc, char* argv[])
 {
     TTK_ART* p = (TTK_ART*)cd;
     ARTICLE* ap;
@@ -432,10 +425,9 @@ char* argv[];
 
 /* XXX Cleanup the tree drawing, replace "wipetree" with special procedure */
 /* Called from trn to draw an article tree. */
+/* x,y: starting X and Y positions */
 void
-ttk_draw_tree(ap,x,y)
-ARTICLE* ap;
-int x,y;				/* starting X and Y positions */
+ttk_draw_tree(ARTICLE* ap, int x, int y)
 {
     static char lbuf[100];
 
@@ -452,11 +444,7 @@ int x,y;				/* starting X and Y positions */
 }
 
 static int
-ttk_article(cd, interp, argc, argv)
-ClientData cd;
-Tcl_Interp* interp;
-int argc;
-char* argv[];
+ttk_article(ClientData cd, Tcl_Interp* interp, int argc, char* argv[])
 {
     TTK_ART* p;
 
@@ -475,11 +463,7 @@ char* argv[];
 
 /* XXX XXX Move this elsewhere. (general TRN stuff, not just article trees) */
 static int
-ttk_trn(cd, interp, argc, argv)
-ClientData cd;
-Tcl_Interp* interp;
-int argc;
-char* argv[];
+ttk_trn(ClientData cd, Tcl_Interp* interp, int argc, char* argv[])
 {
     char* cmd;
     static char lbuf[32];		/* long enough for integers... */
@@ -509,7 +493,7 @@ char* argv[];
 }
 
 int
-ttk_tree_init()
+ttk_tree_init(void)
 {
     char lbuf[20];
 

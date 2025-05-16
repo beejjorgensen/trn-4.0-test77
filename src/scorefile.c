@@ -53,7 +53,7 @@ static bool sf_has_extra_headers;
 
 /* Must be called before any other sf_ routine (once for each group) */
 void
-sf_init()
+sf_init(void)
 {
     int i;
     char* s;
@@ -136,7 +136,7 @@ sf_init()
 }
 
 void
-sf_clean()
+sf_clean(void)
 {
     int i;
 
@@ -169,7 +169,7 @@ sf_clean()
  * call it "sf_recent_entry" or "sf_last_entry"?
  */
 void
-sf_grow()
+sf_grow(void)
 {
     int i;
 
@@ -190,9 +190,9 @@ sf_grow()
 /* Returns -1 if no matching extra header found, otherwise returns offset
  * into the sf_extra_headers array.
  */
+/* head: header name, (without ':' character) */
 int
-sf_check_extra_headers(head)
-char* head;		/* header name, (without ':' character) */
+sf_check_extra_headers(char* head)
 {
     int i;
     char* s;
@@ -214,9 +214,9 @@ char* head;		/* header name, (without ':' character) */
 /* adds the header to the list of known extra headers if it is not already
  * known.
  */
+/* head: new header name, (without ':' character) */
 void
-sf_add_extra_header(head)
-char* head;		/* new header name, (without ':' character) */
+sf_add_extra_header(char* head)
 {
     static char lbuf[LBUFLEN];		/* ick. */
     int len;
@@ -248,10 +248,10 @@ char* head;		/* new header name, (without ':' character) */
     sf_extra_headers[sf_num_extra_headers-1] = s;
 }
 
+/* art: article number to check */
+/* hnum: header number: offset into sf_extra_headers */
 char*
-sf_get_extra_header(art,hnum)
-ART_NUM art;		/* article number to check */
-int hnum;		/* header number: offset into sf_extra_headers */
+sf_get_extra_header(ART_NUM art, int hnum)
 {
     char* s;
     char* head;		/* header text */
@@ -292,8 +292,7 @@ int hnum;		/* header number: offset into sf_extra_headers */
  * Note: does not check for trailing garbage ("+00kjsdfk" returns TRUE).
  */
 bool
-is_text_zero(s)
-char* s;
+is_text_zero(char* s)
 {
     return *s == '0' || ((*s == '+' || *s == '-') && s[1]=='0');
 }
@@ -303,8 +302,7 @@ static char sf_file[LBUFLEN];
 
 /* filenames of type a/b/c/foo.bar.misc for group foo.bar.misc */
 char*
-sf_get_filename(level)
-int level;
+sf_get_filename(int level)
 {
     char* s;
 
@@ -348,8 +346,7 @@ int level;
 
 /* given a string, if no slashes prepends SCOREDIR env. variable */
 char*
-sf_cmd_fname(s)
-char* s;
+sf_cmd_fname(char* s)
 {
     static char lbuf[LBUFLEN];
     char* s1;
@@ -365,10 +362,10 @@ char* s;
 }
 
 /* returns TRUE if good command, FALSE otherwise */
+/* cmd: text of command */
+/* check: if TRUE, just check, don't execute */
 bool
-sf_do_command(cmd,check)
-char* cmd;		/* text of command */
-bool_int check;		/* if TRUE, just check, don't execute */
+sf_do_command(char* cmd, bool_int check)
 {
     char* s;
     int i;
@@ -536,10 +533,10 @@ bool_int check;		/* if TRUE, just check, don't execute */
 
 COMPEX* sf_compex INIT(NULL);
 
+/* start1: points to first character of keyword */
+/* end1: points to last  character of keyword */
 char*
-sf_freeform(start1,end1)
-char* start1;		/* points to first character of keyword */
-char* end1;		/* points to last  character of keyword */
+sf_freeform(char* start1, char* end1)
 {
     char* s;
     bool error;
@@ -593,10 +590,9 @@ char* end1;		/* points to last  character of keyword */
     return s;
 }
 
+/* check: if TRUE, just check the line, don't act. */
 bool
-sf_do_line(line,check)
-char* line;
-bool_int check;		/* if TRUE, just check the line, don't act. */
+sf_do_line(char* line, bool_int check)
 {
     char ch;
     char* s;
@@ -712,8 +708,7 @@ bool_int check;		/* if TRUE, just check the line, don't act. */
 }
 
 void
-sf_do_file(fname)
-char* fname;
+sf_do_file(char* fname)
 {
     char* s;
     int sf_fp;
@@ -767,10 +762,10 @@ char* fname;
     sf_file_level--;
 }
 
+/* str: string to match on */
+/* ind: index into sf_entries */
 int
-score_match(str,ind)
-char* str;		/* string to match on */
-int ind;		/* index into sf_entries */
+score_match(char* str, int ind)
 {
     char* s1;
     char* s2;
@@ -795,8 +790,7 @@ int ind;		/* index into sf_entries */
 }
 
 int
-sf_score(a)
-ART_NUM a;
+sf_score(ART_NUM a)
 {
     int sum,i,j;
     int h;		/* header type */
@@ -878,8 +872,7 @@ ART_NUM a;
 
 /* returns changed score line or NULL if no changes */
 char*
-sf_missing_score(line)
-char* line;
+sf_missing_score(char* line)
 {
     static char lbuf[LBUFLEN];
     int i;
@@ -908,8 +901,7 @@ Type a score now or delete the colon to abort this entry:\n") FLUSH;
 /* Interprets the '\"' command for creating new score entries online */
 /* consider using some external buffer rather than the 2 internal ones */
 void
-sf_append(line)
-char* line;
+sf_append(char* line)
 {
     char* scoreline;	/* full line to add to scorefile */
     char* scoretext;	/* text after the score# */
@@ -1036,9 +1028,7 @@ char* line;
 
 /* returns a lowercased copy of the header line type h in private buffer */
 char*
-sf_get_line(a,h)
-ART_NUM a;
-int h;
+sf_get_line(ART_NUM a, int h)
 {
     static char sf_getline[LBUFLEN];
     char* s;
@@ -1076,8 +1066,7 @@ int h;
 
 /* given an index into sf_entries, print information about that index */
 void
-sf_print_match(indx)
-int indx;
+sf_print_match(int indx)
 {
     int i,j,k;
     int level,tmplevel;		/* level is initialized iff used */
@@ -1129,8 +1118,7 @@ int indx;
 }
 
 void
-sf_exclude_file(fname)
-char* fname;
+sf_exclude_file(char* fname)
 {
     int start,end;
     int newnum;
@@ -1182,9 +1170,9 @@ char* fname;
 	printf("Excluded file: %s\n",fname) FLUSH;
 }
 
+/* filespec: file abbrev. or name */
 void
-sf_edit_file(filespec)
-char* filespec;		/* file abbrev. or name */
+sf_edit_file(char* filespec)
 {
     char filebuf[LBUFLEN];	/* clean up buffers */
     char filechar;		/* which file to do? */
@@ -1234,8 +1222,7 @@ char* filespec;		/* file abbrev. or name */
 /* if file number is negative, the file does not exist or cannot be opened */
 #ifdef SCOREFILE_CACHE
 static int
-sf_open_file(name)
-char* name;
+sf_open_file(char* name)
 {
     FILE* fp;
     char* temp_name;
@@ -1303,7 +1290,7 @@ char* name;
 
 #ifdef SCOREFILE_CACHE
 static void
-sf_file_clear()
+sf_file_clear(void)
 {
     int i;
 
@@ -1325,8 +1312,7 @@ sf_file_clear()
 
 #ifdef SCOREFILE_CACHE
 static char*
-sf_file_getline(fnum)
-int fnum;
+sf_file_getline(int fnum)
 {
     if (fnum < 0 || fnum >= sf_num_files)
 	return NULL;

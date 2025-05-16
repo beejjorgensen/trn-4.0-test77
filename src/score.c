@@ -47,9 +47,9 @@
 FILE* filter_error_file;
 #endif
 
+/* pend_wait: if true, enter pending mode when scoring... */
 void
-sc_init(pend_wait)
-bool_int pend_wait;	/* if true, enter pending mode when scoring... */
+sc_init(bool_int pend_wait)
 {
     int i;
     ART_NUM a;
@@ -167,7 +167,7 @@ bool_int pend_wait;	/* if true, enter pending mode when scoring... */
 }
 
 void
-sc_cleanup()
+sc_cleanup(void)
 {
     if (!sc_initialized)
 	return;
@@ -190,9 +190,7 @@ sc_cleanup()
 }
 
 void
-sc_set_score(a,score)
-ART_NUM a;
-int score;
+sc_set_score(ART_NUM a, int score)
 {
     register ARTICLE* ap;
 
@@ -212,8 +210,7 @@ int score;
 /* Hopefully people will write more scoring routines later */
 /* This is where you should add hooks for new scoring methods. */
 void
-sc_score_art_basic(a)
-ART_NUM a;
+sc_score_art_basic(ART_NUM a)
 {
     int score;
 #ifdef USE_FILTER
@@ -250,11 +247,11 @@ ART_NUM a;
 }
 
 /* Returns an article's score, scoring it if necessary */
+/* now: if TRUE, sort the scores if necessary... */
 int
-sc_score_art(a,now)
-ART_NUM a;
-bool_int now;	/* if TRUE, sort the scores if necessary... */
+sc_score_art(ART_NUM a, bool_int now)
 {
+    (void)now;
     if (a < absfirst || a > lastart) {
 #if 0
  	printf("\nsc_score_art: illegal article# %d\n",a) FLUSH;
@@ -286,8 +283,7 @@ bool_int now;	/* if TRUE, sort the scores if necessary... */
 /* scores articles in a range */
 /* CONSIDER: option for scoring only unread articles (obey sc_fill_unread?) */
 void
-sc_fill_scorelist(first,last)
-ART_NUM first,last;
+sc_fill_scorelist(ART_NUM first, ART_NUM last)
 {
     int i;
 
@@ -302,10 +298,11 @@ ART_NUM first,last;
  * FALSE means use NICEBG if available
  */
 void
-sc_lookahead(flag, nowait)
-bool_int flag;
-bool_int nowait;
+sc_lookahead(bool_int flag, bool_int nowait)
 {
+    (void)flag;
+    (void)nowait;
+
     ART_NUM oldart = openart;
     ART_POS oldartpos;
 
@@ -366,7 +363,7 @@ bool_int nowait;
 }
 
 int
-sc_percent_scored()
+sc_percent_scored(void)
 {
     int i,total,scored;
 
@@ -399,7 +396,7 @@ sc_percent_scored()
 }
 
 void
-sc_rescore_arts()
+sc_rescore_arts(void)
 {
     ART_NUM a;
     bool old_spin;
@@ -441,8 +438,7 @@ sc_rescore_arts()
 /* Wrapper to isolate scorefile functions from the rest of the world */
 /* corrupted (:-) 11/12/92 by CAA for online rescoring */
 void
-sc_append(line)
-char* line;
+sc_append(char* line)
 {
     char filechar;
     if (!line)		/* empty line */
@@ -483,7 +479,7 @@ char* line;
 }
 
 void
-sc_rescore()
+sc_rescore(void)
 {
     sc_rescoring = TRUE;	/* in case routines need to know */
     sc_cleanup();	/* get rid of the old */
@@ -499,8 +495,7 @@ sc_rescore()
 
 /* May have a very different interface in the user versions */
 void
-sc_score_cmd(line)
-char* line;
+sc_score_cmd(char* line)
 {
     long i, j;
     char* s;
@@ -574,9 +569,9 @@ char* line;
     } /* switch */
 }
 
+/* thresh: kill all articles with this score or lower */
 void
-sc_kill_threshold(thresh)
-int thresh;		/* kill all articles with this score or lower */
+sc_kill_threshold(int thresh)
 {
     ART_NUM a;
 
