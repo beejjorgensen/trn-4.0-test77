@@ -46,7 +46,7 @@ save_article(void)
     bool_int use_pref;
     register char* s;
     register char* c;
-    char altbuf[CBUFLEN*50];
+    char altbuf[CBUFLEN];
     int i;
     bool interactive = (buf[1] == FINISHCMD);
     char cmd = *buf;
