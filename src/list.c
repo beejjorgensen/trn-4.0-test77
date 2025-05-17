@@ -10,7 +10,7 @@
 #include "list.ih"
 
 void
-list_init()
+list_init(void)
 {
     ;
 }

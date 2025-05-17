@@ -32,7 +32,7 @@
 #include "sadisp.h"
 
 void
-sa_refresh_top()
+sa_refresh_top(void)
 {
     color_object(COLOR_SCORE, 1);
     printf("%s |",ngname);
@@ -55,7 +55,7 @@ sa_refresh_top()
 }
 
 void
-sa_refresh_bot()
+sa_refresh_bot(void)
 {
     char* s;
 
@@ -89,7 +89,7 @@ sa_refresh_bot()
 
 /* set up various screen dimensions */
 void
-sa_set_screen()
+sa_set_screen(void)
 {
     /* One size fits all for now. */
     /* these things here because they may vary by screen size later */

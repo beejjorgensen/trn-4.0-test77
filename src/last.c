@@ -18,7 +18,7 @@ static char* lastfile = NULL;	/* path name of .rnlast file */
 static long starttime;
 
 void
-last_init()
+last_init(void)
 {
     lastfile = savestr(filexp(LASTNAME));
 
@@ -27,7 +27,7 @@ last_init()
 }
 
 void
-readlast()
+readlast(void)
 {
     if ((tmpfp = fopen(lastfile,"r")) != NULL) {
 	if (fgets(buf,sizeof buf,tmpfp) != NULL) {
@@ -51,7 +51,7 @@ readlast()
 /* Put out certain values for next run of trn */
 
 void
-writelast()
+writelast(void)
 {
     sprintf(buf,"%s.%ld", lastfile, our_pid);
     if ((tmpfp = fopen(buf,"w")) != NULL) {
