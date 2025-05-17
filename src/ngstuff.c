@@ -552,8 +552,12 @@ perform(register char* cmdlst, int output_level)
 	    }
 	}
 	else {
-	    sprintf(msg,"Unknown command: %s",cmdlst);
-	    errormsg(msg);
+        // GCC detects a potential overrun if we just use cmd_buf so we
+        // make a bigger one of 512*3 bytes. That used to be a lot.
+        char big_msg[CBUFLEN*3];
+
+	    sprintf(big_msg,"Unknown command: %s",cmdlst);
+	    errormsg(big_msg);
 	    return -1;
 	}
 #ifdef VERBOSE

@@ -649,6 +649,9 @@ edit_kfile(void)
 #ifdef KILLFILES
     int r = -1;
     char* bp;
+    // GCC detects a potential overrun if we just use cmd_buf so we make
+    // a bigger one of 512*3 bytes. That used to be a lot.
+    char big_cmd_buf[CBUFLEN*3];
 
     if (in_ng) {
 	if (kf_state & KFS_LOCAL_CHANGES)
@@ -662,13 +665,13 @@ edit_kfile(void)
     } else
 	strcpy(buf,filexp(getval("KILLGLOBAL",killglobal)));
     if ((r = makedir(buf,MD_FILE)) == 0) {
-	sprintf(cmd_buf,"%s %s",
+	sprintf(big_cmd_buf,"%s %s",
 	    filexp(getval("VISUAL",getval("EDITOR",defeditor))),buf);
 	printf("\nEditing %s KILL file:\n%s\n",
-	    (in_ng?"local":"global"),cmd_buf) FLUSH;
+	    (in_ng?"local":"global"),big_cmd_buf) FLUSH;
 	termdown(3);
 	resetty();			/* make sure tty is friendly */
-	r = doshell(sh,cmd_buf);/* invoke the shell */
+	r = doshell(sh,big_cmd_buf);/* invoke the shell */
 	noecho();			/* and make terminal */
 	crmode();			/*   unfriendly again */
 	open_kfile(in_ng);

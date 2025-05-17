@@ -183,7 +183,7 @@ bool
 mime_TypesMatch(char* ct, char* pat)
 {
     char* s = index(pat,'/');
-    int len = (s? s - pat : strlen(pat));
+    int len = (s? s - pat : (int)strlen(pat));
     bool iswild = (!s || strEQ(s+1,"*"));
 
     return strcaseEQ(ct,pat)
