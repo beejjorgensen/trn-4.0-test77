@@ -1233,6 +1233,8 @@ reinp_selector:
 static void
 sel_prompt(void)
 {
+    char bigbuf[CBUFLEN*4];
+
     draw_mousebar(tc_COLS,0);
     if (can_home)
 	goto_xy(0,sel_last_line);
@@ -1248,11 +1250,11 @@ sel_prompt(void)
 		(long)((sel_prior_obj_cnt+sel_page_obj_cnt)*100 / sel_total_obj_cnt),
 		page_char, end_char);
     interp(buf, sizeof buf, mailcall);
-    sprintf(msg, "%s-- %s %s (%s%s order) -- %s", buf,
+    sprintf(bigbuf, "%s-- %s %s (%s%s order) -- %s", buf,
 	    sel_exclusive && in_ng? "SELECTED" : "Select", sel_mode_string,
 	    sel_direction<0? "reverse " : nullstr, sel_sort_string, cmd_buf);
-    color_string(COLOR_CMD,msg);
-    term_col = strlen(msg);
+    color_string(COLOR_CMD,bigbuf);
+    term_col = strlen(bigbuf);
     removed_prompt = 0;
 }
 
@@ -2415,8 +2417,10 @@ q does nothing.\n\n\
 		    (void) first_page();
 		return DS_RESTART;
 	    }
-	    /* FALL THROUGH */
 #endif
+        // I really wanted this line inside the #endif, but gcc ignores
+        // it there. Someday C23.
+	    // fallthrough
 	  case ING_QUIT:
 	    sel_ret = 'q';
 	    return DS_QUIT;
@@ -2847,7 +2851,7 @@ q does nothing.\n\n\
 static void
 switch_dmode(char** dmode_cpp)
 {
-    char* s;
+    char* s = "";
 
     if (!*++*dmode_cpp) {
 	do {
