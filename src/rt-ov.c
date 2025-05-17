@@ -154,7 +154,7 @@ ov_data(ART_NUM first, ART_NUM last, bool_int cheating)
     ART_NUM real_first = first;
 #ifdef SUPPORT_NNTP
     ART_NUM real_last = last;
-    int line_cnt;
+    int line_cnt = 0;
     int ov_chunk_size = cheating? OV_CHUNK_SIZE : OV_CHUNK_SIZE * 8;
 #endif
     time_t started_request;

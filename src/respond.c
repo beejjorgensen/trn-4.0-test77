@@ -47,6 +47,7 @@ save_article(void)
     register char* s;
     register char* c;
     char altbuf[CBUFLEN];
+    char bigaltbuf[CBUFLEN*3];
     int i;
     bool interactive = (buf[1] == FINISHCMD);
     char cmd = *buf;
@@ -137,7 +138,8 @@ save_article(void)
 	    s = (s==buf ? altbuf : buf);
 	}
 	if (FILE_REF(s) != '/') {	/* path still relative? */
-	    c = (s==buf ? altbuf : buf);
+	    //c = (s==buf ? altbuf : buf);
+        c = bigaltbuf;  // bigger buf to silence gcc overflow warning
 	    sprintf(c, "%s/%s", cwd, s);
 	    s = c;			/* absolutize it */
 	}
@@ -300,7 +302,8 @@ save_article(void)
 	}
 	makedir(s,MD_FILE);
 	if (FILE_REF(s) != '/') {	/* relative path? */
-	    c = (s==buf ? altbuf : buf);
+	    //c = (s==buf ? altbuf : buf);
+        c = bigaltbuf;  // bigger buf to silence gcc overflow warning
 	    sprintf(c, "%s/%s", cwd, s);
 	    s = c;			/* absolutize it */
 	}

@@ -1033,6 +1033,8 @@ prev_page(void)
 	    return TRUE;
 	}
       }
+      // Not sure this is deliberate
+      // fallthrough
       default: {
 	SUBJECT* sp;
 	SUBJECT* page_sp = sel_page_sp;
