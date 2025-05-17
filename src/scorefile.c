@@ -1060,7 +1060,7 @@ sf_get_line(ART_NUM a, int h)
     for (s = sf_getline; *s; s++)
 	if (isupper(*s))
 	    *s = tolower(*s);
-	*s = tolower(*s);
+	//*s = tolower(*s);  // What is this doing here?
     return sf_getline;
 }
 
