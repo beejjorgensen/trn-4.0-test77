@@ -36,17 +36,17 @@
 static char nullart[] = "\nEmpty article.\n";
 
 void
-respond_init()
+respond_init(void)
 {
 }
 
 int
-save_article()
+save_article(void)
 {
     bool_int use_pref;
     register char* s;
     register char* c;
-    char altbuf[CBUFLEN];
+    char altbuf[CBUFLEN*50];
     int i;
     bool interactive = (buf[1] == FINISHCMD);
     char cmd = *buf;
@@ -440,7 +440,7 @@ s_bomb:
 }
 
 int
-view_article()
+view_article(void)
 {
     parseheader(art);
     mime_SetArticle();
@@ -505,7 +505,7 @@ view_article()
 }
 
 int
-cancel_article()
+cancel_article(void)
 {
     char hbuf[5*LBUFLEN];
     char* ngs_buf;
@@ -578,7 +578,7 @@ done:
 }
 
 int
-supersede_article()		/* Supersedes: */
+supersede_article(void)		/* Supersedes: */
 {
     char hbuf[5*LBUFLEN];
     char* ngs_buf;
@@ -655,7 +655,7 @@ done:
 }
 
 static void
-follow_it_up()
+follow_it_up(void)
 {
     safecpy(cmd_buf,filexp(getval("NEWSPOSTER",NEWSPOSTER)), sizeof cmd_buf);
     if (invoke(cmd_buf,origdir) == 42) {
@@ -695,7 +695,7 @@ follow_it_up()
 }
 
 void
-reply()
+reply(void)
 {
     char hbuf[5*LBUFLEN];
     bool incl_body = (*buf == 'R' && art);
@@ -755,7 +755,7 @@ done:
 }
   
 void
-forward()
+forward(void)
 {
     char hbuf[5*LBUFLEN];
     char* maildoer = savestr(getval("FORWARDPOSTER",FORWARDPOSTER));
@@ -866,7 +866,7 @@ forward()
 }
 
 void
-followup()
+followup(void)
 {
     char hbuf[5*LBUFLEN];
     bool incl_body = (*buf == 'F' && art);
@@ -973,8 +973,7 @@ invoke(char* cmd, char* dir)
 */
 #if 0
 static bool
-cut_line(str)
-char* str;
+cut_line(char* str)
 {
     char* cp;
     char got_flag;
