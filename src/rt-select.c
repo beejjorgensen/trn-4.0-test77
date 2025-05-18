@@ -116,7 +116,7 @@ static int (*extra_commands) _((char_int));
 char
 article_selector(char_int cmd)
 {
-    bool save_selected_only;
+    bool save_selected_only = FALSE;
     START_SELECTOR('t');
 
     sel_rereading = (cmd == 'U');
@@ -836,7 +836,7 @@ sel_status_msg(char* cp)
 static char
 sel_input(void)
 {
-    register int j;
+    register int j = 0;
     int ch, action;
     char* in_select;
     int got_dash, got_goto;

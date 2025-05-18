@@ -227,7 +227,7 @@ decode_switch(register char* s)
 		/* Free old user_htype list */
 		while (user_htype_cnt > 1)
 		    free(user_htype[--user_htype_cnt].name);
-		bzero((char*)user_htypeix, 26);
+		bzero((char*)user_htypeix, 26 * sizeof user_htypeix[0]);
 	    }
 	    /* FALL THROUGH */
 	case 'H':

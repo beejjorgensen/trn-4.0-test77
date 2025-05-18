@@ -667,7 +667,7 @@ char*
 secs2text(time_t secs)
 {
     char* s = buf;
-    int items;
+    int items = 0;
 
     if (!secs || (secs & 1))
 	return "never";

@@ -73,7 +73,7 @@ char*
 filexp(register char* s)
 {
     static char filename[CBUFLEN];
-    char scrbuf[CBUFLEN];
+    char scrbuf[CBUFLEN * 2];
     register char* d;
 
 #ifdef DEBUG
