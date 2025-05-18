@@ -16,7 +16,7 @@
 #include "score-easy.h"
 
 /* new line to return to the caller. */
-static char sc_e_newline[LBUFLEN];
+static char sc_e_newline[LBUFLEN + 2];
 
 /* returns new string or NULL to abort. */
 char*

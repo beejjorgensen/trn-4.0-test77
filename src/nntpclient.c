@@ -63,6 +63,7 @@ nntp_connect(char* machine, bool_int verbose)
 	    response = 0;
 	    break;
 	}
+        // fallthrough
     case -1:
 	if (verbose)
 	    printf("failed.\n");

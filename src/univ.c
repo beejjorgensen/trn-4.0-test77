@@ -329,6 +329,7 @@ univ_add_textfile(char* desc, char* name)
       /* later add URL handling */
       case ':':
 	s++;
+        // fallthrough
       default:
 	/* XXX later have error checking on length */
 	strcpy(lbuf,univ_fname);
@@ -1179,7 +1180,7 @@ univ_article_desc(UNIV_ITEM* ui)
 {
     char* s;
     char* f;
-    static char dbuf[200];
+    static char dbuf[600];
     static char sbuf[200];
     static char fbuf[200];
 

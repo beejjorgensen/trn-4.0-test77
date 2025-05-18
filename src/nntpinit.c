@@ -132,7 +132,7 @@ cleanup_nntp(void)
 int
 get_tcp_socket(char* machine, int port, char* service)
 {
-    int s;
+    int s = -1;
 #if INET6
     struct addrinfo hints;
     struct addrinfo* res;
