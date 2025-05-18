@@ -25,5 +25,7 @@ arrested decay.
 
 ## TODO
 
-* Set up more expect scripts for different configurations.
 * When posting news, the `nntpauth` file gets deleted...?
+  * In `util.c` in `doshell()` we `UNLINK(nntp_auth_file)`. I don't yet
+    understand why.
+* Set up more expect scripts for different configurations.
