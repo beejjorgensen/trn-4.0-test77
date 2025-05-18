@@ -956,6 +956,7 @@ invoke(char* cmd, char* dir)
     resetty();			/* make terminal well-behaved */
     ret = doshell(sh,cmd);	/* do the command */
     noecho();			/* set no echo */
+    ret = WEXITSTATUS(ret); // Caller expects to see exit status
     crmode();			/* and cbreak mode */
     termlib_init();
     set_mode(gmode,oldmode);
