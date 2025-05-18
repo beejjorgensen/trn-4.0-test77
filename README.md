@@ -26,5 +26,4 @@ arrested decay.
 ## TODO
 
 * Set up more expect scripts for different configurations.
-* When posting news, how to set the From?
 * When posting news, the `nntpauth` file gets deleted...?
