@@ -221,7 +221,7 @@ uudecode(FILE* ifp, int state)
 	    state = DECODE_SETLEN;
 	    break;
 	  case DECODE_INACTIVE:	/* Looking for uuencoded data to resume */
-	    if (*buf != 'M' || strlen(buf) != line_length) {
+	    if (*buf != 'M' || strlen(buf) != (size_t)line_length) {  // Clang 15.0.0 needs the size_t cast
 		if (*buf == 'B' && strnEQ(buf, "BEGIN", 5))
 		    state = DECODE_ACTIVE;
 		break;
@@ -233,11 +233,11 @@ uudecode(FILE* ifp, int state)
 	    state = DECODE_ACTIVE;
 	    /* FALL THROUGH */
 	  case DECODE_ACTIVE:	/* Decoding data */
-	    if (*buf == 'M' && strlen(buf) == line_length) {
+	    if (*buf == 'M' && strlen(buf) == (size_t)line_length) { // Clang 15.0.0 needs the size_t cast
 		uudecodeline(buf, ofp);
 		break;
 	    }
-	    if (strlen(buf) > line_length) {
+	    if (strlen(buf) > (size_t)line_length) { // Clang 15.0.0 needs the size_t cast
 		state = DECODE_INACTIVE;
 		break;
 	    }
