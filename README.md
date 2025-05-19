@@ -25,10 +25,4 @@ arrested decay.
 
 ## TODO
 
-* When posting news, the `nntpauth` file gets deleted...?
-  * In `util.c` in `doshell()` we `UNLINK(nntp_auth_file)`.
-  * Before that in `doshell()`, it creates the auth file. Maybe it
-    assumes it's temporary?
-    * But it's needed to connect to the server to begin with.
-    * Why does `doshell()` blindly create then destroy the file?
 * Set up more expect scripts for different configurations.
