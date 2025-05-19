@@ -142,9 +142,9 @@ finalize(int status)
     if (status < 0) {
 	sigset(SIGILL,SIG_DFL);
 #ifdef HAS_SIGBLOCK
-	//sigsetmask(sigblock(0) & ~(sigmask(SIGILL) | sigmask(SIGIOT)));
+	/*sigsetmask(sigblock(0) & ~(sigmask(SIGILL) | sigmask(SIGIOT)));*/
+        /* This is replacement code for the above line */
 #endif
-        // This is replacement code for the above line
         {
 	    sigset_t mask;
 	    sigprocmask(SIG_SETMASK, NULL, &mask);
@@ -235,9 +235,9 @@ sig_catcher(int signo)
 #endif
     if (panic) {
 #ifdef HAS_SIGBLOCK
-	//sigsetmask(sigblock(0) & ~(sigmask(SIGILL) | sigmask(SIGIOT)));
+	/*sigsetmask(sigblock(0) & ~(sigmask(SIGILL) | sigmask(SIGIOT)));*/
 #endif
-        // This is replacement code for the above line
+        /* This is replacement code for the above line */
         {
 	    sigset_t mask;
 	    sigprocmask(SIG_SETMASK, NULL, &mask);
@@ -319,9 +319,9 @@ stop_catcher(int signo)
 	fflush(stdout);
 	sigset(signo,SIG_DFL);	/* enable stop */
 #ifdef HAS_SIGBLOCK
-	//sigsetmask(sigblock(0) & ~(1 << (signo-1)));
+	/*sigsetmask(sigblock(0) & ~(1 << (signo-1))); */
 #endif
-        // This is replacement code for the above line
+        /* This is replacement code for the above line */
         {
 	    sigset_t mask;
 	    sigprocmask(SIG_SETMASK, NULL, &mask);

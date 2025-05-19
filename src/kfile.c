@@ -389,7 +389,7 @@ write_local_thread_commands(int keylen, HASHDATUM* data, int extra)
 
     ARTICLE* ap = (ARTICLE*)data->dat_ptr;
     int autofl = ap->autofl;
-    char ch = '\0';  // Was used uninitialized -Beej
+    char ch = '\0';
 
     if (autofl && ((ap->flags & AF_EXISTS) || ap->child1)) {
 	int i;
@@ -485,7 +485,7 @@ write_global_thread_commands(int keylen, HASHDATUM* data, int appending)
     int autofl;
     int i, age;
     char* msgid;
-    char ch = '\0';  // Was used uninitialized -Beej
+    char ch = '\0';
 
     if (data->dat_len) {
 	if (appending)
@@ -649,8 +649,8 @@ edit_kfile(void)
 #ifdef KILLFILES
     int r = -1;
     char* bp;
-    // GCC detects a potential overrun if we just use cmd_buf so we make
-    // a bigger one of 512*3 bytes. That used to be a lot.
+    /* GCC detects a potential overrun if we just use cmd_buf so we make
+    a bigger one of 512*3 bytes. That used to be a lot. */
     char big_cmd_buf[CBUFLEN*3];
 
     if (in_ng) {

@@ -2,7 +2,7 @@
  */
 /* This software is copyrighted as detailed in the LICENSE file. */
 
-// beej this is hackish, can't we #include <term.h> to get these?
+/* this is hackish, can't we #include <term.h> to get these? */
 int tputs(const char *str, int affcnt, int (*putc)(int));
 int tgetent(char *bp, const char *name);
 int tgetflag(const char *id);

@@ -965,7 +965,7 @@ char* dointerp(register char* dest, register int destsize, register char* patter
 		    /* copy out so we can copy in. */
 		    safecpy(scrbuf, s, sizeof scrbuf);
 		    s = scrbuf;
-		    if ((size_t)i > (size_t)sizeof scrbuf)	/* we truncated, ack! */  // Second size_t for clang 15.0.0
+		    if ((size_t)i > (size_t)sizeof scrbuf)	/* we truncated, ack! */  /* Second size_t for clang 15.0.0 */
 			abort_interp();
 		}
 		while (*s) {

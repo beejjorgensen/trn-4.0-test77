@@ -377,7 +377,7 @@ set_toread(register NGDATA* np, bool_int lax_high_check)
     }
     nums = np->rcline + np->numoffset;
     length = strlen(nums);
-    if ((size_t)(length+MAX_DIGITS+1) > (size_t)sizeof tmpbuf)  // Second cast for clang 15.0.0
+    if ((size_t)(length+MAX_DIGITS+1) > (size_t)sizeof tmpbuf)  /* Second cast for clang 15.0.0 */
 	mybuf = safemalloc((MEM_SIZE)(length+MAX_DIGITS+1));
     strcpy(mybuf,nums);
     mybuf[length++] = ',';
@@ -527,8 +527,8 @@ was_read_group(DATASRC* dp, ART_NUM artnum, char* ngnam)
     register NGDATA* np;
     register char* s;
     register char* t;
-    //register char* maxt = NULL;
-    ART_NUM min = 0, max = -1; // lastnum = 0;
+    /*register char* maxt = NULL;*/
+    ART_NUM min = 0, max = -1; /* lastnum = 0; */
 
     if (!artnum)
 	return TRUE;
@@ -560,16 +560,16 @@ was_read_group(DATASRC* dp, ART_NUM artnum, char* ngnam)
 	    t++;			/* skip to next number */
 	    if (artnum <= (max = atol(t)))
 		return TRUE;		/* it is in range => already read */
-	    //lastnum = max;		/* remember it */
-	    //maxt = t;			/* remember position in case we */
+	    /*lastnum = max;*/		/* remember it */
+	    /*maxt = t;*/			/* remember position in case we */
 					/* want to overwrite the max */
 	    while (isdigit(*t)) t++;	/* skip second number */
 	}
 	else {
 	    if (artnum == min)		/* explicitly a read article? */
 		return TRUE;
-	    //lastnum = min;		/* remember what the number was */
-	    //maxt = NULL;		/* last one was not a range */
+	    /*lastnum = min;*/		/* remember what the number was */
+	    /*maxt = NULL;*/		/* last one was not a range */
 	}
 	while (*t && !isdigit(*t)) t++;	/* skip comma and any spaces */
 	s = t;

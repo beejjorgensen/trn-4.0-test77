@@ -1142,8 +1142,7 @@ This is the last leaf in this tree.\n",stdout) FLUSH;
 #endif
 	if (*buf == Ctl('n')? next_art_with_subj() : prev_art_with_subj())
 	    return AS_NORM;
-      // Not sure this is deliberate
-      // fallthrough
+      /* fallthrough */
       case '/': case '?':
 normal_search:
 #ifdef ARTSEARCH

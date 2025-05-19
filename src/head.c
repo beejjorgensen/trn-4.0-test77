@@ -76,7 +76,7 @@ set_line_type(char* bufptr, register char* colon)
     register char* f;
     register int i, len;
 
-    if ((size_t)(colon-bufptr) > (size_t)sizeof msg) // second size_t for clang 15.0.0
+    if ((size_t)(colon-bufptr) > (size_t)sizeof msg) /* second size_t for clang 15.0.0 */
 	return SOME_LINE;
 
     for (t = msg, f = bufptr; f < colon; f++, t++) {
@@ -455,7 +455,7 @@ prefetchlines(ART_NUM artnum, int which_line, bool_int copy)
 {
     char* s;
     char* t;
-    register ART_POS firstpos = 0; // Was used uninitialized -Beej
+    register ART_POS firstpos = 0;
     register ART_POS lastpos;
     int size;
 

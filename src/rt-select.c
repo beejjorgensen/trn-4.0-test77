@@ -2418,9 +2418,9 @@ q does nothing.\n\n\
 		return DS_RESTART;
 	    }
 #endif
-        // I really wanted this line inside the #endif, but gcc ignores
-        // it there. Someday C23.
-	    // fallthrough
+        /* I really wanted this line inside the #endif, but gcc ignores
+        it there. Someday: C23.*/
+	    /* fallthrough */
 	  case ING_QUIT:
 	    sel_ret = 'q';
 	    return DS_QUIT;

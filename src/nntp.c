@@ -2,7 +2,7 @@
 */
 /* This software is copyrighted as detailed in the LICENSE file. */
 
-// beej these are deprecated and need to be replaced
+/* these are deprecated and need to be replaced */
 int sighold(int sig);
 int sigrelse(int sig);
 
@@ -223,7 +223,7 @@ nntp_body(ART_NUM artnum)
 	char b[NNTP_STRLEN];
 	ART_POS prev_pos = body_end = 0;
 	while (nntp_copybody(b, sizeof b, body_end+1) > 0) {
-	    if (*b == '\n' && (size_t)(body_end - prev_pos) < (size_t)sizeof b)  // Extra (size_t) for Clang 15.0.0
+	    if (*b == '\n' && (size_t)(body_end - prev_pos) < (size_t)sizeof b)  /* Extra (size_t) for Clang 15.0.0 */
 		break;
 	    prev_pos = body_end;
 	}

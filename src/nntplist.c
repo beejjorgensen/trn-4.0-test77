@@ -2,7 +2,7 @@
  */
 /* This software is copyrighted as detailed in the LICENSE file. */
 
-// beej these are deprecated and need to be replaced
+/* these are deprecated and need to be replaced */
 int sighold(int sig);
 int sigrelse(int sig);
 

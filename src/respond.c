@@ -138,8 +138,8 @@ save_article(void)
 	    s = (s==buf ? altbuf : buf);
 	}
 	if (FILE_REF(s) != '/') {	/* path still relative? */
-	    //c = (s==buf ? altbuf : buf);
-        c = bigaltbuf;  // bigger buf to silence gcc overflow warning
+	    /*c = (s==buf ? altbuf : buf); */
+        c = bigaltbuf;  /* bigger buf to silence gcc overflow warning */
 	    sprintf(c, "%s/%s", cwd, s);
 	    s = c;			/* absolutize it */
 	}
@@ -302,8 +302,8 @@ save_article(void)
 	}
 	makedir(s,MD_FILE);
 	if (FILE_REF(s) != '/') {	/* relative path? */
-	    //c = (s==buf ? altbuf : buf);
-        c = bigaltbuf;  // bigger buf to silence gcc overflow warning
+	    /*c = (s==buf ? altbuf : buf); */
+        c = bigaltbuf;  /* bigger buf to silence gcc overflow warning */
 	    sprintf(c, "%s/%s", cwd, s);
 	    s = c;			/* absolutize it */
 	}
@@ -956,7 +956,7 @@ invoke(char* cmd, char* dir)
     resetty();			/* make terminal well-behaved */
     ret = doshell(sh,cmd);	/* do the command */
     noecho();			/* set no echo */
-    ret = WEXITSTATUS(ret); // Caller expects to see exit status
+    ret = WEXITSTATUS(ret); /* Caller expects to see exit status */
     crmode();			/* and cbreak mode */
     termlib_init();
     set_mode(gmode,oldmode);

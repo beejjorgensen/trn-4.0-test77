@@ -386,8 +386,8 @@ thread_perform(void)
 int
 perform(register char* cmdlst, int output_level)
 {
-    // GCC detects a potential overrun if we just use cmd_buf so we
-    // make a bigger one of 512*3 bytes. That used to be a lot.
+    /* GCC detects a potential overrun if we just use cmd_buf so we
+    make a bigger one of 512*3 bytes. That used to be a lot. */
     char big_msg[CBUFLEN*3];
 
     register int ch;

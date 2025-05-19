@@ -329,7 +329,7 @@ univ_add_textfile(char* desc, char* name)
       /* later add URL handling */
       case ':':
 	s++;
-        // fallthrough
+        /* fallthrough */
       default:
 	/* XXX later have error checking on length */
 	strcpy(lbuf,univ_fname);

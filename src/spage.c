@@ -409,7 +409,7 @@ s_go_next_page(void)
     /* the fill-page will set the refresh for the screen */
     flag = s_fillpage_forward(a);
     assert(flag);		/* I *must* be able to fill a page */
-    (void)flag; // silence usused warning
+    (void)flag;
     s_ptr_page_line = 0;	/* top of page */
 }
 
@@ -428,7 +428,7 @@ s_go_prev_page(void)
     /* take care of partially filled previous pages */
     flag = s_refillpage();
     assert(flag);		/* be nicer later... */
-    (void)flag; // silence usused warning
+    (void)flag;
     s_ref_status = s_ref_desc = 0;	/* refresh from top */
     s_ptr_page_line = 0;	/* top of page */
 }

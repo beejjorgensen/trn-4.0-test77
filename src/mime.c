@@ -1105,13 +1105,13 @@ filter_html(char* t, char* f)
 	if (mime_section->html & HF_IN_DQUOTE) {
 	    if (*f == '"')
 		mime_section->html &= ~HF_IN_DQUOTE;
-	    else if ((size_t)tagword_len < (size_t)(sizeof tagword) - 1)  // Second sizeof for clang 15.0.0
+	    else if ((size_t)tagword_len < (size_t)(sizeof tagword) - 1)  /* Second sizeof for clang 15.0.0 */
 		tagword[tagword_len++] = *f;
 	}
 	else if (mime_section->html & HF_IN_SQUOTE) {
 	    if (*f == '\'')
 		mime_section->html &= ~HF_IN_SQUOTE;
-	    else if ((size_t)tagword_len < (size_t)(sizeof tagword) - 1)  // Second sizeof for clang 15.0.0
+	    else if ((size_t)tagword_len < (size_t)(sizeof tagword) - 1)  /* Second sizeof for clang 15.0.0 */
 		tagword[tagword_len++] = *f;
 	}
 	else if (mime_section->html & HF_IN_COMMENT) {
@@ -1137,7 +1137,7 @@ filter_html(char* t, char* f)
 		mime_section->html |= HF_IN_DQUOTE;
 	    else if (*f == '\'')
 		mime_section->html |= HF_IN_SQUOTE;
-	    else if ((size_t)tagword_len < (size_t)(sizeof tagword) - 1) {  // Second sizeof for clang 15.0.0
+	    else if ((size_t)tagword_len < (size_t)(sizeof tagword) - 1) {  /* Second sizeof for clang 15.0.0 */
 		tagword[tagword_len++] = AT_GREY_SPACE(f)? ' ' : *f;
 	    }
 	}
