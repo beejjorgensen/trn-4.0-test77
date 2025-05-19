@@ -26,3 +26,4 @@ arrested decay.
 ## TODO
 
 * Set up more expect scripts for different configurations.
+* `sighold` and `sigrelse` are deprecated. But no one is warning... yet!
