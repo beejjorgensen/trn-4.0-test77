@@ -23,6 +23,24 @@ be used for realsies. This repo is just trying to mitigate rot. Or, as
 they call it in the ghost town of Bodie, I'm keeping it in a state of
 arrested decay.
 
+## What's this?
+
+https://web.archive.org/web/20220629054850/https://www.foxvalley.net/nntpsetup.html
+
+```
+trn
+Using a text editor, create a file in your .trn directory called "access". The access file should be formatted like this:
+[default]
+NNTP Server = news.foxvalley.net
+Auth User = your_email_address
+Auth Password = your_password
+```
+
+Maybe this is the _Right Way_ and I need to remove that code that protects
+`.nntpauth`. That would make me happy.
+
+Read: `HelpFiles/samples/access`
+
 ## TODO
 
 * Set up more expect scripts for different configurations.
