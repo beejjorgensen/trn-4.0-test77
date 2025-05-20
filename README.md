@@ -23,19 +23,17 @@ be used for realsies. This repo is just trying to mitigate rot. Or, as
 they call it in the ghost town of Bodie, I'm keeping it in a state of
 arrested decay.
 
-## Config scripts
-
-I've included some `expect`-driven scripts that run the extremely-manual
-`./Configure` script.
-
-* `configbot.mac.local`: sets up for a Mac build and local install in
-  `~/.local/bin` (so make sure that's in your `PATH`.
-* `configbot.archlinux`: sets up for a Linux build with installation in
-  the system directories. Basically an AUR builder.
-
 ## Building
 
-1. Run one of the above bot scripts or `./Configure` to do it manually.
+If you're building for a local install in `~/.local/bin` on a Mac or
+Linux or you're doing an AUR build, you can run `./configbot` in the
+`src/` directory. This is just a front-end to various `configbot.*`
+scripts. *This uses the `expect` tool, so have that installed.*
+
+If you want to do the classic interactive configure, run `./Configure`
+instead.
+
+1. Run `./configbot` (automatic) or `./Configure` (manual)
 2. `make`
 3. `make install`
 
@@ -45,7 +43,7 @@ Environment variables:
 
 ```
 export FROM='Me <me@example.com>'
-export ORGANIZATION="Yoyodyne"
+export ORGANIZATION="Yoyodyne Propulsion Systems"
 export NEWSSIGNATURE=~/.trn/signature
 export VISUAL=vim
 export EDITOR="$VISUAL"
@@ -69,5 +67,5 @@ cycle between them.
 
 ## TODO
 
-* Set up more expect scripts for different configurations.
 * `sighold` and `sigrelse` are deprecated. But no one is warning... yet!
+* `egrep` in `Configure` is deprecated.

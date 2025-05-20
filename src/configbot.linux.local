@@ -5,8 +5,8 @@
 spawn ./Configure
 expect {
 	-re "Would.*you.*like.*to.*see.*the.*instructions?" { send n\r ; exp_continue; }
-	-re "Which.*of.*these.*apply,.*if.*any?" { send none\r ; exp_continue; } 
-	-re "Operating.*system.*name?" { send darwin\r ; exp_continue; } 
+	-re "Which.*of.*these.*apply,.*if.*any?" { send linux\r ; exp_continue; } 
+	-re "Operating.*system.*name?" { send linux\r ; exp_continue; } 
 	-re "Select.*the.*news.*spool.*support" { send both\r ; exp_continue; }
 	-re "Do.*you.*want.*to.*use.*generic.*user-authentication?" { send y\r ; exp_continue; } 
 	-re "Enter.*\"local\",.*a.*server.*name,.*or.*a.*file name" { send local\r ; exp_continue; }  

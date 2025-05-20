@@ -1,0 +1,40 @@
+#!/bin/sh
+
+cat <<'EOF'
+==================
+trn auto-configure
+==================
+
+You can run `./Configure` manually or you can try one of these
+pre-canned `expect`-based scripts.
+
+The local installs use your `~/.local` hierarchy and install `trn` in
+`~/.local/bin`.
+
+1. Linux local
+2. Mac local
+3. Arch Linux (for AUR)
+
+EOF
+
+printf "Choose (1-3): "
+read -r choice
+
+case $choice in
+    1)
+        bot=configbot.linux.local
+        ;;
+    2)
+        bot=configbot.mac.local
+        ;;
+    3)
+        bot=configbot.archlinux
+        ;;
+    *)
+        printf "As an AI program, I can't \"%s\", Dave.\n" "$choice" 1>&2
+        exit 1
+        ;;
+esac
+
+TRN_CONFIG_BUFTEST_NOSLEEP=1 ./$bot
+

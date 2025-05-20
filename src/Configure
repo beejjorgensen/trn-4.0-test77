@@ -5190,7 +5190,12 @@ eval $setvar
 echo " "
 case "$d_nolnbuf" in
 '')
-	$cat <<'EOT' >blurfl.c
+    if [ -z "$TRN_CONFIG_BUFTEST_NOSLEEP" ]; then
+        stdout_buf_test_sleep="sleep(1);"
+    else
+        stdout_buf_test_sleep=""
+    fi
+	$cat <<EOT >blurfl.c
 #include <stdio.h>
 #include <unistd.h>
 int main(void)
@@ -5199,7 +5204,7 @@ int main(void)
 
 	for (i = 0; i < 5; i++) {
 		putchar(i+'a');
-		sleep(1);
+		$stdout_buf_test_sleep
 	}
 	putchar('\n');
 }
