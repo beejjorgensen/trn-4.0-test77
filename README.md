@@ -26,9 +26,10 @@ arrested decay.
 ## Building
 
 If you're building for a local install in `~/.local/bin` on a Mac or
-Linux or you're doing an AUR build, you can run `./configbot` in the
-`src/` directory. This is just a front-end to various `configbot.*`
-scripts. *This uses the `expect` tool, so have that installed.*
+Linux or you're doing an [AUR](https://aur.archlinux.org/packages/trn)
+build, you can run `./configbot` in the `src/` directory. This is just a
+front-end to various `configbot.*` scripts. *This uses the `expect`
+tool, so have that installed.*
 
 If you want to do the classic interactive configure, run `./Configure`
 instead.
