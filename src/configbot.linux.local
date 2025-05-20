@@ -51,7 +51,7 @@ expect {
 	-re "Any.*additional.*libraries?" { send \r ; exp_continue; } 
 	-re "What.*optimizer/debugger.*flag.*should.*be.*used?" { send \r ; exp_continue; } 
 	-re "Any.*additional.*cc.*flags?" { send \r ; exp_continue; }  
-	-re "Any.*additional.*ld.*flags" { send  \r ; exp_continue; }  
+	-re "Any.*additional.*ld.*flags" { send \r ; exp_continue; }  
 	-re "Berkeley/V7.*format.*for.*full.*name.*in.*/etc/passwd?" { send y\r ; exp_continue; }  
 	-re "Shall.*I.*use.*/usr/bin/nm.*to.*extract.*C.*symbols.*from.*the.*libraries?" { send n\r ; exp_continue; }  
     -re "Your.*system.*appears.*to.*NOT.*have.*termlib-style.*routines..*Is.*this.*true?" { send n\r; exp_continue; }
