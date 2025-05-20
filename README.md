@@ -44,57 +44,30 @@ I've included some `expect`-driven scripts that run the extremely-manual
 Environment variables:
 
 ```
-export NNTPSERVER=news.eternal-september.org  # For example
+export FROM='Me <me@example.com>'
 export ORGANIZATION="Yoyodyne"
+export NEWSSIGNATURE=~/.trn/signature
 export VISUAL=vim
 export EDITOR="$VISUAL"
-export FROM='Me <me@example.com>'
-export SIGNATURE_FILE=~/.sig
 ```
 
-If you need authorization, try:
+Add a `~/.trn/access` file, mode `0600` since it has a password in the
+clear. Here's one for
+[`eternal-september.org`](https://www.eternal-september.org/):
 
 ```
-export NNTP_FORCE_AUTH=YES  # Force trn to use ~/.nntpauth
-```
-
-And make a `~/.nntpauth` file. In that file have two lines:
-
-```
-loginname
-password
-```
-
-`chmod 600 ~/.nntpauth` so that others can't read it.
-
-(There might be a better way to do auth—I'm slowly figuring it out.)
-
-Then `trn` and you're off.
-
-## Auth issues
-
-https://web.archive.org/web/20220629054850/https://www.foxvalley.net/nntpsetup.html
-
-```
-trn
-Using a text editor, create a file in your .trn directory called "access". The access file should be formatted like this:
 [default]
-NNTP Server = news.foxvalley.net
-Auth User = your_email_address
+NNTP Server = news.eternal-september.org
+Auth User = your_username
 Auth Password = your_password
+Force Auth = yes
 ```
 
-Maybe this is the _Right Way_ and I need to remove that code that protects
-`.nntpauth`. That would make me happy.
-
-Read: `HelpFiles/samples/access`
-
-I can't tell that the `~/.trn/access` file is actually read anywhere. At
-least for `eternal-september`, it seems to be ignored and I have to use
-`.nntpauth`.
+The `Force Auth` is required for some servers, apparently. And also,
+apparently, you can add multiple NNTP servers to the `access` file and
+cycle between them.
 
 ## TODO
 
 * Set up more expect scripts for different configurations.
 * `sighold` and `sigrelse` are deprecated. But no one is warning... yet!
-* Fix auth properly?

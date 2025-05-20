@@ -97,32 +97,6 @@ doshell(char* shell, char* s)
     pid_t pid, w;
 #endif
     int ret;
-    int auth_file_exists; /* See note below */
-
-    {
-        /*
-         * doshell() recreates and deletes the auth file. I'm not sure
-         * why this is, since there doesn't seem to be any other way to
-         * set the auth info, and removing the file prevents you from
-         * logging in the next time you run trn.
-         *
-         * This function is called from a variety of places, and it
-         * doesn't seem to make sense to remove the auth information
-         * every time you want to run a shell command.
-         *
-         * So this change checks to see if the auth file already exists,
-         * and if it does, it doesn't overwrite or unlink it.
-         *
-         * Search for "auth_file_exists" to see the affected code
-         * blocks.
-         *
-         * -Beej 2025-05-18
-         */
-       int fd = open(nntp_auth_file, O_RDONLY);
-       close(fd);
-
-       auth_file_exists = fd >= 0;
-    }
 
     xmouse_off();
 
@@ -158,7 +132,7 @@ doshell(char* shell, char* s)
 	    re_export(nntpforce_export,"yes",3);
 	else
 	    un_export(nntpforce_export);
-	if (datasrc->auth_user && !auth_file_exists) {
+	if (datasrc->auth_user) {
 	    int fd;
 	    if ((fd = open(nntp_auth_file, O_WRONLY|O_CREAT, 0600)) >= 0) {
 		write(fd, datasrc->auth_user, strlen(datasrc->auth_user));
@@ -277,7 +251,7 @@ doshell(char* shell, char* s)
     sigset(SIGTTIN,stop_catcher);
 #endif
 #ifdef SUPPORT_NNTP
-    if (datasrc && datasrc->auth_user && !auth_file_exists)
+    if (datasrc && datasrc->auth_user)
 	UNLINK(nntp_auth_file);
 #endif
     return ret;
